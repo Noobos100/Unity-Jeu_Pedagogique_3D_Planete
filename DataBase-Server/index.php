@@ -18,7 +18,8 @@ include_once 'gui/ViewRandomQuestion.php';
 include_once 'gui/ViewInteractions.php';
 include_once 'gui/ViewPartie.php';
 include_once 'gui/ViewQuestions.php';
-use gui\{Layout, ViewInteractions, ViewPartie, ViewQuestions, ViewRandomQuestion};
+include_once 'gui/ViewHome.php';
+use gui\{Layout, ViewInteractions, ViewPartie, ViewQuestions, ViewRandomQuestion, ViewHome};
 
 session_start();
 
@@ -77,6 +78,13 @@ else if ( '/index.php/abortOnGoingGame' == $uri){
     $date = date('Y-m-d H:i:s');
     $layout = new Layout('gui/layout.html');
     $viewPartie = new ViewPartie($layout, $partieStatus, $ip, $date);
+
+    $viewPartie->display();
+}
+else if ( '/index.php' == $uri){
+
+    $layout = new Layout('gui/layout.html');
+    $viewPartie = new ViewHome($layout);
 
     $viewPartie->display();
 }

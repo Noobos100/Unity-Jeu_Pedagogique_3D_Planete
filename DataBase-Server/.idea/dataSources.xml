@@ -5,7 +5,7 @@
       <driver-ref>mariadb</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://mysql-jeupedagogique.alwaysdata.net/jeupedagogique_bd</jdbc-url>
+      <jdbc-url>jdbc:mariadb://mysql-jeupedagogique.alwaysdata.net:3306/jeupedagogique_bd</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
