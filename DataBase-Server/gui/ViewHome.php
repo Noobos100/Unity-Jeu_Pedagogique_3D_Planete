@@ -18,7 +18,7 @@ class ViewHome extends View
         $this->title = 'Accueil';
         $this->content = '<p>Bienvenue sur le site de gestion des interactions</p>';
         // form to add a question
-        $this->content .= '<form action="index.php/addQuestion" method="post">
+        $this->content .= '<form action="/index.php/addQuestion" method="post">
             <label for="question">Question:</label>
             <input type="text" id="question" name="question" required>
             <label for="answer">Réponse:</label>

@@ -46,7 +46,7 @@ $partieChecking = new PartieChecking();
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 // Vérifier si l'utilisateur est connecté, sauf pour la page de connexion
-if ($uri !== '/index.php' && (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true)) {
+if (!($uri == '/' || $uri == '/index.php') && (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true)) {
     header('Status: 404 Not Found');
     echo '<html><body><h1>Page Not Found</h1>';
     echo '<button onclick="window.location.href=\'/index.php\'">Retour à la page d\'accueil</button>';
