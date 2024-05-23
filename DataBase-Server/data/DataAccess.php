@@ -371,7 +371,11 @@ class DataAccess implements DataAccessInterface
             return $result;
     }
 
-    public function getPDO()
-    {
+    /**
+     * @return array
+     */
+    public function getAllQ(): array{
+        $query = "SELECT * FROM QUESTION";
+        return $this->dataAccess->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 }

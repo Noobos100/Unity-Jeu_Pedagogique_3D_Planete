@@ -28,6 +28,7 @@ session_start();
 $data = null;
 try {
     $data = new DataAccess(new \PDO('mysql:host=mysql-jeupedagogique.alwaysdata.net;dbname=jeupedagogique_bd', '331395_jeu_pedag', 'Planete-T3rr3'));
+
 } catch (PDOException $e) {
     print "Erreur de connexion !: " . $e->getMessage() . "<br/>";
     die();
@@ -40,6 +41,7 @@ $controllerQuestions = new ControllerQuestions();
 
 // initilisation du cas d'utilisation PartieChecking
 $partieChecking = new PartieChecking();
+
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
@@ -176,8 +178,15 @@ if ('/index.php' == $uri || '/' == $uri) {
         $viewQuestion = new ViewQuestions($layout, $jsonQ);
 
         $viewQuestion->display();
-    } else {
-        echo "URL not complete, cannot show question attributes";
+    }
+    else{
+        // display all questions
+        $jsonQ = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
+
+        $layout = new Layout('gui/layoutJson.html');
+        $viewQuestion = new ViewQuestions($layout, $jsonQ);
+
+        $viewQuestion->display();
     }
 } elseif ('/index.php/randomQuestions' == $uri) {
     $nbQCU = $_GET['qcu'] ?? 0;

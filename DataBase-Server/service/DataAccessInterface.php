@@ -123,6 +123,8 @@ interface DataAccessInterface
      */
     public function getQQCU(int $numQues): Qcu|False;
 
+    public function getAllQ(): array;
+
     /**
      * @param int $howManyQCU
      * @return array

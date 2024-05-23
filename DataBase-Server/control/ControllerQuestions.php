@@ -28,6 +28,15 @@ class ControllerQuestions
     }
 
     /**
+     * Generates JSON containing attributes of all questions.
+     */
+    public function getJsonAttributesAllQ(PartieChecking $questionService, mixed $data): string {
+        $json = json_encode($questionService->getAllQ($data), JSON_UNESCAPED_UNICODE);
+        return preg_replace('/null/', '-1', $json);
+    }
+
+
+    /**
      * Generates JSON containing attributes of a specific question.
      *
      * @param int $numQues The number of the question.

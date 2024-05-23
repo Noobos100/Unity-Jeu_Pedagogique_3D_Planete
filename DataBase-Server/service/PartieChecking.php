@@ -166,6 +166,10 @@ class PartieChecking
         return $data->getQQCU($numQues);
     }
 
+    public function getAllQ($data): array{
+        return $data->getAllQ();
+    }
+
     /**
      * @param int $howManyQCM
      * @param $data
