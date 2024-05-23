@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DatabaseAccess
   m_EditorClassIdentifier: 
   _webDatabaseConnection:
-    host: https://jeupedagogique.alwaysdata.net/index.php
+    host: https://jeupedagogique.alwaysdata.net/
