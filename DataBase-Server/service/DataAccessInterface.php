@@ -7,6 +7,13 @@ use domain\{Interaction, Joueur, Partie, Qcu, Quesinterac, UserAnswer, VraiFaux}
 interface DataAccessInterface
 {
     /**
+     * @param string $name
+     * @param string $pwd
+     * @return bool
+     */
+    public function utilisateur(string $name, string $pwd): bool;
+
+    /**
      * @param string $nomInteract
      * @param float $valeurInteract
      * @param int $isEval

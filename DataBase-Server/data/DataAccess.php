@@ -42,6 +42,22 @@ class DataAccess implements DataAccessInterface
     }
 
     /**
+     * @param string $name
+     * @param string $pwd
+     * @return bool
+     */
+    public function utilisateur(string $name, string $pwd): bool
+    {
+        $query = "SELECT COUNT(*) AS Counter FROM UTILISATEUR WHERE NOM = ? AND MDP = ?";
+        $stmt = $this->dataAccess->prepare($query);
+        $stmt->execute([$name, $pwd]);
+        $result = $stmt->fetch();
+
+        return $result['Counter'] > 0;
+    }
+
+
+    /**
      * @param string $nomInteract
      * @param float $valeurInteract
      * @param int $isEval
@@ -353,5 +369,9 @@ class DataAccess implements DataAccessInterface
                 $result[$count] = $result[$count]['Num_Ques'];
             }
             return $result;
+    }
+
+    public function getPDO()
+    {
     }
 }
