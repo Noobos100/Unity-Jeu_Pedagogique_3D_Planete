@@ -53,7 +53,7 @@ if (!($uri == '/' || $uri == '/index.php') && (!isset($_SESSION['loggedin']) || 
     echo '</body></html>';
 }
 
-if ('/index.php' == $uri || '/' == $uri) {
+elseif ('/index.php' == $uri || '/' == $uri) {
     $layout = new Layout('gui/layout.html');
     $viewLogin = new ViewLogin($layout);
     $error = '';
@@ -200,6 +200,7 @@ if ('/index.php' == $uri || '/' == $uri) {
 
     $viewRandomQs->display();
 } else {
+	session_destroy();
     header('Status: 404 Not Found');
     echo '<html><body><h1>Page Not Found</h1>';
     echo '<button onclick="window.location.href=\'/index.php\'">Retour à la page d\'accueil</button>';
