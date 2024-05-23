@@ -173,21 +173,15 @@ if ('/index.php' == $uri || '/' == $uri) {
 } elseif ('/index.php/question' == $uri) {
     if (isset($_GET['qid'])) {
         $jsonQ = $controllerQuestions->getJsonAttributesQ($_GET['qid'], $partieChecking, $data);
-
-        $layout = new Layout('gui/layoutJson.html');
-        $viewQuestion = new ViewQuestions($layout, $jsonQ);
-
-        $viewQuestion->display();
     }
     else{
         // display all questions
         $jsonQ = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
-
-        $layout = new Layout('gui/layoutJson.html');
-        $viewQuestion = new ViewQuestions($layout, $jsonQ);
-
-        $viewQuestion->display();
     }
+    $layout = new Layout('gui/layoutJson.html');
+    $viewQuestion = new ViewQuestions($layout, $jsonQ);
+
+    $viewQuestion->display();
 } elseif ('/index.php/randomQuestions' == $uri) {
     $nbQCU = $_GET['qcu'] ?? 0;
     $nbInteraction = $_GET['interaction'] ?? 0;
