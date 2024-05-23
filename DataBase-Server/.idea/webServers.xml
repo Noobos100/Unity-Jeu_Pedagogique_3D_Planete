@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a5b57a3e-1693-4ce2-be11-38a00f118370" name="site planete sae" url="http://ftp-jeupedagogique.alwaysdata.net">
+        <fileTransfer rootFolder="/www" host="ftp-jeupedagogique.alwaysdata.net" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
