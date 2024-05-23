@@ -164,7 +164,13 @@ elseif ( '/index.php/question' == $uri){
         $viewQuestion->display();
     }
     else{
-        echo "URL not complete, cannot show question attributes";
+        // display all questions
+        $jsonQ = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
+
+        $layout = new Layout('gui/layoutJson.html');
+        $viewQuestion = new ViewQuestions($layout, $jsonQ);
+
+        $viewQuestion->display();
     }
 }
 elseif ( '/index.php/randomQuestions' == $uri){
