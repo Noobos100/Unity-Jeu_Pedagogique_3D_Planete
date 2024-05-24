@@ -21,7 +21,9 @@ include_once 'gui/ViewPartie.php';
 include_once 'gui/ViewQuestions.php';
 include_once 'gui/ViewHome.php';
 include_once 'gui/ViewLogin.php';
-use gui\{Layout, ViewInteractions, ViewPartie, ViewQuestions, ViewRandomQuestion, ViewHome, ViewLogin};
+include_once 'gui/ViewModifyQuestion.php';
+
+use gui\{Layout, ViewInteractions, ViewModifyQuestion, ViewPartie, ViewQuestions, ViewRandomQuestion, ViewHome, ViewLogin};
 
 session_start();
 
@@ -78,9 +80,12 @@ elseif ('/index.php' == $uri || '/' == $uri) {
 
 } elseif ('/index.php/home' == $uri) {
     $layout = new Layout('gui/layout.html');
-    $viewPartie = new ViewHome($layout);
 
+    $questions = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
+
+    $viewPartie = new ViewHome($layout, $questions);
     $viewPartie->display();
+
 } elseif ('/index.php/addInteraction' == $uri) {
     if (isset($_GET["type"]) && isset($_GET["value"]) && isset($_GET["isEval"])) {
         $ip = $_SERVER['REMOTE_ADDR'];
@@ -182,6 +187,41 @@ elseif ('/index.php' == $uri || '/' == $uri) {
     $viewQuestion = new ViewQuestions($layout, $jsonQ);
 
     $viewQuestion->display();
+} elseif ('/index.php/ModifyQuestion' == $uri && $_SESSION['loggedin']) {
+    if (isset($_GET['qid'])) {
+        $questionData = $controllerQuestions->getJsonAttributesQ($_GET['qid'], $partieChecking, $data);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if ($questionData['Type'] == 'QCU') {
+                $question = $_POST['question'];
+                $option1 = $_POST['option1'];
+                $option2 = $_POST['option2'];
+                $option3 = $_POST['option3'];
+                $option4 = $_POST['option4'];
+                $correct = $_POST['correct'];
+
+                $controllerQuestions->updateQCU($questionData['Num_Ques'], $question, $option1, $option2, $option3, $option4, $correct, $partieChecking, $data);
+            } elseif ($questionData['Type'] == 'QUESINTERAC') {
+                $question = $_POST['question'];
+                $orbit = $_POST['orbit'];
+                $rotation = $_POST['rotation'];
+
+                $controllerQuestions->updateQInterac($questionData['Num_Ques'], $question, $orbit, $rotation, $partieChecking, $data);
+            } elseif ($questionData['Type'] == 'VRAIFAUX') {
+                $question = $_POST['question'];
+                $correct = $_POST['correct'];
+
+                $controllerQuestions->updateQVraiFaux($questionData['Num_Ques'], $question, $correct, $partieChecking, $data);
+            }
+        }
+
+        $layout = new Layout('gui/layoutJson.html');
+        $viewModifyQ = new ViewModifyQuestion($layout, $questionData);
+
+        $viewModifyQ->display();
+    } else {
+        echo "URL not complete, cannot modify question.";
+    }
 } elseif ('/index.php/randomQuestions' == $uri) {
     $nbQCU = $_GET['qcu'] ?? 0;
     $nbInteraction = $_GET['interaction'] ?? 0;
