@@ -17,6 +17,9 @@ class ViewHome extends View
 
         $this->title = 'Accueil';
         $this->content = '<p>Bienvenue sur le site de gestion des interactions</p>';
+        if ($_SESSION['username'] != null) {
+            $this->content .= '<p>Bonjour ' . $_SESSION['username'] . '</p>';
+        }
         // form to add a question
         $this->content .= '<form action="/index.php/addQuestion" method="post">
             <label for="question">Question:</label>

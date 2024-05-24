@@ -59,10 +59,10 @@ elseif ('/index.php' == $uri || '/' == $uri) {
     $error = '';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+        $_SESSION['username'] = $_POST['username'];
+        $_SESSION['password'] = $_POST['password'];
 
-        if ($data->utilisateur($username, $password)) {
+        if ($data->utilisateur($_SESSION['username'], $_SESSION['password'])) {
             $_SESSION['loggedin'] = true;
             header('Location: /index.php/home');
             exit;
