@@ -17,7 +17,7 @@ class ViewGame extends View
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
-        background: url("image/image2.jpg") no-repeat center center fixed;
+        background: url("../Assets/Image/image2.jpg") no-repeat center center fixed;
         background-size: cover;
     }
     

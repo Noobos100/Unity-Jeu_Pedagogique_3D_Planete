@@ -53,14 +53,6 @@ if($uri == '/game' || '/' == $uri){
     $viewPartie->display();
 }
 
-// Vérifier si l'utilisateur est connecté, sauf pour la page de connexion
-elseif (!($uri == '/index.php') && (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true)) {
-    header('Status: 404 Not Found');
-    echo '<html><body><h1>Page Not Found</h1>';
-    echo '<button onclick="window.location.href=\'/index.php\'">Retour à la page d\'accueil</button>';
-    echo '</body></html>';
-}
-
 elseif ('/index.php' == $uri ) {
     $layout = new Layout('gui/layout.html');
     $viewLogin = new ViewLogin($layout);
@@ -84,13 +76,9 @@ elseif ('/index.php' == $uri ) {
     }
     $viewLogin->display();
 
-} elseif ('/index.php/home' == $uri) {
+} elseif ('/index.php/home' == $uri && (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true)) {
     $layout = new Layout('gui/layout.html');
     $viewPartie = new ViewHome($layout);
-
-    $questions = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
-
-    $viewPartie = new ViewHome($layout, $questions);
     $viewPartie->display();
 
 } elseif ('/index.php/addInteraction' == $uri) {
