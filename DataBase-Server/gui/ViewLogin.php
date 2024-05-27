@@ -35,7 +35,7 @@ $this->content .= '<style>
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
-        background: url("image/espace.jpg") no-repeat center center fixed;
+        background: url("../Assets/Image/espace.jpg") no-repeat center center fixed;
         background-size: cover;
     }
     .login-container {

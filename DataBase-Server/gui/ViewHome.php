@@ -6,6 +6,8 @@ include_once "View.php";
 
 class ViewHome extends View
 {
+    private $currentPage;
+
     /**
      * Constructs a new ViewHome instance.
      *
@@ -15,100 +17,32 @@ class ViewHome extends View
     {
         parent::__construct($layout);
 
-        // Récupérer le login de l'utilisateur connecté depuis la session
+        // Déterminer la page actuelle
+        $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+
+// Récupérer le login de l'utilisateur connecté depuis la session
         $login = isset($_SESSION['username']) ? $_SESSION['username'] : 'user';
 
         $this->title = 'Accueil';
-        $this->content = '<div class="container">
-            <div class="sidebar">
-                <button class="sidebar-button">Accueil</button>
-                <button class="sidebar-button">Utilisateurs</button>
-                <button class="sidebar-button">Questions</button>
-                <button class="sidebar-button">Parties</button>
-                <button class="sidebar-button">Type joueurs</button>
-                <div class="sidebar-footer">
-                    <p id="datetime"></p>
-                </div>
-            </div>
-            <div class="main-content">
-                <p>Bienvenue sur le site de gestion des interactions</p>
-                <p>Bonjour ' . htmlspecialchars($login) . '</p>
-            </div>
-        </div>';
+        $this->content = '<link rel="stylesheet" href="../Assets/Css/Style.css">';
+        $this->content .= '<div class="container">
+    <div class="sidebar">
+        <button class="sidebar-button' . ($this->currentPage == '/index.php/home' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/home\'">Accueil</button>
+        <button class="sidebar-button' . ($this->currentPage == '/index.php/utilisateurs' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/utilisateurs\'">Utilisateurs</button>
+        <button class="sidebar-button' . ($this->currentPage == '/index.php/questions' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/questions\'">Questions</button>
+        <button class="sidebar-button' . ($this->currentPage == '/index.php/parties' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/parties\'">Parties</button>
+        <button class="sidebar-button' . ($this->currentPage == '/index.php/type-joueurs' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/type-joueurs\'">Type joueurs</button>
+        <div class="sidebar-footer">
+            <p id="datetime"></p>
+        </div>
+    </div>
+    <div class="main-content">
+        <p>Bienvenue sur le site de gestion des interactions</p>
+        <p>Bonjour ' . htmlspecialchars($login) . '</p>
+    </div>
+</div>';
 
-        // Add CSS and JavaScript
-        $this->content .= '<style>
-            body, html {
-                margin: 0;
-                padding: 0;
-                height: 100%;
-                font-family: Arial, sans-serif;
-            }
-            .container {
-                display: flex;
-                height: 100%;
-                background: url("/image/espace2.jpg") no-repeat center center fixed;
-                background-size: cover;
-            }
-            .sidebar {
-                width: 200px;
-                background-color: #061123;
-                color: white;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                padding: 10px;
-            }
-            .sidebar-button {
-                background: linear-gradient(90deg, #061123, #0B1B66, #061123);
-                color: white;
-                border: none;
-                padding: 10px;
-                margin-top: 10px; /* Add margin-top for spacing */
-                cursor: pointer;
-                text-align: center;
-                border-radius: 5px;
-            }
-            .sidebar-button:hover {
-                background-color: #333;
-            }
-            .sidebar-footer {
-                font-size: 14px;
-            }
-            .main-content {
-                flex-grow: 1;
-                padding: 20px;
-                color: white;
-                background: rgba(0, 0, 0, 0.5);
-                margin: 20px;
-                border-radius: 10px;
-                overflow-y: auto;
-            }
-            label, input {
-                display: block;
-                margin-bottom: 10px;
-                font-size: 16px;
-            }
-            input[type="text"], input[type="password"] {
-                width: 100%;
-                padding: 10px;
-                border: none;
-                border-radius: 5px;
-                font-size: 16px;
-            }
-            input[type="submit"] {
-                padding: 10px;
-                border: none;
-                border-radius: 5px;
-                background-color: #1a1a1a;
-                color: white;
-                font-size: 18px;
-                cursor: pointer;
-            }
-            input[type="submit"]:hover {
-                background-color: #333;
-            }
-        </style>';
+        // Ajouter un script pour mettre à jour l'heure et la date actuelles
 
         $this->content .= '<script>
             function updateDateTime() {

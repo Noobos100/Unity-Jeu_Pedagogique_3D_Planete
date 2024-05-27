@@ -88,12 +88,9 @@ elseif ('/index.php' == $uri ) {
     }
     $viewLogin->display();
 
-} elseif ('/index.php/home' == $uri) {
+} elseif ('/index.php/home' == $uri && (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true)) {
     $layout = new Layout('gui/layout.html');
-
-    $questions = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
-
-    $viewPartie = new ViewHome($layout, $questions);
+    $viewPartie = new ViewHome($layout);
     $viewPartie->display();
 
 } elseif ('/index.php/addInteraction' == $uri) {
