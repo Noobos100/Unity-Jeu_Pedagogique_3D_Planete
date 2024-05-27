@@ -6,7 +6,6 @@ include_once "View.php";
 
 class ViewUtilisateur extends View
 {
-    private string $currentPage;
 
     /**
      * Constructs a new ViewHome instance.
@@ -18,7 +17,6 @@ class ViewUtilisateur extends View
         parent::__construct($layout);
 
         // Déterminer la page actuelle
-        $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
         $this->title = 'Utilisateurs';
 		$this->content .= '<h1>Utilisateurs</h1>';

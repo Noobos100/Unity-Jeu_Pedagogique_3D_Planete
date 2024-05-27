@@ -9,6 +9,8 @@ class Layout
 {
     protected $templateFile;
 
+    protected $navbar = '';
+
     /**
      * Constructs a new Layout instance.
      *
@@ -17,6 +19,8 @@ class Layout
     public function __construct($templateFile)
     {
         $this->templateFile = $templateFile;
+
+        $this->navbar = require('navbar.php');
     }
 
     /**
@@ -29,7 +33,7 @@ class Layout
     public function display($title, $content)
     {
         $page = file_get_contents($this->templateFile);
-        $page = str_replace(['%title%', '%content%'], [$title, $content], $page);
+        $page = str_replace(['%title%', '%content%', '%navbar%'], [$title, $content, $this->navbar], $page);
         echo $page;
     }
 }

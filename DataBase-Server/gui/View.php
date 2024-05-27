@@ -10,6 +10,7 @@ class View
     protected $content = '';
     protected $layout;
 
+
     /**
      * Constructs a new View instance.
      *
@@ -18,6 +19,8 @@ class View
     public function __construct($layout)
     {
         $this->layout = $layout;
+
+
     }
 
     /**

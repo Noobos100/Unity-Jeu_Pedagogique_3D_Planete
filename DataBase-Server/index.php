@@ -53,14 +53,18 @@ $partieChecking = new PartieChecking();
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-if($uri == '/game' || '/' == $uri){
-    $layout = new Layout('gui/layout.html');
+if($uri == '/Game' || $uri == '/'){
+    $layout = new Layout('gui/layoutLogged.html');
     $viewPartie = new ViewGame($layout);
-
     $viewPartie->display();
 }
+elseif ('/Logout' == $uri) {
+    session_destroy();
+    header('Location: /');
+    exit;
+}
 
-elseif ('/index.php' == $uri ) {
+elseif ('/Login' == $uri ) {
     $layout = new Layout('gui/layout.html');
     $viewLogin = new ViewLogin($layout);
     $error = '';
@@ -71,7 +75,7 @@ elseif ('/index.php' == $uri ) {
 
         if ($data->utilisateur($_SESSION['username'], $_SESSION['password'])) {
             $_SESSION['loggedin'] = true;
-            header('Location: /index.php/Home');
+            header('Location: /index.php/DonneesJeu');
             exit;
         } else {
             $error = "Nom d'utilisateur ou mot de passe incorrect.";
@@ -83,24 +87,18 @@ elseif ('/index.php' == $uri ) {
     }
     $viewLogin->display();
 
-} elseif ('/index.php/Home' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
-    $layout = new Layout('gui/layoutLogged.html');
-    $viewPartie = new ViewHome($layout);
-    $viewPartie->display();
-
-
-} elseif ('/index.php/Utilisateurs' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
+}elseif ('/index.php/Utilisateurs' == $uri && (isset($_SESSION['loggedin']))) {
 $layout = new Layout('gui/layoutLogged.html');
 $viewPartie = new ViewUtilisateur($layout);
 $viewPartie->display();
 
-}elseif ('/index.php/Parties' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
+}elseif ('/index.php/DonneesJeu' == $uri && (isset($_SESSION['loggedin']) )) {
     $layout = new Layout('gui/layoutLogged.html');
     $viewPartie = new ViewParties($layout);
     $viewPartie->display();
 
 
-} elseif ('/index.php/TypesJoueur' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
+} elseif ('/index.php/Joueurs' == $uri && (isset($_SESSION['loggedin']) )) {
     $layout = new Layout('gui/layoutLogged.html');
     $viewPartie = new ViewTypesJoueur($layout);
     $viewPartie->display();
@@ -206,14 +204,14 @@ elseif ('/index.php/addInteraction' == $uri) {
     $viewQuestion = new ViewQuestions($layout, $jsonQ);
 
     $viewQuestion->display();
-} elseif ('/index.php/ManageQuestions' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)){
+} elseif ('/index.php/ManageQuestions' == $uri && (isset($_SESSION['loggedin']) )){
     $layout = new Layout('gui/layoutLogged.html');
     $questions = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
 
     $viewManageQ = new ViewManageQuestions($layout, $questions);
     $viewManageQ->display();
 
-} elseif ('/index.php/ModifyQuestion' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
+} elseif ('/index.php/ModifyQuestion' == $uri && (isset($_SESSION['loggedin']) )) {
     if (isset($_GET['qid'])) {
         $questionData = $controllerQuestions->getJsonAttributesQ($_GET['qid'], $partieChecking, $data);
 

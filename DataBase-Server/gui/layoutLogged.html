@@ -8,11 +8,7 @@
 <body>
 <div class="container">
     <nav class="sidebar">
-        <button class="sidebar-button" onclick="location.href='/index.php/Home'">Accueil</button>
-        <button class="sidebar-button" onclick="location.href='/index.php/Utilisateurs'">Utilisateurs</button>
-        <button class="sidebar-button" onclick="location.href='/index.php/ManageQuestions'">Questions</button>
-        <button class="sidebar-button" onclick="location.href='/index.php/Parties'">Parties</button>
-        <button class="sidebar-button" onclick="location.href='/index.php/TypesJoueur'">Types joueur</button>
+    %navbar%
         <div class="sidebar-footer">
             <p id="datetime"></p>
         </div>
@@ -20,6 +16,7 @@
     <div class="main-content">
         %content%
     </div>
+
 </div>
 <script>
   const buttons = document.querySelectorAll('.sidebar-button');

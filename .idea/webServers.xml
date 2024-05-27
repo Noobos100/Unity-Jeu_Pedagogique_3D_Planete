@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="8337a3af-0dde-4354-9961-0618c6030cf6" name="chickenwing" url="http://ftp-jeupedagogique.alwaysdata.net">
+        <fileTransfer rootFolder="/www" host="ftp-jeupedagogique.alwaysdata.net" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

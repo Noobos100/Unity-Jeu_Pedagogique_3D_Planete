@@ -20,7 +20,7 @@ $this->title = 'Connexion';
 // Formulaire de connexion
 $this->content .= '
 <div class="login-container">
-    <form action="/index.php" method="post" class="login-form">
+    <form action="/Login" method="post" class="login-form">
         <label for="username">Nom d\'utilisateur:</label>
         <input type="text" id="username" name="username" required>
         <label for="password">Mot de passe:</label>
