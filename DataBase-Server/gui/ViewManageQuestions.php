@@ -14,22 +14,9 @@ class ViewManageQuestions extends View
         parent::__construct($layout);
 
         $this->title = 'Gestion des questions';
-        $this->content = '<link rel="stylesheet" href="../Assets/Css/Style.css">';
 
         // Déterminer la page actuelle
         $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-
-        $this->content .= '<div class="container">
-            <div class="sidebar">
-                <button class="sidebar-button' . ($this->currentPage == '/index.php/home' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/home\'">Accueil</button>
-                <button class="sidebar-button' . ($this->currentPage == '/index.php/utilisateurs' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/utilisateurs\'">Utilisateurs</button>
-                <button class="sidebar-button' . ($this->currentPage == '/index.php/ManageQuestions' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/ManageQuestions\'">Questions</button>
-                <button class="sidebar-button' . ($this->currentPage == '/index.php/parties' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/parties\'">Parties</button>
-                <button class="sidebar-button' . ($this->currentPage == '/index.php/type-joueurs' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/type-joueurs\'">Type joueurs</button>
-                <div class="sidebar-footer">
-                    <p id="datetime"></p>
-                </div>
-            </div>';
 
         // Ajouter un script pour mettre à jour l'heure et la date actuelles
         $this->content .= '<h1>Vous pouvez gérer les questions ici</h1>';

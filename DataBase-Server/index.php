@@ -247,7 +247,7 @@ elseif ('/index.php/addInteraction' == $uri) {
             }
         }
 
-        $layout = new Layout('gui/layoutJson.html');
+        $layout = new Layout('gui/layoutLogged.html');
         $viewModifyQ = new ViewModifyQuestion($layout, $questionData);
 
         $viewModifyQ->display();
