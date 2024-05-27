@@ -27,7 +27,6 @@ class ViewModifyQuestion extends View
         <button class="sidebar-button" onclick="window.location.href=\'/index.php/Parties\'">Parties</button>
         <button class="sidebar-button" onclick="window.location.href=\'/index.php/TypesJoueur\'">Types joueur</button>
                     <p id="datetime"></p>
-                </div>
             </div>';
         $this->content .= '<script>
             function updateDateTime() {
@@ -95,6 +94,7 @@ class ViewModifyQuestion extends View
             <input type="submit" value="Submit">
         </form>';
         }
+        $this->content .= '</div>';
         $this->content .= '</div>';
     }
 }
