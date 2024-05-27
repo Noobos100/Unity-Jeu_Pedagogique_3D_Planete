@@ -21,9 +21,8 @@ include_once 'gui/ViewPartie.php';
 include_once 'gui/ViewQuestions.php';
 include_once 'gui/ViewHome.php';
 include_once 'gui/ViewLogin.php';
-include_once 'gui/ViewModifyQuestion.php';
-
-use gui\{Layout, ViewInteractions, ViewModifyQuestion, ViewPartie, ViewQuestions, ViewRandomQuestion, ViewHome, ViewLogin};
+include_once 'gui/ViewGame.php';
+use gui\{Layout, ViewInteractions, ViewPartie, ViewQuestions, ViewRandomQuestion, ViewHome, ViewLogin, ViewGame};
 
 session_start();
 
@@ -47,15 +46,22 @@ $partieChecking = new PartieChecking();
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+if($uri == '/game' || '/' == $uri){
+    $layout = new Layout('gui/layout.html');
+    $viewPartie = new ViewGame($layout);
+
+    $viewPartie->display();
+}
+
 // Vérifier si l'utilisateur est connecté, sauf pour la page de connexion
-if (!($uri == '/' || $uri == '/index.php') && (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true)) {
+elseif (!($uri == '/index.php') && (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true)) {
     header('Status: 404 Not Found');
     echo '<html><body><h1>Page Not Found</h1>';
     echo '<button onclick="window.location.href=\'/index.php\'">Retour à la page d\'accueil</button>';
     echo '</body></html>';
 }
 
-elseif ('/index.php' == $uri || '/' == $uri) {
+elseif ('/index.php' == $uri ) {
     $layout = new Layout('gui/layout.html');
     $viewLogin = new ViewLogin($layout);
     $error = '';
@@ -80,6 +86,7 @@ elseif ('/index.php' == $uri || '/' == $uri) {
 
 } elseif ('/index.php/home' == $uri) {
     $layout = new Layout('gui/layout.html');
+    $viewPartie = new ViewHome($layout);
 
     $questions = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
 
