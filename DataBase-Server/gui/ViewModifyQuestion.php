@@ -14,7 +14,7 @@ class ViewModifyQuestion extends View
         // Decode the JSON data
         $questionData = json_decode($questionData, true);
 
-        $this->title = 'Modification de la question';
+        $this->title = 'Modification de la question '. htmlspecialchars($questionData['Num_Ques']);
         $this->content = '<link rel="stylesheet" href="../assets/css/Style.css">';
         // Déterminer la page actuelle
         $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
