@@ -65,5 +65,8 @@ class ControllerQuestions
         $questionService->addQuestionAnswer($numQues, $idParty, $dateDeb, $dateFin, $isCorrect, $data);
     }
 
+    public function updateQQCU(int $numQues, string $question, string $option1, string $option2, string $option3, string $option4, string $correct, PartieChecking $questionService, mixed $data): void {
+        $questionService->updateQCU($numQues, $question, $option1, $option2, $option3, $option4, $correct, $data);
+    }
 
 }

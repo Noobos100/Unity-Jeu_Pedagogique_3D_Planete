@@ -405,16 +405,28 @@ class DataAccess implements DataAccessInterface
             return $result;
     }
 
-    public function updateQCU(int $numQues, string $rep1, string $rep2, string $rep3, string $rep4, int $bonneRep): void{
-        $query = "UPDATE QCU SET Rep1 = :rep1, Rep2 = :rep2, Rep3 = :rep3, Rep4 = :rep4, BonneRep = :bonneRep WHERE Num_Ques = :numQues";
+    public function updateQCU(int $numQues, string $question, string $rep1, string $rep2, string $rep3, string $rep4, string $bonneRep): void{
+        $query = "UPDATE QCU SET Rep1 = :rep1, Rep2 = :rep2, Rep3 = :rep3, Rep4 = :rep4 WHERE Num_Ques = :numQues";
+        $query2 = "UPDATE QCU SET BonneRep = ".$bonneRep." WHERE Num_Ques = :numQues";
+        $query3 = "UPDATE QUESTION SET Enonce = :question WHERE Num_Ques = :numQues";
+
         $stmt = $this->dataAccess->prepare($query);
+        $stmt2 = $this->dataAccess->prepare($query2);
+        $stmt3 = $this->dataAccess->prepare($query3);
+
         $stmt->bindParam(':numQues', $numQues);
         $stmt->bindParam(':rep1', $rep1);
         $stmt->bindParam(':rep2', $rep2);
         $stmt->bindParam(':rep3', $rep3);
         $stmt->bindParam(':rep4', $rep4);
-        $stmt->bindParam(':bonneRep', $bonneRep);
         $stmt->execute();
+
+        $stmt2->bindParam(':numQues', $numQues);
+        $stmt2->execute();
+
+        $stmt3->bindParam(':question', $question);
+        $stmt3->bindParam(':numQues', $numQues);
+        $stmt3->execute();
     }
 
     /**
