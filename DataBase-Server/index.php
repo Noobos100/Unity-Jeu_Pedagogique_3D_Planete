@@ -88,7 +88,7 @@ elseif ('/index.php' == $uri ) {
     }
     $viewLogin->display();
 
-} elseif ('/index.php/home' == $uri && (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true)) {
+} elseif ('/index.php/home' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
     $layout = new Layout('gui/layout.html');
     $viewPartie = new ViewHome($layout);
     $viewPartie->display();
