@@ -22,6 +22,17 @@
     </div>
 </div>
 <script>
+  const buttons = document.querySelectorAll('.sidebar-button');
+  const currentPath = window.location.pathname;
+
+  buttons.forEach(button => {
+    const buttonPath = button.getAttribute('onclick').split("'")[1];
+    if (buttonPath === currentPath) {
+      button.classList.add('url-match');
+      button.classList.remove('sidebar-button');
+    }
+  });
+
   function updateDateTime() {
     const now = new Date();
     const date = now.toLocaleDateString("fr-FR");

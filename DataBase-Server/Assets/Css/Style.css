@@ -11,7 +11,7 @@ body, html {
     background-size: cover;
 }
 .sidebar {
-    width: 200px;
+    min-width: 200px;
     background-color: #061123;
     color: white;
     display: flex;
@@ -39,9 +39,15 @@ body, html {
     border-radius: 10px; /* Add rounded corners */
 
 }
-.sidebar-button.url-match:hover {
+.url-match {
     background-color: #0B1B66; /* Color when active */
     border-radius: 10px; /* Add rounded corners */
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 10px; /* Add margin-top for spacing */
+    cursor: pointer;
+    text-align: center;
 }
 .sidebar-button:hover {
     background-color: #333;
