@@ -193,7 +193,7 @@ elseif ('/index.php' == $uri ) {
     $viewQuestion = new ViewQuestions($layout, $jsonQ);
 
     $viewQuestion->display();
-} elseif ('/index.php/ManageQuestions'){
+} elseif ('/index.php/ManageQuestions' == $uri && $_SESSION['loggedin']){
     $layout = new Layout('gui/layout.html');
     $questions = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
 
