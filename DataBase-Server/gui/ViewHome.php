@@ -6,7 +6,7 @@ include_once "View.php";
 
 class ViewHome extends View
 {
-    private $currentPage;
+    private string $currentPage;
 
     /**
      * Constructs a new ViewHome instance.
