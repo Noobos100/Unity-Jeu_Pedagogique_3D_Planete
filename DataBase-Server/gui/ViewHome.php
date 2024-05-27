@@ -24,12 +24,12 @@ class ViewHome extends View
         $login = isset($_SESSION['username']) ? $_SESSION['username'] : 'user';
 
         $this->title = 'Accueil';
-        $this->content = '<link rel="stylesheet" href="../assets/css/Style.css">';
+        $this->content = '<link rel="stylesheet" href="../Assets/Css/Style.css">';
         $this->content .= '<div class="container">
     <div class="sidebar">
         <button class="sidebar-button' . ($this->currentPage == '/index.php/home' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/home\'">Accueil</button>
         <button class="sidebar-button' . ($this->currentPage == '/index.php/utilisateurs' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/utilisateurs\'">Utilisateurs</button>
-        <button class="sidebar-button' . ($this->currentPage == '/index.php/questions' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/ManageQuestions\'">Questions</button>
+        <button class="sidebar-button' . ($this->currentPage == '/index.php/ManageQuestions' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/ManageQuestions\'">Questions</button>
         <button class="sidebar-button' . ($this->currentPage == '/index.php/parties' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/parties\'">Parties</button>
         <button class="sidebar-button' . ($this->currentPage == '/index.php/type-joueurs' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/type-joueurs\'">Type joueurs</button>
         <div class="sidebar-footer">

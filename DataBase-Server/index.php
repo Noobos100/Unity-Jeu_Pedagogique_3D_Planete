@@ -199,6 +199,7 @@ elseif ('/index.php' == $uri ) {
 
     $viewManageQ = new ViewManageQuestions($layout, $questions);
     $viewManageQ->display();
+
 } elseif ('/index.php/ModifyQuestion' == $uri && $_SESSION['loggedin']) {
     if (isset($_GET['qid'])) {
         $questionData = $controllerQuestions->getJsonAttributesQ($_GET['qid'], $partieChecking, $data);
