@@ -25,7 +25,9 @@ class ViewManageQuestions extends View
         <button class="sidebar-button" onclick="window.location.href=\'/index.php/ManageQuestions\'">Questions</button>
         <button class="sidebar-button" onclick="window.location.href=\'/index.php/Parties\'">Parties</button>
         <button class="sidebar-button" onclick="window.location.href=\'/index.php/TypesJoueur\'">Types joueur</button>
-                    <p id="datetime"></p>
+                <div class="sidebar-footer">
+            <p id="datetime"></p>
+        </div>
                 </div>';
 
         // Ajouter un script pour mettre à jour l'heure et la date actuelles

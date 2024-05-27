@@ -42,7 +42,6 @@ body, html {
 .sidebar-button.url-match:hover {
     background-color: #0B1B66; /* Color when active */
     border-radius: 10px; /* Add rounded corners */
-
 }
 .sidebar-button:hover {
     background-color: #333;
