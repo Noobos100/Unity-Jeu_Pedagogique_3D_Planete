@@ -19,6 +19,15 @@ body, html {
     justify-content: space-between;
     padding: 10px;
 }
+.sidebar-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0B1B66; /* Change the background color */
+    color: white; /* Change the text color */
+    border-radius: 10px; /* Add rounded corners */
+
+}
 .sidebar-button {
     background: linear-gradient(90deg, #061123, #0B1B66, #061123);
     color: white;
@@ -27,10 +36,13 @@ body, html {
     margin-top: 10px; /* Add margin-top for spacing */
     cursor: pointer;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 10px; /* Add rounded corners */
+
 }
-.sidebar-button.url-match {
+.sidebar-button.url-match:hover {
     background-color: #0B1B66; /* Color when active */
+    border-radius: 10px; /* Add rounded corners */
+
 }
 .sidebar-button:hover {
     background-color: #333;
@@ -63,11 +75,14 @@ input[type="submit"] {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #1a1a1a;
+    background-color: #0B1B66;
     color: white;
     font-size: 18px;
     cursor: pointer;
 }
 input[type="submit"]:hover {
     background-color: #333;
+}
+h1 {
+    border-bottom: 2px solid #0B1B66; /* Changez la couleur et l'épaisseur de la bordure selon vos préférences */
 }

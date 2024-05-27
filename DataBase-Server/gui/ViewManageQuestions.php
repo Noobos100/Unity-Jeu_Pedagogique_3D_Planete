@@ -18,18 +18,15 @@ class ViewManageQuestions extends View
 
         // Déterminer la page actuelle
         $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-
         $this->content .= '<div class="container">
             <div class="sidebar">
-                <button class="sidebar-button' . ($this->currentPage == '/index.php/home' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/home\'">Accueil</button>
-                <button class="sidebar-button' . ($this->currentPage == '/index.php/utilisateurs' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/utilisateurs\'">Utilisateurs</button>
-                <button class="sidebar-button' . ($this->currentPage == '/index.php/questions' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/questions\'">Questions</button>
-                <button class="sidebar-button' . ($this->currentPage == '/index.php/parties' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/parties\'">Parties</button>
-                <button class="sidebar-button' . ($this->currentPage == '/index.php/type-joueurs' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/type-joueurs\'">Type joueurs</button>
-                <div class="sidebar-footer">
+        <button class="sidebar-button" onclick="window.location.href=\'/index.php/Home\'">Accueil</button>
+        <button class="sidebar-button" onclick="window.location.href=\'/index.php/Utilisateurs\'">Utilisateurs</button>
+        <button class="sidebar-button" onclick="window.location.href=\'/index.php/ManageQuestions\'">Questions</button>
+        <button class="sidebar-button" onclick="window.location.href=\'/index.php/Parties\'">Parties</button>
+        <button class="sidebar-button" onclick="window.location.href=\'/index.php/TypesJoueur\'">Types joueur</button>
                     <p id="datetime"></p>
-                </div>
-            </div>';
+                </div>';
 
         // Ajouter un script pour mettre à jour l'heure et la date actuelles
 
@@ -46,7 +43,7 @@ class ViewManageQuestions extends View
 
         $this->content .= '<div class="main-content">';
 
-        $this->content .= '<p>Vous pouvez gérer les questions ici</p>';
+        $this->content .= '<H1>Vous pouvez gérer les questions ici</H1>';
 
         $questions = json_decode($questions, true);
 
@@ -74,6 +71,7 @@ class ViewManageQuestions extends View
                                </tr>';
         }
         $this->content .= '</table>';
+        $this->content .= '</div>';
         $this->content .= '</div>';
     }
 }

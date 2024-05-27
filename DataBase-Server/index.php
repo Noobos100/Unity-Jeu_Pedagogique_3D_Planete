@@ -24,8 +24,11 @@ include_once 'gui/ViewLogin.php';
 include_once 'gui/ViewModifyQuestion.php';
 include_once 'gui/ViewManageQuestions.php';
 include_once 'gui/ViewGame.php';
+include_once 'gui/ViewUtilisateur.php';
+include_once 'gui/ViewTypesJoueur.php';
+include_once 'gui/ViewParties.php';
 
-use gui\{Layout,ViewInteractions,ViewManageQuestions,ViewModifyQuestion,ViewPartie,ViewQuestions,ViewRandomQuestion,ViewHome,ViewLogin,ViewGame};
+use gui\{Layout,ViewInteractions,ViewParties,ViewTypesJoueur,ViewManageQuestions,ViewModifyQuestion,ViewPartie,ViewQuestions,ViewRandomQuestion,ViewUtilisateur,ViewHome,ViewLogin,ViewGame};
 
 
 session_start();
@@ -57,14 +60,6 @@ if($uri == '/game' || '/' == $uri){
     $viewPartie->display();
 }
 
-// Vérifier si l'utilisateur est connecté, sauf pour la page de connexion
-elseif (!($uri == '/index.php') && (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true)) {
-    header('Status: 404 Not Found');
-    echo '<html><body><h1>Page Not Found</h1>';
-    echo '<button onclick="window.location.href=\'/index.php\'">Retour à la page d\'accueil</button>';
-    echo '</body></html>';
-}
-
 elseif ('/index.php' == $uri ) {
     $layout = new Layout('gui/layout.html');
     $viewLogin = new ViewLogin($layout);
@@ -76,7 +71,7 @@ elseif ('/index.php' == $uri ) {
 
         if ($data->utilisateur($_SESSION['username'], $_SESSION['password'])) {
             $_SESSION['loggedin'] = true;
-            header('Location: /index.php/home');
+            header('Location: /index.php/Home');
             exit;
         } else {
             $error = "Nom d'utilisateur ou mot de passe incorrect.";
@@ -88,12 +83,30 @@ elseif ('/index.php' == $uri ) {
     }
     $viewLogin->display();
 
-} elseif ('/index.php/home' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
+} elseif ('/index.php/Home' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
     $layout = new Layout('gui/layout.html');
     $viewPartie = new ViewHome($layout);
     $viewPartie->display();
 
-} elseif ('/index.php/addInteraction' == $uri) {
+
+} elseif ('/index.php/Utilisateurs' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
+$layout = new Layout('gui/layout.html');
+$viewPartie = new ViewUtilisateur($layout);
+$viewPartie->display();
+
+}elseif ('/index.php/Parties' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
+    $layout = new Layout('gui/layout.html');
+    $viewPartie = new ViewParties($layout);
+    $viewPartie->display();
+
+
+} elseif ('/index.php/TypesJoueur' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
+    $layout = new Layout('gui/layout.html');
+    $viewPartie = new ViewTypesJoueur($layout);
+    $viewPartie->display();
+
+}
+elseif ('/index.php/addInteraction' == $uri) {
     if (isset($_GET["type"]) && isset($_GET["value"]) && isset($_GET["isEval"])) {
         $ip = $_SERVER['REMOTE_ADDR'];
         $type = $_GET["type"];
@@ -182,7 +195,7 @@ elseif ('/index.php' == $uri ) {
         $report = str_replace('\n', '<br />', $report);
         echo '<p>', $report, '</p>';
     }
-} elseif ('/index.php/question' == $uri) {
+} elseif ('/index.php/question' == $uri ) {
     if (isset($_GET['qid'])) {
         $jsonQ = $controllerQuestions->getJsonAttributesQ($_GET['qid'], $partieChecking, $data);
     } else {
@@ -193,14 +206,14 @@ elseif ('/index.php' == $uri ) {
     $viewQuestion = new ViewQuestions($layout, $jsonQ);
 
     $viewQuestion->display();
-} elseif ('/index.php/ManageQuestions' == $uri && $_SESSION['loggedin']){
+} elseif ('/index.php/ManageQuestions' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)){
     $layout = new Layout('gui/layout.html');
     $questions = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
 
     $viewManageQ = new ViewManageQuestions($layout, $questions);
     $viewManageQ->display();
 
-} elseif ('/index.php/ModifyQuestion' == $uri && $_SESSION['loggedin']) {
+} elseif ('/index.php/ModifyQuestion' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
     if (isset($_GET['qid'])) {
         $questionData = $controllerQuestions->getJsonAttributesQ($_GET['qid'], $partieChecking, $data);
 

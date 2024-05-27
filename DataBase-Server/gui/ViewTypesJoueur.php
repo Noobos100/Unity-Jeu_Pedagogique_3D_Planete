@@ -4,7 +4,7 @@ namespace gui;
 
 include_once "View.php";
 
-class ViewHome extends View
+class ViewTypesJoueur extends View
 {
     private string $currentPage;
 
@@ -20,10 +20,7 @@ class ViewHome extends View
         // Déterminer la page actuelle
         $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
-// Récupérer le login de l'utilisateur connecté depuis la session
-        $login = isset($_SESSION['username']) ? $_SESSION['username'] : 'user';
-
-        $this->title = 'Accueil';
+        $this->title = 'Utilisateurs';
         $this->content = '<link rel="stylesheet" href="../Assets/Css/Style.css">';
         $this->content .= '<div class="container">
     <div class="sidebar">
@@ -37,12 +34,9 @@ class ViewHome extends View
         </div>
     </div>
     <div class="main-content">
-        <H1>Bienvenue sur le site de gestion des interactions</H1>
-        <H2>Bonjour ' . htmlspecialchars($login) . '</H2>
+        <h1>Types de joueur</h1>
     </div>
 </div>';
-
-        // Ajouter un script pour mettre à jour l'heure et la date actuelles
 
         $this->content .= '<script>
             function updateDateTime() {
@@ -55,4 +49,5 @@ class ViewHome extends View
             window.onload = updateDateTime;
         </script>';
     }
+
 }
