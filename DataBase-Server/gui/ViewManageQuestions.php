@@ -14,10 +14,10 @@ class ViewManageQuestions extends View
         parent::__construct($layout);
 
         $this->title = 'Gestion des questions';
-        $this->content = '<link rel="stylesheet" href="../Assets/Css/Style.css">';
 
         // Déterminer la page actuelle
         $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+
         // Ajouter un script pour mettre à jour l'heure et la date actuelles
         $this->content .= '<h1>Vous pouvez gérer les questions ici</h1>';
 

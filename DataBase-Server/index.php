@@ -218,7 +218,9 @@ elseif ('/index.php/addInteraction' == $uri) {
         $questionData = $controllerQuestions->getJsonAttributesQ($_GET['qid'], $partieChecking, $data);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if ($questionData['Type'] == 'QCU') {
+            $questionData = json_decode($questionData, true);
+
+            if ($questionData["Type"] == 'QCU') {
                 $question = $_POST['question'];
                 $option1 = $_POST['option1'];
                 $option2 = $_POST['option2'];
@@ -226,12 +228,16 @@ elseif ('/index.php/addInteraction' == $uri) {
                 $option4 = $_POST['option4'];
                 $correct = $_POST['correct'];
 
-                $controllerQuestions->updateQCU($questionData['Num_Ques'], $question, $option1, $option2, $option3, $option4, $correct, $partieChecking, $data);
-            } elseif ($questionData['Type'] == 'QUESINTERAC') {
+                $controllerQuestions->updateQQCU($questionData["Num_Ques"], $question, $option1, $option2, $option3, $option4, $correct, $partieChecking, $data);
+                echo '<script>
+                        alert("Changements sauvegardés.");
+                        window.location.href = "/index.php/ModifyQuestion?qid=' . $_GET['qid'] . '";
+                    </script>';
+            }
+            elseif ($questionData['Type'] == 'QUESINTERAC') {
                 $question = $_POST['question'];
                 $orbit = $_POST['orbit'];
                 $rotation = $_POST['rotation'];
-
                 $controllerQuestions->updateQInterac($questionData['Num_Ques'], $question, $orbit, $rotation, $partieChecking, $data);
             } elseif ($questionData['Type'] == 'VRAIFAUX') {
                 $question = $_POST['question'];
@@ -241,7 +247,7 @@ elseif ('/index.php/addInteraction' == $uri) {
             }
         }
 
-        $layout = new Layout('gui/layoutJson.html');
+        $layout = new Layout('gui/layoutLogged.html');
         $viewModifyQ = new ViewModifyQuestion($layout, $questionData);
 
         $viewModifyQ->display();

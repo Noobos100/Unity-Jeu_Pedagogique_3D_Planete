@@ -15,7 +15,7 @@ class ViewModifyQuestion extends View
         $questionData = json_decode($questionData, true);
 
         $this->title = 'Modification de la question';
-        $this->content = '<link rel="stylesheet" href="../Assets/Css/Style.css">';
+        $this->content = '<link rel="stylesheet" href="../assets/css/Style.css">';
         // Déterminer la page actuelle
         $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
@@ -27,21 +27,29 @@ class ViewModifyQuestion extends View
             <br>
             <label for="option1">Option 1:</label>
             <input type="text" id="option1" name="option1" value="' . htmlspecialchars($questionData['Rep1']) . '" required>
-            <input type="radio" id="correct1" name="correct" value="1" ' . ($questionData['BonneRep'] == $questionData['Rep1'] ? 'checked' : '') . '>
             <br>
             <label for="option2">Option 2:</label>
             <input type="text" id="option2" name="option2" value="' . htmlspecialchars($questionData['Rep2']) . '" required>
-            <input type="radio" id="correct2" name="correct" value="2" ' . ($questionData['BonneRep'] == $questionData['Rep2'] ? 'checked' : '') . '>
             <br>
             <label for="option3">Option 3:</label>
             <input type="text" id="option3" name="option3" value="' . htmlspecialchars($questionData['Rep3']) . '" required>
-            <input type="radio" id="correct3" name="correct" value="3" ' . ($questionData['BonneRep'] == $questionData['Rep3'] ? 'checked' : '') . '>
             <br>
             <label for="option4">Option 4:</label>
             <input type="text" id="option4" name="option4" value="' . htmlspecialchars($questionData['Rep4']) . '" required>
-            <input type="radio" id="correct4" name="correct" value="4" ' . ($questionData['BonneRep'] == $questionData['Rep4'] ? 'checked' : '') . '>
+            <br>';
+            // A <select> input showing all options, labeled 'correct answer';
+            $this->content .= '<label for="correct">Correct answer:</label>
+            <select id="correct" name="correct" required>
+                <option value="Rep1">Option 1</option>
+                <option value="Rep2">Option 2</option>
+                <option value="Rep3">Option 3</option>
+                <option value="Rep4">Option 4</option>
+            </select>
             <br>
-            <input type="submit" value="Submit">
+            <label for="current">Current correct answer:</label>
+            <input type="text" id="current" name="current" value="' . htmlspecialchars($questionData['BonneRep']) . '" readonly> 
+            <br>
+            <input type="submit" value="Submit changes">
         </form>';
         } elseif ($questionData['Type'] == 'QUESINTERAC') {
             $this->content .=
