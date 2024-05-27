@@ -32,21 +32,7 @@ class ViewManageQuestions extends View
             </div>';
 
         // Ajouter un script pour mettre à jour l'heure et la date actuelles
-
-        $this->content .= '<script>
-            function updateDateTime() {
-                const now = new Date();
-                const date = now.toLocaleDateString("fr-FR");
-                const time = now.toLocaleTimeString("fr-FR");
-                document.getElementById("datetime").textContent = `${time} ${date}`;
-            }
-            setInterval(updateDateTime, 1000);
-            window.onload = updateDateTime;
-        </script>';
-
-        $this->content .= '<div class="main-content">';
-
-        $this->content .= '<p>Vous pouvez gérer les questions ici</p>';
+        $this->content .= '<h1>Vous pouvez gérer les questions ici</h1>';
 
         $questions = json_decode($questions, true);
 

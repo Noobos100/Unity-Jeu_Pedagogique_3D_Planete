@@ -16,33 +16,8 @@ class ViewModifyQuestion extends View
 
         $this->title = 'Modification de la question';
         $this->content = '<link rel="stylesheet" href="../assets/css/Style.css">';
-        $this->content .= 'Pour débug, request method: '.$_SERVER['REQUEST_METHOD'];
         // Déterminer la page actuelle
         $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-
-        $this->content .= '<div class="container">
-            <div class="sidebar">
-                <button class="sidebar-button' . ($this->currentPage == '/index.php/home' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/home\'">Accueil</button>
-                <button class="sidebar-button' . ($this->currentPage == '/index.php/utilisateurs' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/utilisateurs\'">Utilisateurs</button>
-                <button class="sidebar-button' . ($this->currentPage == '/index.php/ManageQuestions' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/ManageQuestions\'">Questions</button>
-                <button class="sidebar-button' . ($this->currentPage == '/index.php/parties' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/parties\'">Parties</button>
-                <button class="sidebar-button' . ($this->currentPage == '/index.php/type-joueurs' ? ' active url-match' : '') . '" onclick="window.location.href=\'/index.php/type-joueurs\'">Type joueurs</button>
-                <div class="sidebar-footer">
-                    <p id="datetime"></p>
-                </div>
-            </div>';
-        $this->content .= '<script>
-            function updateDateTime() {
-                const now = new Date();
-                const date = now.toLocaleDateString("fr-FR");
-                const time = now.toLocaleTimeString("fr-FR");
-                document.getElementById("datetime").textContent = `${time} ${date}`;
-            }
-            setInterval(updateDateTime, 1000);
-            window.onload = updateDateTime;
-        </script>';
-
-        $this->content .= '<div class="main-content">';
 
         if ($questionData['Type'] == 'QCU') {
             $this->content .=
@@ -105,6 +80,5 @@ class ViewModifyQuestion extends View
             <input type="submit" value="Submit">
         </form>';
         }
-        $this->content .= '</div>';
     }
 }
