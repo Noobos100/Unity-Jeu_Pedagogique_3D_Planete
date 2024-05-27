@@ -84,24 +84,24 @@ elseif ('/index.php' == $uri ) {
     $viewLogin->display();
 
 } elseif ('/index.php/Home' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
-    $layout = new Layout('gui/layout.html');
+    $layout = new Layout('gui/layoutLogged.html');
     $viewPartie = new ViewHome($layout);
     $viewPartie->display();
 
 
 } elseif ('/index.php/Utilisateurs' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
-$layout = new Layout('gui/layout.html');
+$layout = new Layout('gui/layoutLogged.html');
 $viewPartie = new ViewUtilisateur($layout);
 $viewPartie->display();
 
 }elseif ('/index.php/Parties' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
-    $layout = new Layout('gui/layout.html');
+    $layout = new Layout('gui/layoutLogged.html');
     $viewPartie = new ViewParties($layout);
     $viewPartie->display();
 
 
 } elseif ('/index.php/TypesJoueur' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)) {
-    $layout = new Layout('gui/layout.html');
+    $layout = new Layout('gui/layoutLogged.html');
     $viewPartie = new ViewTypesJoueur($layout);
     $viewPartie->display();
 
@@ -207,7 +207,7 @@ elseif ('/index.php/addInteraction' == $uri) {
 
     $viewQuestion->display();
 } elseif ('/index.php/ManageQuestions' == $uri && (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true)){
-    $layout = new Layout('gui/layout.html');
+    $layout = new Layout('gui/layoutLogged.html');
     $questions = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
 
     $viewManageQ = new ViewManageQuestions($layout, $questions);

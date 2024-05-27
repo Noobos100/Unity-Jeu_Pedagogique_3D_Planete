@@ -18,32 +18,9 @@ class ViewManageQuestions extends View
 
         // Déterminer la page actuelle
         $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-        $this->content .= '<div class="container">
-            <div class="sidebar">
-        <button class="sidebar-button" onclick="window.location.href=\'/index.php/Home\'">Accueil</button>
-        <button class="sidebar-button" onclick="window.location.href=\'/index.php/Utilisateurs\'">Utilisateurs</button>
-        <button class="sidebar-button" onclick="window.location.href=\'/index.php/ManageQuestions\'">Questions</button>
-        <button class="sidebar-button" onclick="window.location.href=\'/index.php/Parties\'">Parties</button>
-        <button class="sidebar-button" onclick="window.location.href=\'/index.php/TypesJoueur\'">Types joueur</button>
-                    <p id="datetime"></p>
-                </div>';
 
         // Ajouter un script pour mettre à jour l'heure et la date actuelles
-
-        $this->content .= '<script>
-            function updateDateTime() {
-                const now = new Date();
-                const date = now.toLocaleDateString("fr-FR");
-                const time = now.toLocaleTimeString("fr-FR");
-                document.getElementById("datetime").textContent = `${time} ${date}`;
-            }
-            setInterval(updateDateTime, 1000);
-            window.onload = updateDateTime;
-        </script>';
-
-        $this->content .= '<div class="main-content">';
-
-        $this->content .= '<H1>Vous pouvez gérer les questions ici</H1>';
+        $this->content .= '<h1>Vous pouvez gérer les questions ici</h1>';
 
         $questions = json_decode($questions, true);
 
@@ -71,7 +48,6 @@ class ViewManageQuestions extends View
                                </tr>';
         }
         $this->content .= '</table>';
-        $this->content .= '</div>';
         $this->content .= '</div>';
     }
 }
