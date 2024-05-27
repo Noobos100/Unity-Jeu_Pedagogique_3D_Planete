@@ -18,6 +18,15 @@ class ViewManageQuestions extends View
 
         // Déterminer la page actuelle
         $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+        $this->content .= '<div class="container">
+            <div class="sidebar">
+        <button class="sidebar-button" onclick="window.location.href=\'/index.php/Home\'">Accueil</button>
+        <button class="sidebar-button" onclick="window.location.href=\'/index.php/Utilisateurs\'">Utilisateurs</button>
+        <button class="sidebar-button" onclick="window.location.href=\'/index.php/ManageQuestions\'">Questions</button>
+        <button class="sidebar-button" onclick="window.location.href=\'/index.php/Parties\'">Parties</button>
+        <button class="sidebar-button" onclick="window.location.href=\'/index.php/TypesJoueur\'">Types joueur</button>
+                    <p id="datetime"></p>
+                </div>';
 
         // Ajouter un script pour mettre à jour l'heure et la date actuelles
         $this->content .= '<h1>Vous pouvez gérer les questions ici</h1>';
