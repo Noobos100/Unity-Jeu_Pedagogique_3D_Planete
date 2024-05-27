@@ -12,7 +12,7 @@ include_once 'service/PartieChecking.php';
 include_once 'service/DataAccessInterface.php';
 include_once 'service/CannotDoException.php';
 
-use service\{PartieChecking};
+use service\{PartieChecking, CannotDoException};
 
 include_once 'gui/Layout.php';
 include_once 'gui/ViewRandomQuestion.php';
@@ -21,8 +21,12 @@ include_once 'gui/ViewPartie.php';
 include_once 'gui/ViewQuestions.php';
 include_once 'gui/ViewHome.php';
 include_once 'gui/ViewLogin.php';
+include_once 'gui/ViewModifyQuestion.php';
+include_once 'gui/ViewManageQuestions.php';
 include_once 'gui/ViewGame.php';
-use gui\{Layout, ViewInteractions, ViewPartie, ViewQuestions, ViewRandomQuestion, ViewHome, ViewLogin, ViewGame};
+
+use gui\{Layout,ViewInteractions,ViewManageQuestions,ViewModifyQuestion,ViewPartie,ViewQuestions,ViewRandomQuestion,ViewHome,ViewLogin,ViewGame};
+
 
 session_start();
 
@@ -86,7 +90,6 @@ elseif ('/index.php' == $uri ) {
 
 } elseif ('/index.php/home' == $uri) {
     $layout = new Layout('gui/layout.html');
-    $viewPartie = new ViewHome($layout);
 
     $questions = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
 
@@ -103,7 +106,7 @@ elseif ('/index.php' == $uri ) {
 
         try {
             $controllerInte->addInteration($type, (float)$value, $isEval, $ip, $dateInteract, $partieChecking, $data);
-        } catch (\service\CannotDoException $e) {
+        } catch (CannotDoException $e) {
             $report = $e->getReport();
             $report = str_replace('\n', '<br />', $report);
             echo '<p>', $report, '</p>';
@@ -134,14 +137,14 @@ elseif ('/index.php' == $uri ) {
         $date = date('Y-m-d H:i:s');
         try {
             $controllerGame->newPlayer($ip, $plateforme, $partieChecking, $data);
-        } catch (\service\CannotDoException $e) {
+        } catch (CannotDoException $e) {
             $report = $e->getReport();
             $report = str_replace('\n', '<br />', $report);
             echo '<p>', $report, '</p>';
         }
         try {
             $controllerGame->newPartie($ip, $date, $partieChecking, $data);
-        } catch (\service\CannotDoException $e) {
+        } catch (CannotDoException $e) {
             $report = $e->getReport();
             $report = str_replace('\n', '<br />', $report);
             echo '<p>', $report, '</p>';
@@ -177,7 +180,7 @@ elseif ('/index.php' == $uri ) {
         $viewPartie = new ViewPartie($layout, $partieStatus, $ip, $date);
 
         $viewPartie->display();
-    } catch (\service\CannotDoException $e) {
+    } catch (CannotDoException $e) {
         $report = $e->getReport();
         $report = str_replace('\n', '<br />', $report);
         echo '<p>', $report, '</p>';
@@ -185,8 +188,7 @@ elseif ('/index.php' == $uri ) {
 } elseif ('/index.php/question' == $uri) {
     if (isset($_GET['qid'])) {
         $jsonQ = $controllerQuestions->getJsonAttributesQ($_GET['qid'], $partieChecking, $data);
-    }
-    else{
+    } else {
         // display all questions
         $jsonQ = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
     }
@@ -194,6 +196,12 @@ elseif ('/index.php' == $uri ) {
     $viewQuestion = new ViewQuestions($layout, $jsonQ);
 
     $viewQuestion->display();
+} elseif ('/index.php/ManageQuestions'){
+    $layout = new Layout('gui/layout.html');
+    $questions = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
+
+    $viewManageQ = new ViewManageQuestions($layout, $questions);
+    $viewManageQ->display();
 } elseif ('/index.php/ModifyQuestion' == $uri && $_SESSION['loggedin']) {
     if (isset($_GET['qid'])) {
         $questionData = $controllerQuestions->getJsonAttributesQ($_GET['qid'], $partieChecking, $data);

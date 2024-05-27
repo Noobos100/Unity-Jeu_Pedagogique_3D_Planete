@@ -210,6 +210,40 @@ class DataAccess implements DataAccessInterface
         else return False;
     }
 
+    public function addQuestion(string $enonce, string $type): int {
+        $query = "INSERT INTO QUESTION (Enonce, Type) VALUES (:enonce, :type)";
+        $stmt = $this->dataAccess->prepare($query);
+        $stmt->bindParam(':enonce', $enonce);
+        $stmt->bindParam(':type', $type);
+        $stmt->execute();
+        return $this->dataAccess->lastInsertId();
+    }
+
+    public function addQCU(int $numQues, string $rep1, string $rep2, string $rep3, string $rep4, int $bonneRep): int {
+        $query = "INSERT INTO QCU (Num_Ques, Rep1, Rep2, Rep3, Rep4, BonneRep) VALUES (:numQues, :rep1, :rep2, :rep3, :rep4, :bonneRep)";
+        $stmt = $this->dataAccess->prepare($query);
+        $stmt->bindParam(':numQues', $numQues);
+        $stmt->bindParam(':rep1', $rep1);
+        $stmt->bindParam(':rep2', $rep2);
+        $stmt->bindParam(':rep3', $rep3);
+        $stmt->bindParam(':rep4', $rep4);
+        $stmt->bindParam(':bonneRep', $bonneRep);
+        $stmt->execute();
+        return $this->dataAccess->lastInsertId();
+    }
+
+    public function addQInterac(int $numQues, float $bonneRepValeur_orbit, float $marge_Orbit, float $bonneRepValeur_rotation, float $marge_Rotation): int {
+        $query = "INSERT INTO QUESINTERAC (Num_Ques, BonneRepValeur_orbit, Marge_Orbit, BonneRepValeur_rotation, Marge_Rotation) VALUES (:numQues, :bonneRepValeur_orbit, :marge_Orbit, :bonneRepValeur_rotation, :marge_Rotation)";
+        $stmt = $this->dataAccess->prepare($query);
+        $stmt->bindParam(':numQues', $numQues);
+        $stmt->bindParam(':bonneRepValeur_orbit', $bonneRepValeur_orbit);
+        $stmt->bindParam(':marge_Orbit', $marge_Orbit);
+        $stmt->bindParam(':bonneRepValeur_rotation', $bonneRepValeur_rotation);
+        $stmt->bindParam(':marge_Rotation', $marge_Rotation);
+        $stmt->execute();
+        return $this->dataAccess->lastInsertId();
+    }
+
     /**
      * @param int $numQues
      * @param int $idParty
@@ -346,7 +380,7 @@ class DataAccess implements DataAccessInterface
      * @return VraiFaux|False
      */
     public function getQVraiFaux(int $numQues): VraiFaux|False{
-        $query = "SELECT * FROM  VRAIFAUX WHERE Num_Ques = $numQues";
+        $query = "SELECT * FROM VRAIFAUX WHERE Num_Ques = $numQues";
         $result = $this->dataAccess->query($query)->fetch(PDO::FETCH_ASSOC);
         if($result){
             $basics = $this->getQBasics($numQues);
@@ -371,6 +405,18 @@ class DataAccess implements DataAccessInterface
             return $result;
     }
 
+    public function updateQCU(int $numQues, string $rep1, string $rep2, string $rep3, string $rep4, int $bonneRep): void{
+        $query = "UPDATE QCU SET Rep1 = :rep1, Rep2 = :rep2, Rep3 = :rep3, Rep4 = :rep4, BonneRep = :bonneRep WHERE Num_Ques = :numQues";
+        $stmt = $this->dataAccess->prepare($query);
+        $stmt->bindParam(':numQues', $numQues);
+        $stmt->bindParam(':rep1', $rep1);
+        $stmt->bindParam(':rep2', $rep2);
+        $stmt->bindParam(':rep3', $rep3);
+        $stmt->bindParam(':rep4', $rep4);
+        $stmt->bindParam(':bonneRep', $bonneRep);
+        $stmt->execute();
+    }
+
     /**
      * @return array
      */
@@ -378,4 +424,5 @@ class DataAccess implements DataAccessInterface
         $query = "SELECT * FROM QUESTION";
         return $this->dataAccess->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
+
 }
