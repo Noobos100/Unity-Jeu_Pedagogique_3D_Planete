@@ -19,12 +19,13 @@ class ViewModifyQuestion extends View
         // Déterminer la page actuelle
         $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
-        if ($questionData['Type'] == 'QCU') {
-            $this->content .=
-                '<form action="/index.php/ModifyQuestion?qid=' . htmlspecialchars($questionData['Num_Ques']) . '" method="post">
+        $this->content .= '<form action="/index.php/ModifyQuestion?qid=' . htmlspecialchars($questionData['Num_Ques']) . '" method="post">
             <label for="question">Question:</label>
             <input type="text" id="question" name="question" value="' . htmlspecialchars($questionData['Enonce']) . '" required>
-            <br>
+            <br>';
+
+        if ($questionData['Type'] == 'QCU') {
+            $this->content .='
             <label for="option1">Option 1:</label>
             <input type="text" id="option1" name="option1" value="' . htmlspecialchars($questionData['Rep1']) . '" required>
             <br>
@@ -36,9 +37,8 @@ class ViewModifyQuestion extends View
             <br>
             <label for="option4">Option 4:</label>
             <input type="text" id="option4" name="option4" value="' . htmlspecialchars($questionData['Rep4']) . '" required>
-            <br>';
-            // A <select> input showing all options, labeled 'correct answer';
-            $this->content .= '<label for="correct">Correct answer:</label>
+            <br>
+            <label for="correct">Correct answer:</label>
             <select id="correct" name="correct" required>
                 <option value="Rep1">Option 1</option>
                 <option value="Rep2">Option 2</option>
@@ -53,11 +53,7 @@ class ViewModifyQuestion extends View
         </form>';
         } elseif ($questionData['Type'] == 'QUESINTERAC') {
             $this->content .=
-                '<form action="/index.php/ModifyQuestion?qid=' . htmlspecialchars($questionData['Num_Ques']) . '" method="post">
-            <label for="question">Question:</label>
-            <input type="text" id="question" name="question" value="' . htmlspecialchars($questionData['Enonce']) . '" required>
-            <br>
-            <label for="orbit">Answer for orbit:</label>
+                '<label for="orbit">Answer for orbit:</label>
             <input type="text" id="orbit" name="answer" value="' . htmlspecialchars($questionData['BonneRepValeur_orbit']) . '" required>
             <br>
             <label for="rotation">Answer for rotation:</label>
@@ -67,14 +63,16 @@ class ViewModifyQuestion extends View
         </form>';
         } elseif ($questionData['Type'] == 'VRAIFAUX') {
             $this->content .=
-                '<form action="/index.php/ModifyQuestion?qid=' . htmlspecialchars($questionData['Num_Ques']) . '" method="post">
-            <label for="question">Question:</label>
-            <input type="text" id="question" name="question" value="' . htmlspecialchars($questionData['Enonce']) . '" required>
+                '<label for="orbit">Answer for orbit:</label>
+            <input type="text" id="orbit" name="orbit" pattern="^-?\d+(\.\d+)?$" title="Please enter a valid float value" value="'.htmlspecialchars($questionData['Valeur_orbit'] == '-1' ?? '', ENT_QUOTES).'">
+            <br>
+            <label for="rotation">Answer for rotation:</label>
+            <input type="text" id="rotation" name="rotation" pattern="^-?\d+(\.\d+)?$" title="Please enter a valid float value" value="'.htmlspecialchars($questionData['Valeur_rotation'] == '-1' ?? '', ENT_QUOTES).'">
             <br>
             <label for="answer">Answer:</label>
-            <input type="radio" id="true" name="answer" value="1" ' . ($questionData['BonneRep'] == 'Vrai' ? 'checked' : '') . '>
+            <input type="radio" id="torf" name="answer" value="Vrai" ' . ($questionData['BonneRep'] == 'Vrai' ? 'checked' : '') . '>
             <label for="true">True</label>
-            <input type="radio" id="false" name="answer" value="0" ' . ($questionData['BonneRep'] == 'Faux' ? 'checked' : '') . '>
+            <input type="radio" id="torf" name="answer" value="Faux" ' . ($questionData['BonneRep'] == 'Faux' ? 'checked' : '') . '>
             <label for="false">False</label>
             <br>
             <input type="submit" value="Submit">

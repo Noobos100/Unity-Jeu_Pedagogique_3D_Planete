@@ -429,6 +429,30 @@ class DataAccess implements DataAccessInterface
         $stmt3->execute();
     }
 
+    public function updateQVraiFaux(int $numQues, string $question, string $orbite, string $rotation, string $correct): void
+    {
+        var_dump(empty($orbite));
+        echo '<br>';
+        var_dump(empty($rotation));
+
+        $orbite = empty($orbite) ? null : $orbite;
+        $rotation = empty($rotation) ? null : $rotation;
+
+        $query = "UPDATE QUESTION SET Enonce = :question WHERE Num_Ques = :numQues";
+        $stmt = $this->dataAccess->prepare($query);
+        $stmt->bindParam(':question', $question);
+        $stmt->bindParam(':numQues', $numQues);
+        $stmt->execute();
+
+        $query2 = "UPDATE VRAIFAUX SET BonneRep = :correct, Valeur_orbit = :orbite, Valeur_rotation = :rotation WHERE Num_Ques = :numQues";
+        $stmt2 = $this->dataAccess->prepare($query2);
+        $stmt2->bindParam(':correct', $correct);
+        $stmt2->bindParam(':orbite', $orbite, PDO::PARAM_NULL | PDO::PARAM_STR);
+        $stmt2->bindParam(':rotation', $rotation, PDO::PARAM_NULL | PDO::PARAM_STR);
+        $stmt2->bindParam(':numQues', $numQues);
+        $stmt2->execute();
+    }
+
     /**
      * @return array
      */

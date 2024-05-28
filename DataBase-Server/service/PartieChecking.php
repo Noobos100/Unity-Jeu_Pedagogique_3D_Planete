@@ -218,6 +218,11 @@ class PartieChecking
     public function updateQCU(int $numQues, string $question, string $option1, string $option2, string $option3, string $option4, string $correct, $data): void{
         $data->updateQCU($numQues, $question, $option1, $option2, $option3, $option4, $correct);
     }
+
+    public function updateQVraiFaux(mixed $Num_Ques, mixed $question, string $orbit, string $rotation, mixed $correct, $data): void
+    {
+        $data->updateQVraiFaux($Num_Ques, $question, $orbit, $rotation, $correct);
+    }
 }
 
 

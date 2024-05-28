@@ -237,11 +237,21 @@ elseif ('/index.php/addInteraction' == $uri) {
                 $orbit = $_POST['orbit'];
                 $rotation = $_POST['rotation'];
                 $controllerQuestions->updateQInterac($questionData['Num_Ques'], $question, $orbit, $rotation, $partieChecking, $data);
+                echo '<script>
+                        alert("Changements sauvegardés.");
+                        window.location.href = "/index.php/ModifyQuestion?qid=' . $_GET['qid'] . '";
+                    </script>';
             } elseif ($questionData['Type'] == 'VRAIFAUX') {
                 $question = $_POST['question'];
-                $correct = $_POST['correct'];
+                $correct = $_POST['answer'];
+                $orbit = $_POST['orbit'];
+                $rotation = $_POST['rotation'];
 
-                $controllerQuestions->updateQVraiFaux($questionData['Num_Ques'], $question, $correct, $partieChecking, $data);
+                $controllerQuestions->updateQVraiFaux($questionData['Num_Ques'], $question, $orbit, $rotation, $correct, $partieChecking, $data);
+                echo '<script>
+                        alert("Changements sauvegardés.");
+                        window.location.href = "/index.php/ModifyQuestion?qid=' . $_GET['qid'] . '";
+                    </script>';
             }
         }
 
