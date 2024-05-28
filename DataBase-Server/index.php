@@ -252,7 +252,7 @@ if($uri == '/') {
     } else {
         echo "URL not complete, cannot modify question.";
     }
-} elseif ('/randomQuestions' == $uri) {
+} elseif ('/random-questions' == $uri) {
     $nbQCU = $_GET['qcu'] ?? 0;
     $nbInteraction = $_GET['interaction'] ?? 0;
     $nbVraiFaux = $_GET['vraifaux'] ?? 0;
