@@ -7,16 +7,18 @@ body, html {
 .container {
     display: flex;
     height: 100%;
-    background: url("/Assets/Image/espace2.jpg") no-repeat center center fixed;
+    background: url("/assets/image/espace2.jpg") no-repeat center center fixed;
     background-size: cover;
 }
 .sidebar {
-    width: 200px;
-    background-color: #061123;
-    color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    min-width: 200px;
+    background-color: #061123;
+    color: white;
+
     padding: 10px;
 }
 .sidebar-button {
@@ -24,23 +26,22 @@ body, html {
     color: white;
     border: none;
     padding: 10px;
-    margin-top: 10px; /* Add margin-top for spacing */
-    cursor: pointer;
-    text-align: center;
-    border-radius: 10px;
-}
-.url-match {
-    background-color: #0B1B66; /* Color when active */
-    color: white;
-    border: none;
-    padding: 10px;
-    margin-top: 10px; /* Add margin-top for spacing */
     cursor: pointer;
     text-align: center;
     border-radius: 10px;
 }
 .sidebar-button:hover {
-    background-color: #333;
+    background: linear-gradient(90deg, #061123, #0B1B66, #0B1B66, #061123);
+}
+
+.url-match {
+    background: #0B1B66 none;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
 }
 .sidebar-footer {
     font-size: 14px;

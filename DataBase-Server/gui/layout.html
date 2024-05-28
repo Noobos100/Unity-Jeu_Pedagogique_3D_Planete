@@ -3,9 +3,41 @@
 <head>
     <title> %title% </title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <link rel="stylesheet" href="/Assets/Css/loginStyle.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
 </head>
 <body>
-%content%
+<div class="container">
+    <nav class="sidebar">
+    %navbar%
+        <div class="sidebar-footer">
+            <p id="datetime"></p>
+        </div>
+    </nav>
+    <div class="main-content">
+        %content%
+    </div>
+
+</div>
+<script>
+  const buttons = document.querySelectorAll('.sidebar-button');
+  const currentPath = window.location.pathname;
+
+  buttons.forEach(button => {
+    const buttonPath = button.getAttribute('onclick').split("'")[1];
+    if (buttonPath === currentPath) {
+      button.classList.add('url-match');
+      button.classList.remove('sidebar-button');
+    }
+  });
+
+  function updateDateTime() {
+    const now = new Date();
+    const date = now.toLocaleDateString("fr-FR");
+    const time = now.toLocaleTimeString("fr-FR");
+    document.getElementById("datetime").textContent = `${time} ${date}`;
+  }
+  setInterval(updateDateTime, 1000);
+  window.onload = updateDateTime;
+</script>
 </body>
 </html>

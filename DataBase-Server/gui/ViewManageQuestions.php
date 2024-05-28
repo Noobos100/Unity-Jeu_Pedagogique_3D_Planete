@@ -6,17 +6,11 @@ use gui\View;
 
 class ViewManageQuestions extends View
 {
-
-    private string $currentPage;
-
-    public function __construct($layout, $questions)
+    public function __construct(Layout $layout, mixed $questions)
     {
         parent::__construct($layout);
 
         $this->title = 'Gestion des questions';
-
-        // Déterminer la page actuelle
-        $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
         // Ajouter un script pour mettre à jour l'heure et la date actuelles
         $this->content .= '<h1>Vous pouvez gérer les questions ici</h1>';
@@ -24,7 +18,8 @@ class ViewManageQuestions extends View
         $questions = json_decode($questions, true);
 
         // form to add a question
-        $this->content .= '<form action="/index.php/addQuestion" method="post">
+        $this->content .= '
+		<form action="add-question" method="post">
             <label for="question">Question:</label>
             <input type="text" id="question" name="question" required>
             <label for="answer">Réponse:</label>
@@ -43,7 +38,7 @@ class ViewManageQuestions extends View
                                 <td>' . htmlspecialchars($question['Num_Ques']) . '</td>
                                 <td>' . htmlspecialchars($question['Enonce']) . '</td>
                                 <td>' . htmlspecialchars($question['Type']) . '</td>
-                                <td><button onclick="window.open(\'/index.php/ModifyQuestion?qid=' . $question['Num_Ques'] . '\')">Réponses</button></td>
+                                <td><button onclick="window.open(\'/modify-question?qid=' . $question['Num_Ques'] . '\')">Réponses</button></td>
                                </tr>';
         }
         $this->content .= '</table>';

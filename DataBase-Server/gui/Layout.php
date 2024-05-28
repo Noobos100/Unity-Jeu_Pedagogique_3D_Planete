@@ -7,16 +7,16 @@ namespace gui;
  */
 class Layout
 {
-    protected $templateFile;
+    protected string $templateFile;
 
-    protected $navbar = '';
+    protected string $navbar = '';
 
     /**
      * Constructs a new Layout instance.
      *
      * @param string $templateFile The path to the template file.
      */
-    public function __construct($templateFile)
+    public function __construct(string $templateFile)
     {
         $this->templateFile = $templateFile;
 
@@ -30,8 +30,8 @@ class Layout
      * @param string $content The content to display.
      * @return void
      */
-    public function display($title, $content)
-    {
+    public function display(string $title, string $content): void
+	{
         $page = file_get_contents($this->templateFile);
         $page = str_replace(['%title%', '%content%', '%navbar%'], [$title, $content, $this->navbar], $page);
         echo $page;

@@ -19,16 +19,14 @@ include_once 'gui/ViewRandomQuestion.php';
 include_once 'gui/ViewInteractions.php';
 include_once 'gui/ViewPartie.php';
 include_once 'gui/ViewQuestions.php';
-include_once 'gui/ViewHome.php';
 include_once 'gui/ViewLogin.php';
 include_once 'gui/ViewModifyQuestion.php';
 include_once 'gui/ViewManageQuestions.php';
 include_once 'gui/ViewGame.php';
-include_once 'gui/ViewUtilisateur.php';
 include_once 'gui/ViewTypesJoueur.php';
 include_once 'gui/ViewParties.php';
 
-use gui\{Layout,ViewInteractions,ViewParties,ViewTypesJoueur,ViewManageQuestions,ViewModifyQuestion,ViewPartie,ViewQuestions,ViewRandomQuestion,ViewUtilisateur,ViewHome,ViewLogin,ViewGame};
+use gui\{Layout,ViewInteractions,ViewParties,ViewTypesJoueur,ViewManageQuestions,ViewModifyQuestion,ViewPartie,ViewQuestions,ViewRandomQuestion,ViewUtilisateur,ViewLogin,ViewGame};
 
 
 session_start();
@@ -53,19 +51,18 @@ $partieChecking = new PartieChecking();
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-if($uri == '/Game' || $uri == '/'){
-    $layout = new Layout('gui/layoutLogged.html');
+if($uri == '/') {
+	header('Location: /game');
+} elseif($uri == '/game'){
+    $layout = new Layout('gui/layout.html');
     $viewPartie = new ViewGame($layout);
     $viewPartie->display();
-}
-elseif ('/Logout' == $uri) {
+} elseif ('/logout' == $uri) {
     session_destroy();
     header('Location: /');
     exit;
-}
-
-elseif ('/Login' == $uri ) {
-    $layout = new Layout('gui/layout.html');
+} elseif ('/login' == $uri ) {
+    $layout = new Layout('gui/layout-login.html');
     $viewLogin = new ViewLogin($layout);
     $error = '';
 
@@ -75,7 +72,7 @@ elseif ('/Login' == $uri ) {
 
         if ($data->utilisateur($_SESSION['username'], $_SESSION['password'])) {
             $_SESSION['loggedin'] = true;
-            header('Location: /index.php/DonneesJeu');
+            header('Location: /game-data');
             exit;
         } else {
             $error = "Nom d'utilisateur ou mot de passe incorrect.";
@@ -86,25 +83,18 @@ elseif ('/Login' == $uri ) {
         echo '<p style="color: red;">' . htmlspecialchars($error) . '</p>';
     }
     $viewLogin->display();
-
-}elseif ('/index.php/Utilisateurs' == $uri && (isset($_SESSION['loggedin']))) {
-$layout = new Layout('gui/layoutLogged.html');
-$viewPartie = new ViewUtilisateur($layout);
-$viewPartie->display();
-
-}elseif ('/index.php/DonneesJeu' == $uri && (isset($_SESSION['loggedin']) )) {
-    $layout = new Layout('gui/layoutLogged.html');
+} elseif ('/game-data' == $uri && (isset($_SESSION['loggedin']) )) {
+    $layout = new Layout('gui/layout.html');
     $viewPartie = new ViewParties($layout);
     $viewPartie->display();
 
 
-} elseif ('/index.php/Joueurs' == $uri && (isset($_SESSION['loggedin']) )) {
-    $layout = new Layout('gui/layoutLogged.html');
+} elseif ('/players' == $uri && (isset($_SESSION['loggedin']) )) {
+    $layout = new Layout('gui/layout.html');
     $viewPartie = new ViewTypesJoueur($layout);
     $viewPartie->display();
 
-}
-elseif ('/index.php/addInteraction' == $uri) {
+} elseif ('/add-interaction' == $uri) {
     if (isset($_GET["type"]) && isset($_GET["value"]) && isset($_GET["isEval"])) {
         $ip = $_SERVER['REMOTE_ADDR'];
         $type = $_GET["type"];
@@ -128,7 +118,7 @@ elseif ('/index.php/addInteraction' == $uri) {
     } else {
         echo "URL not complete, cannot register new interaction.";
     }
-} elseif ('/index.php/abortOnGoingGame' == $uri) {
+} elseif ('/abort-on-going-game' == $uri) {
     $ip = $_SERVER['REMOTE_ADDR'];
     $controllerGame->abortPartie($ip, $partieChecking, $data);
 
@@ -138,7 +128,7 @@ elseif ('/index.php/addInteraction' == $uri) {
     $viewPartie = new ViewPartie($layout, $partieStatus, $ip, $date);
 
     $viewPartie->display();
-} elseif ('/index.php/NewGame' == $uri) {
+} elseif ('/new-game' == $uri) {
     if (isset($_GET['plateforme'])) {
         $ip = $_SERVER['REMOTE_ADDR'];
         $plateforme = $_GET['plateforme'];
@@ -166,7 +156,7 @@ elseif ('/index.php/addInteraction' == $uri) {
     } else {
         echo "URL not complete, cannot register new player or game.";
     }
-} elseif ('/index.php/QuestionAnswer' == $uri) {
+} elseif ('/question-answer' == $uri) {
     $ip = $_SERVER['REMOTE_ADDR'];
 
     if (isset($_GET['qid']) && $data->verifyPartieInProgress($ip) && isset($_GET['correct']) && isset($_GET['start'])) {
@@ -176,7 +166,7 @@ elseif ('/index.php/addInteraction' == $uri) {
     } else {
         echo "URL not complete, cannot add question answer to database";
     }
-} elseif ('/index.php/endGame' == $uri) {
+} elseif ('/end-game' == $uri) {
     $ip = $_SERVER['REMOTE_ADDR'];
     $date = date('Y-m-d H:i:s');
 
@@ -193,7 +183,7 @@ elseif ('/index.php/addInteraction' == $uri) {
         $report = str_replace('\n', '<br />', $report);
         echo '<p>', $report, '</p>';
     }
-} elseif ('/index.php/question' == $uri ) {
+} elseif ('/question' == $uri ) {
     if (isset($_GET['qid'])) {
         $jsonQ = $controllerQuestions->getJsonAttributesQ($_GET['qid'], $partieChecking, $data);
     } else {
@@ -204,14 +194,14 @@ elseif ('/index.php/addInteraction' == $uri) {
     $viewQuestion = new ViewQuestions($layout, $jsonQ);
 
     $viewQuestion->display();
-} elseif ('/index.php/ManageQuestions' == $uri && (isset($_SESSION['loggedin']) )){
-    $layout = new Layout('gui/layoutLogged.html');
+} elseif ('/manage-questions' == $uri && (isset($_SESSION['loggedin']) )){
+    $layout = new Layout('gui/layout.html');
     $questions = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
 
     $viewManageQ = new ViewManageQuestions($layout, $questions);
     $viewManageQ->display();
 
-} elseif ('/index.php/ModifyQuestion' == $uri && (isset($_SESSION['loggedin']) )) {
+} elseif ('/modify-question' == $uri && (isset($_SESSION['loggedin']) )) {
     if (isset($_GET['qid'])) {
         $questionData = $controllerQuestions->getJsonAttributesQ($_GET['qid'], $partieChecking, $data);
 
@@ -229,7 +219,7 @@ elseif ('/index.php/addInteraction' == $uri) {
                 $controllerQuestions->updateQQCU($questionData["Num_Ques"], $question, $option1, $option2, $option3, $option4, $correct, $partieChecking, $data);
                 echo '<script>
                         alert("Changements sauvegardés.");
-                        window.location.href = "/index.php/ModifyQuestion?qid=' . $_GET['qid'] . '";
+                        window.location.reload();
                     </script>';
             }
             elseif ($questionData['Type'] == 'QUESINTERAC') {
@@ -239,7 +229,7 @@ elseif ('/index.php/addInteraction' == $uri) {
                 $controllerQuestions->updateQInterac($questionData['Num_Ques'], $question, $orbit, $rotation, $partieChecking, $data);
                 echo '<script>
                         alert("Changements sauvegardés.");
-                        window.location.href = "/index.php/ModifyQuestion?qid=' . $_GET['qid'] . '";
+                        window.location.reload();
                     </script>';
             } elseif ($questionData['Type'] == 'VRAIFAUX') {
                 $question = $_POST['question'];
@@ -250,19 +240,19 @@ elseif ('/index.php/addInteraction' == $uri) {
                 $controllerQuestions->updateQVraiFaux($questionData['Num_Ques'], $question, $orbit, $rotation, $correct, $partieChecking, $data);
                 echo '<script>
                         alert("Changements sauvegardés.");
-                        window.location.href = "/index.php/ModifyQuestion?qid=' . $_GET['qid'] . '";
+                        window.location.reload();
                     </script>';
             }
         }
 
-        $layout = new Layout('gui/layoutLogged.html');
+        $layout = new Layout('gui/layout.html');
         $viewModifyQ = new ViewModifyQuestion($layout, $questionData);
 
         $viewModifyQ->display();
     } else {
         echo "URL not complete, cannot modify question.";
     }
-} elseif ('/index.php/randomQuestions' == $uri) {
+} elseif ('/randomQuestions' == $uri) {
     $nbQCU = $_GET['qcu'] ?? 0;
     $nbInteraction = $_GET['interaction'] ?? 0;
     $nbVraiFaux = $_GET['vraifaux'] ?? 0;
@@ -277,6 +267,6 @@ elseif ('/index.php/addInteraction' == $uri) {
 	session_destroy();
     header('Status: 404 Not Found');
     echo '<html><body><h1>Page Not Found</h1>';
-    echo '<button onclick="window.location.href=\'/index.php\'">Retour à la page d\'accueil</button>';
+    echo '<button onclick="window.location.href=\'/\'">Retour à la page d\'accueil</button>';
     echo '</body></html>';
 }

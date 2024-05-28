@@ -11,7 +11,7 @@ class ViewLogin extends View
 *
 * @param Layout $layout The layout to use for displaying content.
 */
-public function __construct($layout)
+public function __construct(Layout $layout)
 {
 parent::__construct($layout);
 
@@ -20,7 +20,7 @@ $this->title = 'Connexion';
 // Formulaire de connexion
 $this->content .= '
 <div class="login-container">
-    <form action="/Login" method="post" class="login-form">
+    <form action="/login" method="post" class="login-form">
         <label for="username">Nom d\'utilisateur:</label>
         <input type="text" id="username" name="username" required>
         <label for="password">Mot de passe:</label>

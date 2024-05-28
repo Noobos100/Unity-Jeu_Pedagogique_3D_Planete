@@ -6,9 +6,9 @@ include_once "Layout.php";
 
 class View
 {
-    protected $title = '';
-    protected $content = '';
-    protected $layout;
+    protected string $title = '';
+    protected string $content = '';
+    protected Layout $layout;
 
 
     /**
@@ -16,7 +16,7 @@ class View
      *
      * @param Layout $layout The layout to use for displaying content.
      */
-    public function __construct($layout)
+    public function __construct(Layout $layout)
     {
         $this->layout = $layout;
 
@@ -28,8 +28,8 @@ class View
      *
      * @return void
      */
-    public function display()
-    {
+    public function display(): void
+	{
         $this->layout->display($this->title, $this->content);
     }
 }
