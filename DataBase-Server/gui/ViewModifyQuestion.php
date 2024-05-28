@@ -18,7 +18,7 @@ class ViewModifyQuestion extends View
         // Déterminer la page actuelle
         $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
-        $this->content .= '<form action="/index.php/ModifyQuestion?qid=' . $questionData['Num_Ques'] . '" method="post">
+        $this->content .= '<form action="/modify-question?qid=' . $questionData['Num_Ques'] . '" method="post">
             <label for="question">Question:</label>
             <input type="text" id="question" name="question" value="' . $questionData['Enonce'] . '" required>
             <br>';
@@ -50,17 +50,69 @@ class ViewModifyQuestion extends View
             <br>
             <input type="submit" value="Submit changes">
         </form>';
-        } elseif ($questionData['Type'] == 'QUESINTERAC') {
+        }
+        elseif ($questionData['Type'] == 'QUESINTERAC') {
             $this->content .=
-                '<label for="orbit">Answer for orbit:</label>
-            <input type="text" id="orbit" name="answer" value="' . $questionData['BonneRepValeur_orbit'] . '" required>
+            '<label for="orbit">Réponse pour orbite:</label>
+            <input type="text" id="orbit" name="orbit" value="' . $questionData['BonneRepValeur_orbit'] . '">
+            <input id="orbitable" type="checkbox" ' . (($questionData['BonneRepValeur_orbit']) == '-1' ? 'checked' : '') . '>
+            
             <br>
-            <label for="rotation">Answer for rotation:</label>
-            <input type="text" id="rotation" name="answer" value="' . $questionData['BonneRepValeur_rotation'] . '" required>
+            <label for="rotation">Réponse pour rotation:</label>
+            <input type="text" id="rotation" name="rotation" value="' . $questionData['BonneRepValeur_rotation'] . '">
+            <input id="rotatable" type="checkbox" ' . (($questionData['BonneRepValeur_rotation']) == '-1' ? 'checked' : '') . '>
+            <br>
+            
+            <label for="marge-orbit">Marge orbite:</label>
+            <input type="text" id="margin-orbit" name="margin-orbit" value="' . $questionData['Marge_Orbit'] . '">
+            <input id="orbit-margin" type="checkbox" ' . (($questionData['Marge_Orbit']) == '-1' ? 'checked' : '') . '>
+
+            <br>
+            <label for="marge-rotation">Marge rotation:</label>
+            <input type="text" id="margin-rotation" name="margin-rotation" value="' . $questionData['Marge_Rotation'] . '">
+            <input id="rotation-margin" type="checkbox" ' . (($questionData['Marge_Rotation']) == '-1' ? 'checked' : '') . '>
+            
             <br>
             <input type="submit" value="Submit">
-        </form>';
-        } elseif ($questionData['Type'] == 'VRAIFAUX') {
+            </form>
+            <script>
+            	const inputOrbit = document.getElementById("orbit");
+              	const inputRotation = document.getElementById("rotation");            	
+                const inputMargeOrbit = document.getElementById("margin-orbit");
+              	const inputMargeRotation = document.getElementById("margin-rotation");
+                  
+				const isOrbitable = document.getElementById("orbitable");
+        		const isRotatable = document.getElementById("rotatable");
+                const hasOrbitMargin = document.getElementById("orbit-margin");
+                const hasRotationMargin = document.getElementById("rotation-margin");
+                
+				inputOrbit.disabled = isOrbitable.checked;
+				inputRotation.disabled = isRotatable.checked;
+                inputMargeOrbit.disabled = hasOrbitMargin.checked;
+                inputMargeRotation.disabled = hasRotationMargin.checked;
+                
+                isOrbitable.addEventListener("change", () => {
+                    inputOrbit.disabled = isOrbitable.checked;
+                    inputOrbit.value = "";
+                })
+                
+                isRotatable.addEventListener("change", () => {
+                    inputRotation.disabled = isRotatable.checked;
+                    inputRotation.value = "";
+                })
+                
+                hasOrbitMargin.addEventListener("change", () => {
+                    inputMargeOrbit.disabled = hasOrbitMargin.checked;
+                    inputMargeOrbit.value = "";
+                })
+                
+                hasRotationMargin.addEventListener("change", () => {
+                    inputMargeRotation.disabled = hasRotationMargin.checked;
+                    inputMargeRotation.value = "";
+                })
+			</script>';
+        }
+        elseif ($questionData['Type'] == 'VRAIFAUX') {
 			$this->content .= '
 				<label for="forbit">Position de l\'orbite:</label>
 				<div class="checkboxed-question">

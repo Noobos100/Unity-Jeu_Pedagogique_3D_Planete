@@ -219,19 +219,23 @@ if($uri == '/') {
                 $controllerQuestions->updateQQCU($questionData["Num_Ques"], $question, $option1, $option2, $option3, $option4, $correct, $partieChecking, $data);
                 echo '<script>
                         alert("Changements sauvegardés.");
-                        window.location.reload();
+                        location.href = "/modify-question?qid=' . $questionData['Num_Ques'] . '";
                     </script>';
             }
             elseif ($questionData['Type'] == 'QUESINTERAC') {
                 $question = $_POST['question'];
-                $orbit = $_POST['orbit'];
-                $rotation = $_POST['rotation'];
-                $controllerQuestions->updateQInterac($questionData['Num_Ques'], $question, $orbit, $rotation, $partieChecking, $data);
+                $orbit = ($_POST['orbit'] ?? '-1');
+                $rotation = ($_POST['rotation'] ?? '-1');
+                $rotationMargin = ($_POST['margin-orbit'] ?? '-1');
+                $orbitMargin = ($_POST['margin-rotation'] ?? '-1');
+
+                $controllerQuestions->updateQInterac($questionData['Num_Ques'], $question, $orbit, $rotation, $rotationMargin, $orbitMargin, $partieChecking, $data);
                 echo '<script>
-                        alert("Changements sauvegardés.");
-                        window.location.reload();
+                        alert("Changements sauvegardés.")
+                        location.href = "/modify-question?qid=' . $questionData['Num_Ques'] . '";
                     </script>';
-            } elseif ($questionData['Type'] == 'VRAIFAUX') {
+            }
+            elseif ($questionData['Type'] == 'VRAIFAUX') {
                 $question = $_POST['question'];
                 $correct = $_POST['answer'];
                 $orbit = ($_POST['orbit'] ?? '-1');
@@ -239,8 +243,8 @@ if($uri == '/') {
 
                 $controllerQuestions->updateQVraiFaux($questionData['Num_Ques'], $question, $orbit, $rotation, $correct, $partieChecking, $data);
                 echo '<script>
-                        alert("Changements sauvegardés.");
-                        window.location.reload();
+                        alert("Changements sauvegardés.")
+                        location.href = "/modify-question?qid=' . $questionData['Num_Ques'] . '";
                     </script>';
             }
         }

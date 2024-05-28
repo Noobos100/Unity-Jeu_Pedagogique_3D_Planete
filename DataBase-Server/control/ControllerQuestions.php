@@ -75,4 +75,8 @@ class ControllerQuestions
         $partieChecking->updateQVraiFaux($Num_Ques, $question, $orbit, $rotation, $correct, $data);
     }
 
+    public function updateQInterac(mixed $Num_Ques, mixed $question, string $orbit, string $rotation, string $rotationMargin, string $orbitMargin, PartieChecking $partieChecking, $data): void
+    {
+        $partieChecking->updateQInterac($Num_Ques, $question, $orbit, $rotation, $rotationMargin, $orbitMargin, $data);
+    }
 }

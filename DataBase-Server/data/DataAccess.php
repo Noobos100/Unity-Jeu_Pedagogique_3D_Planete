@@ -453,6 +453,24 @@ class DataAccess implements DataAccessInterface
         $stmt2->execute();
     }
 
+    public function updateQInterac(int $numQues, string $question, string $orbite, string $rotation, string $rotationMargin, string $orbitMargin): void
+    {
+        $query = "UPDATE QUESTION SET Enonce = :question WHERE Num_Ques = :numQues";
+        $stmt = $this->dataAccess->prepare($query);
+        $stmt->bindParam(':question', $question);
+        $stmt->bindParam(':numQues', $numQues);
+        $stmt->execute();
+
+        $query2 = "UPDATE QUESINTERAC SET BonneRepValeur_orbit = :orbite, BonneRepValeur_rotation = :rotation, Marge_Orbit = :orbitMargin, Marge_Rotation = :rotationMargin WHERE Num_Ques = :numQues";
+        $stmt2 = $this->dataAccess->prepare($query2);
+        $stmt2->bindParam(':orbite', $orbite);
+        $stmt2->bindParam(':rotation', $rotation);
+        $stmt2->bindParam(':orbitMargin', $orbitMargin);
+        $stmt2->bindParam(':rotationMargin', $rotationMargin);
+        $stmt2->bindParam(':numQues', $numQues);
+        $stmt2->execute();
+    }
+
     /**
      * @return array
      */
