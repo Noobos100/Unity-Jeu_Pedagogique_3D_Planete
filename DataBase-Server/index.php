@@ -244,8 +244,8 @@ elseif ('/index.php/addInteraction' == $uri) {
             } elseif ($questionData['Type'] == 'VRAIFAUX') {
                 $question = $_POST['question'];
                 $correct = $_POST['answer'];
-                $orbit = $_POST['orbit'];
-                $rotation = $_POST['rotation'];
+                $orbit = ($_POST['orbit'] ?? '-1');
+                $rotation = ($_POST['rotation'] ?? '-1');
 
                 $controllerQuestions->updateQVraiFaux($questionData['Num_Ques'], $question, $orbit, $rotation, $correct, $partieChecking, $data);
                 echo '<script>
