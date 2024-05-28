@@ -26,22 +26,45 @@ class ViewManageQuestions extends View
             <input type="text" id="answer" name="answer" required>
             <input type="submit" value="Ajouter">
         </form>';
+        // <select> to filter questions by type in list
+        $this->content .= '<label for="filter">Filtrer par type:</label>
+    <select id="filter" onchange="filterQuestions()">
+    <option value="all">Tous</option>
+    <option value="VRAIFAUX">VRAIFAUX</option>
+    <option value="QCU">QCU</option>
+    <option value="QUESINTERAC">QUESINTERAC</option>
+    </select>';
+
         $this->content .= '<table id="question-table">';
         $this->content .= '<tr>
-               <th>Numéro Question</th>
-               <th>Enoncé</th>
-               <th>Type</th>
-               <th>Réponses</th>
-               </tr>';
+       <th>ID Question</th>
+       <th>Enoncé</th>
+       <th>Type</th>
+       <th>Réponses</th>
+       </tr>';
         foreach ($questions as $question) {
-            $this->content .= '<tr>
-                                <td>' . htmlspecialchars($question['Num_Ques']) . '</td>
-                                <td>' . htmlspecialchars($question['Enonce']) . '</td>
-                                <td>' . htmlspecialchars($question['Type']) . '</td>
-                                <td><button onclick="window.open(\'/modify-question?qid=' . $question['Num_Ques'] . '\')">Réponses</button></td>
-                               </tr>';
+            $this->content .= '<tr class="question-row">
+                        <td>' . htmlspecialchars($question['Num_Ques']) . '</td>
+                        <td>' . htmlspecialchars($question['Enonce']) . '</td>
+                        <td>' . htmlspecialchars($question['Type']) . '</td>
+                        <td><button onclick="window.open(\'/modify-question?qid=' . $question['Num_Ques'] . '\')">Réponses</button></td>
+                       </tr>';
         }
         $this->content .= '</table>';
         $this->content .= '</div>';
+        $this->content .= '<script>
+    function filterQuestions() {
+        let filter = document.getElementById("filter").value;
+        let rows = document.querySelectorAll("#question-table .question-row");
+        rows.forEach(row => {
+            let type = row.cells[2].innerText;
+            if (filter === "all" || type === filter) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+</script>';
     }
 }
