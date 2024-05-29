@@ -13,6 +13,7 @@
     "com.unity.visualscripting": "1.9.0",
     "com.unity.xr.interaction.toolkit": "2.5.2",
     "com.unity.xr.management": "4.4.0",
+    "com.unity.xr.oculus": "4.0.0",
     "com.unity.xr.openxr": "1.8.2",
     "com.unity.xr.openxr.picoxr": "file:C:/Dev/PICO%20Unity%20OpenXR%20Integration%20SDK_120",
     "com.unity.modules.ai": "1.0.0",

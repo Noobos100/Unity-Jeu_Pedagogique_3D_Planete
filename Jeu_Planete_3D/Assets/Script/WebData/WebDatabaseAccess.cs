@@ -20,9 +20,9 @@ namespace Script.WebData
             public int[] list;
         }
         
-        public IEnumerator NewGame(string platform)
+        public IEnumerator NewGame(string platform, string username)
         {
-            string url = _webDatabaseConnection.GetHost() + "/NewGame?plateforme=" + platform;
+            string url = _webDatabaseConnection.GetHost() + "/new-game?plateforme=" + platform + "&username=" + username;
             Debug.Log(url);
         
             UnityWebRequest wwwNewGame = UnityWebRequest.Get(url);
@@ -40,7 +40,7 @@ namespace Script.WebData
 
         public IEnumerator AbortGame()
         {
-            string url = _webDatabaseConnection.GetHost() + "/abortOnGoingGame";
+            string url = _webDatabaseConnection.GetHost() + "/abort-on-going-game";
             Debug.Log(url);
         
             UnityWebRequest wwwAbortGame = UnityWebRequest.Get(url);
@@ -58,7 +58,7 @@ namespace Script.WebData
 
         public IEnumerator EndGame()
         {
-            string url = _webDatabaseConnection.GetHost() + "/endGame";
+            string url = _webDatabaseConnection.GetHost() + "/end-game";
             Debug.Log(url);
         
             UnityWebRequest wwwAbortGame = UnityWebRequest.Get(url);
@@ -86,7 +86,7 @@ namespace Script.WebData
             {
                 strVarURLGet += "0";
             }
-            string url = _webDatabaseConnection.GetHost() + "/addInteraction?" + strVarURLGet;
+            string url = _webDatabaseConnection.GetHost() + "/add-interaction?" + strVarURLGet;
             Debug.Log(url);
         
             UnityWebRequest wwwInteract = UnityWebRequest.Get(url);
@@ -170,7 +170,7 @@ namespace Script.WebData
         public IEnumerator GetRandomQuestions(int nbQcu, int nbTrueFalse, int nbManipulation)
         {
             string strVarURLGet = "qcu=" + nbQcu + "&interaction=" + nbManipulation + "&vraifaux=" + nbTrueFalse;
-            string url = _webDatabaseConnection.GetHost() + "/randomQuestions?" + strVarURLGet;
+            string url = _webDatabaseConnection.GetHost() + "/random-questions?" + strVarURLGet;
             Debug.Log(url);
         
             UnityWebRequest wwwInteract = UnityWebRequest.Get(url);
@@ -211,7 +211,7 @@ namespace Script.WebData
             {
                 strVarURLGet += "0";
             }
-            string url = _webDatabaseConnection.GetHost() + "/QuestionAnswer?" + strVarURLGet;
+            string url = _webDatabaseConnection.GetHost() + "/question-answer?" + strVarURLGet;
             Debug.Log(url);
         
             UnityWebRequest wwwInteract = UnityWebRequest.Get(url);
