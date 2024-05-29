@@ -19,7 +19,7 @@ class ViewModifyQuestion extends View
         $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
         $this->content .= '<form action="/modify-question?qid=' . $questionData['Num_Ques'] . '" method="post">
-            <label for="question">Question:</label>
+            <label for="question">Question ' . $questionData['Num_Ques'] . ' (' . $questionData['Type'] . ')'.':</label>
             <input type="text" id="question" name="question" value="' . $questionData['Enonce'] . '" required>
             <br>';
 
@@ -48,7 +48,7 @@ class ViewModifyQuestion extends View
                 <option value="Rep4">Option 4</option>
             </select>
             <br>
-            <input type="submit" value="Submit changes">
+            <input type="submit" value="Confirmer changements">
         </form>';
         }
         elseif ($questionData['Type'] == 'QUESINTERAC') {
@@ -73,7 +73,7 @@ class ViewModifyQuestion extends View
             <input id="rotation-margin" type="checkbox" ' . (($questionData['Marge_Rotation']) == '-1' ? 'checked' : '') . '>
             
             <br>
-            <input type="submit" value="Submit">
+            <input type="submit" value="Confirmer changements">
             </form>
             <script>
             	const inputOrbit = document.getElementById("orbit");
@@ -133,7 +133,7 @@ class ViewModifyQuestion extends View
 				<label for="true">Vrai</label>
 				<input type="radio" id="torf" name="answer" value="Faux" ' . ($questionData['BonneRep'] == 'Faux' ? 'checked' : '') . '>
 				<label for="false">Faux</label>
-				<button id="submitBtn">Envoyer</button>
+				<button id="submitBtn">Confirmer changements</button>
 			</form>
 			<script>
 				const isOrbitable = document.getElementById("orbitable");
@@ -156,5 +156,15 @@ class ViewModifyQuestion extends View
 			';
 
         }
+
+        $this->content .= '
+        <button onclick="confirmLeave()">Annuler</button>
+        <script>
+            function confirmLeave() {
+                if (confirm("Voulez-vous vraiment quitter sans sauvegarder?")) {
+                    window.location.href = "/manage-questions";
+                }
+            }
+        </script>';
     }
 }
