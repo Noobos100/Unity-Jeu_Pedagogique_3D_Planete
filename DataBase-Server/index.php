@@ -129,12 +129,13 @@ if($uri == '/') {
 
     $viewPartie->display();
 } elseif ('/new-game' == $uri) {
-    if (isset($_GET['plateforme'])) {
+    if (isset($_GET['plateforme']) && isset($_GET['username'])) {
         $ip = $_SERVER['REMOTE_ADDR'];
         $plateforme = $_GET['plateforme'];
         $date = date('Y-m-d H:i:s');
+		$username = $_GET['username'];
         try {
-            $controllerGame->newPlayer($ip, $plateforme, $partieChecking, $data);
+            $controllerGame->newPlayer($ip, $plateforme, $username, $partieChecking, $data);
         } catch (CannotDoException $e) {
             $report = $e->getReport();
             $report = str_replace('\n', '<br />', $report);

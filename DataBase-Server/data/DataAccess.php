@@ -76,17 +76,27 @@ class DataAccess implements DataAccessInterface
     /**
      * @param string $ip
      * @param string $plateforme
+	 * @param string $username
      * @return Joueur|False
      */
-    public function addJoueur(string $ip, string $plateforme): Joueur|False{
-        $query = "INSERT INTO JOUEUR (Ip, Plateforme) VALUES ('$ip', '$plateforme')";
+    public function addJoueur(string $ip, string $plateforme, string $username): Joueur|False{
+        $query = "INSERT INTO JOUEUR (Ip, Plateforme, Username) VALUES ('$ip', '$plateforme', '$username')";
         if($this->dataAccess->query($query)){
-            return new Joueur($ip, $plateforme);
+            return new Joueur($ip, $plateforme, $username);
         }
         else return false;
     }
 
-    /**
+	public function updateJoueur(string $ip, string $plateforme, string $username): Joueur|false
+	{
+		$query = "UPDATE JOUEUR SET Plateforme = '$plateforme', Username = '$username' WHERE Ip = '$ip'";
+		if($this->dataAccess->query($query)) {
+			return new Joueur($ip, $plateforme, $username);
+		}
+		else return false;
+	}
+
+	/**
      * @param string $ip
      * @return bool
      */

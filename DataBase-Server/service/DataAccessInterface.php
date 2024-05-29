@@ -26,9 +26,18 @@ interface DataAccessInterface
     /**
      * @param string $ip
      * @param string $plateforme
+	 * @param string $username
      * @return Joueur|False
      */
-    public function addJoueur(string $ip, string $plateforme): Joueur|False;
+    public function addJoueur(string $ip, string $plateforme, string $username): Joueur|False;
+
+	/**
+	 * @param string $ip
+	 * @param string $plateforme
+	 * @param string $username
+	 * @return Joueur|False
+	 */
+	public function updateJoueur(string $ip, string $plateforme, string $username): Joueur|False;
 
     /**
      * @param string $ip

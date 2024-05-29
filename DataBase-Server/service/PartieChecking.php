@@ -24,12 +24,24 @@ class PartieChecking
     /**
      * @param string $ip
      * @param string $plateforme
+	 * @param string $username
      * @param $data
      * @return Joueur|False
      */
-    public function addJoueur(string $ip, string $plateforme, $data): Joueur|False{
-        return $data->addJoueur($ip, $plateforme);
+    public function addJoueur(string $ip, string $plateforme, string $username, $data): Joueur|False {
+        return $data->addJoueur($ip, $plateforme, $username);
     }
+
+	/**
+	 * @param string $ip
+	 * @param string $plateforme
+	 * @param string $username
+	 * @param $data
+	 * @return Joueur|False
+	 */
+	public function updateJoueur(string $ip, string $plateforme, string $username, $data): Joueur|False {
+		return $data->updateJoueur($ip, $plateforme, $username);
+	}
 
     /**
      * @param string $ip

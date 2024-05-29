@@ -21,15 +21,12 @@ class ControllerGame
      * @throws CannotDoException If the player already exists.
      * @return void
      */
-    public function newPlayer(string $ip, string $platform, PartieChecking $partieService, $data): void {
+    public function newPlayer(string $ip, string $platform, string $username, PartieChecking $partieService, mixed $data): void {
         if($partieService->verifyJoueurExists($ip, $data)){
-            $target = "DataBase User";
-            $action = "Register new player";
-            $explanation = "Player already exists: " . $ip;
-            throw new CannotDoException($target, $action, $explanation);
+            $partieService->updateJoueur($ip, $platform, $username, $data);
         }
         else{
-            $partieService->addJoueur($ip, $platform, $data);
+            $partieService->addJoueur($ip, $platform, $username, $data);
         }
     }
 

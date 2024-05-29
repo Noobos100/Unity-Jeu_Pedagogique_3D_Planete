@@ -12,6 +12,7 @@ class Joueur
 {
     protected string $Ip;
     protected string $Plateforme;
+	protected string $Username;
 
     /**
      * Constructs a new Joueur instance.
@@ -19,10 +20,11 @@ class Joueur
      * @param string $Ip The IP address of the player.
      * @param string $Plateforme The platform of the player.
      */
-    public function __construct(string $Ip, string $Plateforme)
+    public function __construct(string $Ip, string $Plateforme, string $Username)
     {
         $this->Plateforme = $Plateforme;
         $this->Ip = $Ip;
+		$this->Username = $Username;
     }
 
     /**
@@ -44,4 +46,14 @@ class Joueur
     {
         return $this->Plateforme;
     }
+
+	/**
+	 * Gets the username of the player.
+	 *
+	 * @return string The username of the player.
+	 */
+	public function getUsername(): string
+	{
+		return $this->Username;
+	}
 }
