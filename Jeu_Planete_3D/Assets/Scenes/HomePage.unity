@@ -1354,7 +1354,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11887092d454fa54ea77e4ef84e82d87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: 
 --- !u!1 &350781402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2299,7 +2298,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 1
