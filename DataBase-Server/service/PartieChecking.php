@@ -228,6 +228,11 @@ class PartieChecking
     {
         $data->updateQInterac($Num_Ques, $question, $orbit, $rotation, $rotationMargin, $orbitMargin);
     }
+
+    public function deleteQuestion(int $numQues, mixed $data): void
+    {
+        $data->deleteQuestion($numQues);
+    }
 }
 
 

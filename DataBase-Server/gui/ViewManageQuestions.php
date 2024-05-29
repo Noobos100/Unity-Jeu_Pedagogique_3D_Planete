@@ -47,24 +47,30 @@ class ViewManageQuestions extends View
                         <td>' . htmlspecialchars($question['Num_Ques']) . '</td>
                         <td>' . htmlspecialchars($question['Enonce']) . '</td>
                         <td>' . htmlspecialchars($question['Type']) . '</td>
-                        <td><button onclick="window.open(\'/modify-question?qid=' . $question['Num_Ques'] . '\')">Réponses</button></td>
+                        <td><button onclick="location.href=\'modify-question?qid=' . $question['Num_Ques'] . '\'">Modifier</button></td>
+                        <td><button onclick="deleteQuestion(' . $question['Num_Ques'] . ')">Supprimer</button></td>
                        </tr>';
         }
         $this->content .= '</table>';
         $this->content .= '</div>';
         $this->content .= '<script>
-    function filterQuestions() {
-        let filter = document.getElementById("filter").value;
-        let rows = document.querySelectorAll("#question-table .question-row");
-        rows.forEach(row => {
-            let type = row.cells[2].innerText;
-            if (filter === "all" || type === filter) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
+        function filterQuestions() {
+            let filter = document.getElementById("filter").value;
+            let rows = document.querySelectorAll("#question-table .question-row");
+            rows.forEach(row => {
+                let type = row.cells[2].innerText;
+                if (filter === "all" || type === filter) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+        function deleteQuestion(qid) {
+            if (confirm("Êtes-vous sûr de vouloir supprimer cette question?")) {
+                location.href = "delete-question?qid=" + qid;
             }
-        });
-    }
+        }
 </script>';
     }
 }

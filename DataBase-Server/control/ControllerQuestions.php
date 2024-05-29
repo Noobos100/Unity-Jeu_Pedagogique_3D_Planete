@@ -79,4 +79,9 @@ class ControllerQuestions
     {
         $partieChecking->updateQInterac($Num_Ques, $question, $orbit, $rotation, $rotationMargin, $orbitMargin, $data);
     }
+
+    public function deleteQuestion(int $numQues, PartieChecking $questionService, mixed $data): void
+    {
+        $questionService->deleteQuestion($numQues, $data);
+    }
 }

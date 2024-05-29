@@ -53,15 +53,18 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 if($uri == '/') {
 	header('Location: /game');
-} elseif($uri == '/game'){
+}
+elseif($uri == '/game'){
     $layout = new Layout('gui/layout.html');
     $viewPartie = new ViewGame($layout);
     $viewPartie->display();
-} elseif ('/logout' == $uri) {
+}
+elseif ('/logout' == $uri) {
     session_destroy();
     header('Location: /');
     exit;
-} elseif ('/login' == $uri ) {
+}
+elseif ('/login' == $uri ) {
     $layout = new Layout('gui/layout-login.html');
     $viewLogin = new ViewLogin($layout);
     $error = '';
@@ -83,18 +86,21 @@ if($uri == '/') {
         echo '<p style="color: red;">' . htmlspecialchars($error) . '</p>';
     }
     $viewLogin->display();
-} elseif ('/game-data' == $uri && (isset($_SESSION['loggedin']) )) {
+}
+elseif ('/game-data' == $uri && (isset($_SESSION['loggedin']) )) {
     $layout = new Layout('gui/layout.html');
     $viewPartie = new ViewParties($layout);
     $viewPartie->display();
 
 
-} elseif ('/players' == $uri && (isset($_SESSION['loggedin']) )) {
+}
+elseif ('/players' == $uri && (isset($_SESSION['loggedin']) )) {
     $layout = new Layout('gui/layout.html');
     $viewPartie = new ViewTypesJoueur($layout);
     $viewPartie->display();
 
-} elseif ('/add-interaction' == $uri) {
+}
+elseif ('/add-interaction' == $uri) {
     if (isset($_GET["type"]) && isset($_GET["value"]) && isset($_GET["isEval"])) {
         $ip = $_SERVER['REMOTE_ADDR'];
         $type = $_GET["type"];
@@ -118,7 +124,8 @@ if($uri == '/') {
     } else {
         echo "URL not complete, cannot register new interaction.";
     }
-} elseif ('/abort-on-going-game' == $uri) {
+}
+elseif ('/abort-on-going-game' == $uri) {
     $ip = $_SERVER['REMOTE_ADDR'];
     $controllerGame->abortPartie($ip, $partieChecking, $data);
 
@@ -128,7 +135,8 @@ if($uri == '/') {
     $viewPartie = new ViewPartie($layout, $partieStatus, $ip, $date);
 
     $viewPartie->display();
-} elseif ('/new-game' == $uri) {
+}
+elseif ('/new-game' == $uri) {
     if (isset($_GET['plateforme'])) {
         $ip = $_SERVER['REMOTE_ADDR'];
         $plateforme = $_GET['plateforme'];
@@ -156,7 +164,8 @@ if($uri == '/') {
     } else {
         echo "URL not complete, cannot register new player or game.";
     }
-} elseif ('/question-answer' == $uri) {
+}
+elseif ('/question-answer' == $uri) {
     $ip = $_SERVER['REMOTE_ADDR'];
 
     if (isset($_GET['qid']) && $data->verifyPartieInProgress($ip) && isset($_GET['correct']) && isset($_GET['start'])) {
@@ -166,7 +175,8 @@ if($uri == '/') {
     } else {
         echo "URL not complete, cannot add question answer to database";
     }
-} elseif ('/end-game' == $uri) {
+}
+elseif ('/end-game' == $uri) {
     $ip = $_SERVER['REMOTE_ADDR'];
     $date = date('Y-m-d H:i:s');
 
@@ -183,7 +193,8 @@ if($uri == '/') {
         $report = str_replace('\n', '<br />', $report);
         echo '<p>', $report, '</p>';
     }
-} elseif ('/question' == $uri ) {
+}
+elseif ('/question' == $uri ) {
     if (isset($_GET['qid'])) {
         $jsonQ = $controllerQuestions->getJsonAttributesQ($_GET['qid'], $partieChecking, $data);
     } else {
@@ -201,7 +212,8 @@ if($uri == '/') {
     $viewManageQ = new ViewManageQuestions($layout, $questions);
     $viewManageQ->display();
 
-} elseif ('/modify-question' == $uri && (isset($_SESSION['loggedin']) )) {
+}
+elseif ('/modify-question' == $uri && (isset($_SESSION['loggedin']) )) {
     if (isset($_GET['qid'])) {
         $questionData = $controllerQuestions->getJsonAttributesQ($_GET['qid'], $partieChecking, $data);
 
@@ -256,7 +268,19 @@ if($uri == '/') {
     } else {
         echo "URL not complete, cannot modify question.";
     }
-} elseif ('/random-questions' == $uri) {
+}
+elseif ('/delete-question' == $uri && (isset($_SESSION['loggedin']) )) {
+    if (isset($_GET['qid'])) {
+        $controllerQuestions->deleteQuestion($_GET['qid'], $partieChecking, $data);
+        echo '<script>
+                alert("Question supprimée.");
+                location.href = "/manage-questions";
+            </script>';
+    } else {
+        echo "URL not complete, cannot delete question.";
+    }
+}
+elseif ('/random-questions' == $uri) {
     $nbQCU = $_GET['qcu'] ?? 0;
     $nbInteraction = $_GET['interaction'] ?? 0;
     $nbVraiFaux = $_GET['vraifaux'] ?? 0;
@@ -267,7 +291,8 @@ if($uri == '/') {
     $viewRandomQs = new ViewRandomQuestion($layout, $jsonRandQ);
 
     $viewRandomQs->display();
-} else {
+}
+else {
 	session_destroy();
     header('Status: 404 Not Found');
     echo '<html><body><h1>Page Not Found</h1>';

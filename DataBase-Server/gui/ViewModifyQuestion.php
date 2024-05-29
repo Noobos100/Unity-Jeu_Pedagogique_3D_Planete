@@ -37,7 +37,7 @@ class ViewModifyQuestion extends View
             <label for="option4">Option 4:</label>
             <input type="text" id="option4" name="option4" value="' . $questionData['Rep4'] . '" required>
             <br>
-            <label for="correct">Correct answer:</label>
+            <label for="correct">Change correct answer:</label>
             <select id="correct" name="correct" required>
                 <option value="Rep1">Option 1</option>
                 <option value="Rep2">Option 2</option>
