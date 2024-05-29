@@ -235,6 +235,16 @@ class PartieChecking
     {
         $data->updateQVraiFaux($Num_Ques, $question, $orbit, $rotation, $correct);
     }
+
+    public function updateQInterac(mixed $Num_Ques, mixed $question, string $orbit, string $rotation, $rotationMargin, $orbitMargin, $data): void
+    {
+        $data->updateQInterac($Num_Ques, $question, $orbit, $rotation, $rotationMargin, $orbitMargin);
+    }
+
+    public function deleteQuestion(int $numQues, mixed $data): void
+    {
+        $data->deleteQuestion($numQues);
+    }
 }
 
 

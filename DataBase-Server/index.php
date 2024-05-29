@@ -6,7 +6,8 @@ use data\DataAccess;
 include_once 'control/ControllerGame.php';
 include_once 'control/ControllerInteractions.php';
 include_once 'control/ControllerQuestions.php';
-use control\{ControllerGame, ControllerQuestions, ControllerInteractions};
+include_once 'control/ControllerJoueurs.php';
+use control\{ControllerGame, ControllerQuestions, ControllerInteractions, ControllerJoueurs};
 
 include_once 'service/PartieChecking.php';
 include_once 'service/DataAccessInterface.php';
@@ -23,10 +24,10 @@ include_once 'gui/ViewLogin.php';
 include_once 'gui/ViewModifyQuestion.php';
 include_once 'gui/ViewManageQuestions.php';
 include_once 'gui/ViewGame.php';
-include_once 'gui/ViewTypesJoueur.php';
-include_once 'gui/ViewParties.php';
+include_once 'gui/ViewJoueurs.php';
+include_once 'gui/ViewDonneesDuJeu.php';
 
-use gui\{Layout,ViewInteractions,ViewParties,ViewTypesJoueur,ViewManageQuestions,ViewModifyQuestion,ViewPartie,ViewQuestions,ViewRandomQuestion,ViewUtilisateur,ViewLogin,ViewGame};
+use gui\{Layout,ViewInteractions,ViewDonneesDuJeu,ViewJoueurs,ViewManageQuestions,ViewModifyQuestion,ViewPartie,ViewQuestions,ViewRandomQuestion,ViewUtilisateur,ViewLogin,ViewGame};
 
 
 session_start();
@@ -44,6 +45,7 @@ try {
 $controllerGame = new ControllerGame();
 $controllerInte = new ControllerInteractions();
 $controllerQuestions = new ControllerQuestions();
+$controllerJoueurs = new ControllerJoueurs();
 
 // initilisation du cas d'utilisation PartieChecking
 $partieChecking = new PartieChecking();
@@ -53,15 +55,18 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 if($uri == '/') {
 	header('Location: /game');
-} elseif($uri == '/game'){
+}
+elseif($uri == '/game'){
     $layout = new Layout('gui/layout.html');
     $viewPartie = new ViewGame($layout);
     $viewPartie->display();
-} elseif ('/logout' == $uri) {
+}
+elseif ('/logout' == $uri) {
     session_destroy();
     header('Location: /');
     exit;
-} elseif ('/login' == $uri ) {
+}
+elseif ('/login' == $uri ) {
     $layout = new Layout('gui/layout-login.html');
     $viewLogin = new ViewLogin($layout);
     $error = '';
@@ -83,18 +88,21 @@ if($uri == '/') {
         echo '<p style="color: red;">' . htmlspecialchars($error) . '</p>';
     }
     $viewLogin->display();
-} elseif ('/game-data' == $uri && (isset($_SESSION['loggedin']) )) {
+}
+elseif ('/game-data' == $uri && (isset($_SESSION['loggedin']) )) {
     $layout = new Layout('gui/layout.html');
-    $viewPartie = new ViewParties($layout);
+    $viewPartie = new ViewDonneesDuJeu($layout, $controllerJoueurs, $data);
     $viewPartie->display();
 
 
-} elseif ('/players' == $uri && (isset($_SESSION['loggedin']) )) {
+}
+elseif ('/players' == $uri && (isset($_SESSION['loggedin']) )) {
     $layout = new Layout('gui/layout.html');
-    $viewPartie = new ViewTypesJoueur($layout);
+    $viewPartie = new ViewJoueurs($layout, $controllerJoueurs, $data);
     $viewPartie->display();
 
-} elseif ('/add-interaction' == $uri) {
+}
+elseif ('/add-interaction' == $uri) {
     if (isset($_GET["type"]) && isset($_GET["value"]) && isset($_GET["isEval"])) {
         $ip = $_SERVER['REMOTE_ADDR'];
         $type = $_GET["type"];
@@ -118,7 +126,8 @@ if($uri == '/') {
     } else {
         echo "URL not complete, cannot register new interaction.";
     }
-} elseif ('/abort-on-going-game' == $uri) {
+}
+elseif ('/abort-on-going-game' == $uri) {
     $ip = $_SERVER['REMOTE_ADDR'];
     $controllerGame->abortPartie($ip, $partieChecking, $data);
 
@@ -157,7 +166,8 @@ if($uri == '/') {
     } else {
         echo "URL not complete, cannot register new player or game.";
     }
-} elseif ('/question-answer' == $uri) {
+}
+elseif ('/question-answer' == $uri) {
     $ip = $_SERVER['REMOTE_ADDR'];
 
     if (isset($_GET['qid']) && $data->verifyPartieInProgress($ip) && isset($_GET['correct']) && isset($_GET['start'])) {
@@ -167,7 +177,8 @@ if($uri == '/') {
     } else {
         echo "URL not complete, cannot add question answer to database";
     }
-} elseif ('/end-game' == $uri) {
+}
+elseif ('/end-game' == $uri) {
     $ip = $_SERVER['REMOTE_ADDR'];
     $date = date('Y-m-d H:i:s');
 
@@ -184,7 +195,8 @@ if($uri == '/') {
         $report = str_replace('\n', '<br />', $report);
         echo '<p>', $report, '</p>';
     }
-} elseif ('/question' == $uri ) {
+}
+elseif ('/question' == $uri ) {
     if (isset($_GET['qid'])) {
         $jsonQ = $controllerQuestions->getJsonAttributesQ($_GET['qid'], $partieChecking, $data);
     } else {
@@ -202,7 +214,8 @@ if($uri == '/') {
     $viewManageQ = new ViewManageQuestions($layout, $questions);
     $viewManageQ->display();
 
-} elseif ('/modify-question' == $uri && (isset($_SESSION['loggedin']) )) {
+}
+elseif ('/modify-question' == $uri && (isset($_SESSION['loggedin']) )) {
     if (isset($_GET['qid'])) {
         $questionData = $controllerQuestions->getJsonAttributesQ($_GET['qid'], $partieChecking, $data);
 
@@ -220,19 +233,23 @@ if($uri == '/') {
                 $controllerQuestions->updateQQCU($questionData["Num_Ques"], $question, $option1, $option2, $option3, $option4, $correct, $partieChecking, $data);
                 echo '<script>
                         alert("Changements sauvegardés.");
-                        window.location.reload();
+                        location.href = "/modify-question?qid=' . $questionData['Num_Ques'] . '";
                     </script>';
             }
             elseif ($questionData['Type'] == 'QUESINTERAC') {
                 $question = $_POST['question'];
-                $orbit = $_POST['orbit'];
-                $rotation = $_POST['rotation'];
-                $controllerQuestions->updateQInterac($questionData['Num_Ques'], $question, $orbit, $rotation, $partieChecking, $data);
+                $orbit = ($_POST['orbit'] ?? '-1');
+                $rotation = ($_POST['rotation'] ?? '-1');
+                $rotationMargin = ($_POST['margin-orbit'] ?? '-1');
+                $orbitMargin = ($_POST['margin-rotation'] ?? '-1');
+
+                $controllerQuestions->updateQInterac($questionData['Num_Ques'], $question, $orbit, $rotation, $rotationMargin, $orbitMargin, $partieChecking, $data);
                 echo '<script>
-                        alert("Changements sauvegardés.");
-                        window.location.reload();
+                        alert("Changements sauvegardés.")
+                        location.href = "/modify-question?qid=' . $questionData['Num_Ques'] . '";
                     </script>';
-            } elseif ($questionData['Type'] == 'VRAIFAUX') {
+            }
+            elseif ($questionData['Type'] == 'VRAIFAUX') {
                 $question = $_POST['question'];
                 $correct = $_POST['answer'];
                 $orbit = ($_POST['orbit'] ?? '-1');
@@ -240,8 +257,8 @@ if($uri == '/') {
 
                 $controllerQuestions->updateQVraiFaux($questionData['Num_Ques'], $question, $orbit, $rotation, $correct, $partieChecking, $data);
                 echo '<script>
-                        alert("Changements sauvegardés.");
-                        window.location.reload();
+                        alert("Changements sauvegardés.")
+                        location.href = "/modify-question?qid=' . $questionData['Num_Ques'] . '";
                     </script>';
             }
         }
@@ -253,7 +270,19 @@ if($uri == '/') {
     } else {
         echo "URL not complete, cannot modify question.";
     }
-} elseif ('/random-questions' == $uri) {
+}
+elseif ('/delete-question' == $uri && (isset($_SESSION['loggedin']) )) {
+    if (isset($_GET['qid'])) {
+        $controllerQuestions->deleteQuestion($_GET['qid'], $partieChecking, $data);
+        echo '<script>
+                alert("Question supprimée.");
+                location.href = "/manage-questions";
+            </script>';
+    } else {
+        echo "URL not complete, cannot delete question.";
+    }
+}
+elseif ('/random-questions' == $uri) {
     $nbQCU = $_GET['qcu'] ?? 0;
     $nbInteraction = $_GET['interaction'] ?? 0;
     $nbVraiFaux = $_GET['vraifaux'] ?? 0;
@@ -264,7 +293,8 @@ if($uri == '/') {
     $viewRandomQs = new ViewRandomQuestion($layout, $jsonRandQ);
 
     $viewRandomQs->display();
-} else {
+}
+else {
 	session_destroy();
     header('Status: 404 Not Found');
     echo '<html><body><h1>Page Not Found</h1>';

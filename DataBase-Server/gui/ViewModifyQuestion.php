@@ -18,8 +18,8 @@ class ViewModifyQuestion extends View
         // Déterminer la page actuelle
         $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
-        $this->content .= '<form action="/index.php/ModifyQuestion?qid=' . $questionData['Num_Ques'] . '" method="post">
-            <label for="question">Question:</label>
+        $this->content .= '<form action="/modify-question?qid=' . $questionData['Num_Ques'] . '" method="post">
+            <label for="question">Question ' . $questionData['Num_Ques'] . ' (' . $questionData['Type'] . ')'.':</label>
             <input type="text" id="question" name="question" value="' . $questionData['Enonce'] . '" required>
             <br>';
 
@@ -37,7 +37,10 @@ class ViewModifyQuestion extends View
             <label for="option4">Option 4:</label>
             <input type="text" id="option4" name="option4" value="' . $questionData['Rep4'] . '" required>
             <br>
-            <label for="correct">Correct answer:</label>
+            <label for="current">Bonne réponse (actuellement):</label>
+            <input type="text" id="current" name="current" value="' . $questionData['BonneRep'] . '" readonly> 
+            <br>
+            <label for="correct">Changer bonne réponse:</label>
             <select id="correct" name="correct" required>
                 <option value="Rep1">Option 1</option>
                 <option value="Rep2">Option 2</option>
@@ -45,22 +48,71 @@ class ViewModifyQuestion extends View
                 <option value="Rep4">Option 4</option>
             </select>
             <br>
-            <label for="current">Current correct answer:</label>
-            <input type="text" id="current" name="current" value="' . $questionData['BonneRep'] . '" readonly> 
-            <br>
-            <input type="submit" value="Submit changes">
+            <input type="submit" value="Confirmer changements">
         </form>';
-        } elseif ($questionData['Type'] == 'QUESINTERAC') {
+        }
+        elseif ($questionData['Type'] == 'QUESINTERAC') {
             $this->content .=
-                '<label for="orbit">Answer for orbit:</label>
-            <input type="text" id="orbit" name="answer" value="' . $questionData['BonneRepValeur_orbit'] . '" required>
+            '<label for="orbit">Réponse pour orbite:</label>
+            <input type="text" id="orbit" name="orbit" value="' . $questionData['BonneRepValeur_orbit'] . '">
+            <input id="orbitable" type="checkbox" ' . (($questionData['BonneRepValeur_orbit']) == '-1' ? 'checked' : '') . '>
+            
             <br>
-            <label for="rotation">Answer for rotation:</label>
-            <input type="text" id="rotation" name="answer" value="' . $questionData['BonneRepValeur_rotation'] . '" required>
+            <label for="rotation">Réponse pour rotation:</label>
+            <input type="text" id="rotation" name="rotation" value="' . $questionData['BonneRepValeur_rotation'] . '">
+            <input id="rotatable" type="checkbox" ' . (($questionData['BonneRepValeur_rotation']) == '-1' ? 'checked' : '') . '>
             <br>
-            <input type="submit" value="Submit">
-        </form>';
-        } elseif ($questionData['Type'] == 'VRAIFAUX') {
+            
+            <label for="marge-orbit">Marge orbite:</label>
+            <input type="text" id="margin-orbit" name="margin-orbit" value="' . $questionData['Marge_Orbit'] . '">
+            <input id="orbit-margin" type="checkbox" ' . (($questionData['Marge_Orbit']) == '-1' ? 'checked' : '') . '>
+
+            <br>
+            <label for="marge-rotation">Marge rotation:</label>
+            <input type="text" id="margin-rotation" name="margin-rotation" value="' . $questionData['Marge_Rotation'] . '">
+            <input id="rotation-margin" type="checkbox" ' . (($questionData['Marge_Rotation']) == '-1' ? 'checked' : '') . '>
+            
+            <br>
+            <input type="submit" value="Confirmer changements">
+            </form>
+            <script>
+            	const inputOrbit = document.getElementById("orbit");
+              	const inputRotation = document.getElementById("rotation");            	
+                const inputMargeOrbit = document.getElementById("margin-orbit");
+              	const inputMargeRotation = document.getElementById("margin-rotation");
+                  
+				const isOrbitable = document.getElementById("orbitable");
+        		const isRotatable = document.getElementById("rotatable");
+                const hasOrbitMargin = document.getElementById("orbit-margin");
+                const hasRotationMargin = document.getElementById("rotation-margin");
+                
+				inputOrbit.disabled = isOrbitable.checked;
+				inputRotation.disabled = isRotatable.checked;
+                inputMargeOrbit.disabled = hasOrbitMargin.checked;
+                inputMargeRotation.disabled = hasRotationMargin.checked;
+                
+                isOrbitable.addEventListener("change", () => {
+                    inputOrbit.disabled = isOrbitable.checked;
+                    inputOrbit.value = "";
+                })
+                
+                isRotatable.addEventListener("change", () => {
+                    inputRotation.disabled = isRotatable.checked;
+                    inputRotation.value = "";
+                })
+                
+                hasOrbitMargin.addEventListener("change", () => {
+                    inputMargeOrbit.disabled = hasOrbitMargin.checked;
+                    inputMargeOrbit.value = "";
+                })
+                
+                hasRotationMargin.addEventListener("change", () => {
+                    inputMargeRotation.disabled = hasRotationMargin.checked;
+                    inputMargeRotation.value = "";
+                })
+			</script>';
+        }
+        elseif ($questionData['Type'] == 'VRAIFAUX') {
 			$this->content .= '
 				<label for="forbit">Position de l\'orbite:</label>
 				<div class="checkboxed-question">
@@ -78,10 +130,10 @@ class ViewModifyQuestion extends View
 				</div>
 				<label for="answer">Réponse:</label>
 				<input type="radio" id="torf" name="answer" value="Vrai" ' . ($questionData['BonneRep'] == 'Vrai' ? 'checked' : '') . '>
-				<label for="true">True</label>
+				<label for="true">Vrai</label>
 				<input type="radio" id="torf" name="answer" value="Faux" ' . ($questionData['BonneRep'] == 'Faux' ? 'checked' : '') . '>
-				<label for="false">False</label>
-				<button id="submitBtn">Envoyer</button>
+				<label for="false">Faux</label>
+				<button id="submitBtn">Confirmer changements</button>
 			</form>
 			<script>
 				const isOrbitable = document.getElementById("orbitable");
@@ -104,5 +156,15 @@ class ViewModifyQuestion extends View
 			';
 
         }
+
+        $this->content .= '
+        <button onclick="confirmLeave()">Annuler</button>
+        <script>
+            function confirmLeave() {
+                if (confirm("Voulez-vous vraiment quitter sans sauvegarder?")) {
+                    window.location.href = "/manage-questions";
+                }
+            }
+        </script>';
     }
 }
