@@ -37,16 +37,16 @@ class ViewModifyQuestion extends View
             <label for="option4">Option 4:</label>
             <input type="text" id="option4" name="option4" value="' . $questionData['Rep4'] . '" required>
             <br>
-            <label for="correct">Change correct answer:</label>
+            <label for="current">Bonne réponse (actuellement):</label>
+            <input type="text" id="current" name="current" value="' . $questionData['BonneRep'] . '" readonly> 
+            <br>
+            <label for="correct">Changer bonne réponse:</label>
             <select id="correct" name="correct" required>
                 <option value="Rep1">Option 1</option>
                 <option value="Rep2">Option 2</option>
                 <option value="Rep3">Option 3</option>
                 <option value="Rep4">Option 4</option>
             </select>
-            <br>
-            <label for="current">Current correct answer:</label>
-            <input type="text" id="current" name="current" value="' . $questionData['BonneRep'] . '" readonly> 
             <br>
             <input type="submit" value="Submit changes">
         </form>';
@@ -130,9 +130,9 @@ class ViewModifyQuestion extends View
 				</div>
 				<label for="answer">Réponse:</label>
 				<input type="radio" id="torf" name="answer" value="Vrai" ' . ($questionData['BonneRep'] == 'Vrai' ? 'checked' : '') . '>
-				<label for="true">True</label>
+				<label for="true">Vrai</label>
 				<input type="radio" id="torf" name="answer" value="Faux" ' . ($questionData['BonneRep'] == 'Faux' ? 'checked' : '') . '>
-				<label for="false">False</label>
+				<label for="false">Faux</label>
 				<button id="submitBtn">Envoyer</button>
 			</form>
 			<script>

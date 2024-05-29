@@ -12,8 +12,8 @@ class ViewManageQuestions extends View
 
         $this->title = 'Gestion des questions';
 
-        // Ajouter un script pour mettre à jour l'heure et la date actuelles
-        $this->content .= '<h1>Vous pouvez gérer les questions ici</h1>';
+
+        $this->content .= '<h1>Gestionnaire des questions</h1>';
 
         $questions = json_decode($questions, true);
 
