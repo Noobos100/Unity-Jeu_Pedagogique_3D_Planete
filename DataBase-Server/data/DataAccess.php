@@ -42,6 +42,33 @@ class DataAccess implements DataAccessInterface
     }
 
     /**
+     * @return array
+     */
+    public function getParties(): array
+    {
+        $query = "SELECT * FROM PARTIE";
+        return $this->dataAccess->query($query)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @return array
+     */
+    public function getReponsesUsers(): array
+    {
+        $query = "SELECT * FROM REPONSE_USER";
+        return $this->dataAccess->query($query)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @return array
+     */
+    public function getJoueurs(): array
+    {
+        $query = "SELECT * FROM JOUEUR";
+        return $this->dataAccess->query($query)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
      * @param string $name
      * @param string $pwd
      * @return bool

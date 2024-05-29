@@ -6,7 +6,8 @@ use data\DataAccess;
 include_once 'control/ControllerGame.php';
 include_once 'control/ControllerInteractions.php';
 include_once 'control/ControllerQuestions.php';
-use control\{ControllerGame, ControllerQuestions, ControllerInteractions};
+include_once 'control/ControllerJoueurs.php';
+use control\{ControllerGame, ControllerQuestions, ControllerInteractions, ControllerJoueurs};
 
 include_once 'service/PartieChecking.php';
 include_once 'service/DataAccessInterface.php';
@@ -23,10 +24,10 @@ include_once 'gui/ViewLogin.php';
 include_once 'gui/ViewModifyQuestion.php';
 include_once 'gui/ViewManageQuestions.php';
 include_once 'gui/ViewGame.php';
-include_once 'gui/ViewTypesJoueur.php';
-include_once 'gui/ViewParties.php';
+include_once 'gui/ViewJoueurs.php';
+include_once 'gui/ViewDonneesDuJeu.php';
 
-use gui\{Layout,ViewInteractions,ViewParties,ViewTypesJoueur,ViewManageQuestions,ViewModifyQuestion,ViewPartie,ViewQuestions,ViewRandomQuestion,ViewUtilisateur,ViewLogin,ViewGame};
+use gui\{Layout,ViewInteractions,ViewDonneesDuJeu,ViewJoueurs,ViewManageQuestions,ViewModifyQuestion,ViewPartie,ViewQuestions,ViewRandomQuestion,ViewUtilisateur,ViewLogin,ViewGame};
 
 
 session_start();
@@ -44,6 +45,7 @@ try {
 $controllerGame = new ControllerGame();
 $controllerInte = new ControllerInteractions();
 $controllerQuestions = new ControllerQuestions();
+$controllerJoueurs = new ControllerJoueurs();
 
 // initilisation du cas d'utilisation PartieChecking
 $partieChecking = new PartieChecking();
@@ -89,14 +91,14 @@ elseif ('/login' == $uri ) {
 }
 elseif ('/game-data' == $uri && (isset($_SESSION['loggedin']) )) {
     $layout = new Layout('gui/layout.html');
-    $viewPartie = new ViewParties($layout);
+    $viewPartie = new ViewDonneesDuJeu($layout, $controllerJoueurs, $data);
     $viewPartie->display();
 
 
 }
 elseif ('/players' == $uri && (isset($_SESSION['loggedin']) )) {
     $layout = new Layout('gui/layout.html');
-    $viewPartie = new ViewTypesJoueur($layout);
+    $viewPartie = new ViewJoueurs($layout, $controllerJoueurs, $data);
     $viewPartie->display();
 
 }
