@@ -154,21 +154,7 @@ class ControllerJoueurs
                             borderWidth: 1
                         }]
                     },
-                    options: {
-                        plugins: {
-                            legend: {
-                                labels: {
-                                    color: \'#ffffff\' // Couleur des étiquettes de la légende
-                                }
-                            },
-                            tooltip: {
-                                backgroundColor: \'rgba(0,0,0,0.8)\',
-                                titleFontColor: \'#ffffff\',
-                                bodyFontColor: \'#ffffff\',
-                                footerFontColor: \'#ffffff\'
-                            }
-                        }
-                    }
+                    
                 });
             </script>
         ';
@@ -211,8 +197,8 @@ class ControllerJoueurs
         <canvas id="myChart2"></canvas>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            const ctx2 = document.getElementById(\'myChart2\').getContext(\'2d\');
-            const data2 = {
+            let ctx2 = document.getElementById(\'myChart2\').getContext(\'2d\');
+            let data2 = {
                 labels: ' . $labelsJSON . ',
                 datasets: [{
                     type: \'bar\',
@@ -298,8 +284,8 @@ class ControllerJoueurs
         <canvas id="myChart3"></canvas>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            const ctx3 = document.getElementById(\'myChart3\').getContext(\'2d\');
-            const data3 = {
+            let ctx3 = document.getElementById(\'myChart3\').getContext(\'2d\');
+            let data3 = {
                 labels: ' . $labelsJSON . ',
                 datasets: [{
                     type: \'bar\',
@@ -381,8 +367,8 @@ class ControllerJoueurs
     <canvas id="myChart4"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const ctx4 = document.getElementById(\'myChart4\').getContext(\'2d\');
-        const data4 = {
+        let ctx4 = document.getElementById(\'myChart4\').getContext(\'2d\');
+        let data4 = {
             labels: ' . $labelsJSON . ',
             datasets: [{
                 type: \'bar\',
@@ -391,7 +377,7 @@ class ControllerJoueurs
                 backgroundColor: \'rgba(75, 192, 192, 0.75)\',
                 borderWidth: 1
             }]
-        };
+        }
         const options4 = {
             scales: {
                 x: {
@@ -402,7 +388,7 @@ class ControllerJoueurs
                     },
                     ticks: {
                         color: \'#ffffff\' // Couleur des étiquettes de l\'axe X
-                    },
+                    }
                 },
                 y: {
                     title: {
@@ -412,7 +398,7 @@ class ControllerJoueurs
                     },
                     ticks: {
                         color: \'#ffffff\' // Couleur des étiquettes de l\'axe Y
-                    },
+                    }
                 }
             },
             plugins: {
@@ -439,6 +425,7 @@ class ControllerJoueurs
 
         return $chart;
     }
+
 
 
 
