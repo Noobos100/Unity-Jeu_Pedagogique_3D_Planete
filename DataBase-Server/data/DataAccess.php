@@ -44,12 +44,14 @@ class DataAccess implements DataAccessInterface
     /**
      * @return array
      */
-    public function getPartiesAsc(): array
+    /*
+     *
+     public function getPartiesAsc(): array
     {
         $query = "select * from PARTIE order by Date_Fin - Date_Deb = (select min(Date_Fin - Date_Deb) from PARTIE)";
         return $this->dataAccess->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
-
+*/
 
     /**
      * @return array

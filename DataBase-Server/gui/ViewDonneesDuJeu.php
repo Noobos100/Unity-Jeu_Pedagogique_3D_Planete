@@ -21,7 +21,7 @@ class ViewDonneesDuJeu extends View
 
         $parties = $controller->getParties($data);
         $reponseUser = $controller->getReponsesUsers($data);
-        $partiesAsc = $controller->getPartiesAsc($data);
+        //$partiesAsc = $controller->getPartiesAsc($data);
 
         // Afficher le nombre total de parties
         $totalParties = count($parties);
@@ -44,7 +44,7 @@ class ViewDonneesDuJeu extends View
         // Ajouter le tableau des données dans le contenu
         $this->content .= $controller->generateTable($parties);
 
-        $this->content .= $controller->generateChart3($partiesAsc);
+        //$this->content .= $controller->generateChart3($partiesAsc);
 
         $this->content .= '<h2>Réponses</h2>';
 

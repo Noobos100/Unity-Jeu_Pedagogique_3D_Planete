@@ -190,186 +190,181 @@ class ControllerJoueurs
         }
 
         $labels = [];
-        $corrects = [];
-        $attempts = []; // Ajout d'un tableau pour stocker le nombre de tentatives par question
+        $successRates = [];
         foreach ($questionData as $numQues => $data) {
             $labels[] = "Question $numQues";
-            $corrects[] = $data['correct'];
-            $attempts[] = $data['attempts']; // Ajouter le nombre de tentatives au tableau
+            $successRate = ($data['correct'] / $data['attempts']) * 100;
+            $successRates[] = $successRate;
         }
 
         // Convertir les tableaux en chaînes JSON pour JavaScript
         $labelsJSON = json_encode($labels);
-        $correctsJSON = json_encode($attempts);
-        $attemptsJSON = json_encode($corrects); // Convertir le tableau des tentatives en JSON
+        $successRatesJSON = json_encode($successRates);
 
         // Générer le code HTML et JavaScript pour le graphique
         $chart = '
-<canvas id="myChart2"></canvas>
-<script>
-    const ctx2 = document.getElementById(\'myChart2\').getContext(\'2d\');
-    const data2 = {
-        labels: ' . $labelsJSON . ',
-        datasets: [{
-            type: \'bar\',
-            label: \'Nombre de tentatives par question\',
-            data: ' . $correctsJSON . ',
-            backgroundColor: \'rgba(50, 50, 255, 0.75)\',
-            borderWidth: 1
-        },
-        {
-            type: \'bar\',
-            label: \'Nombre de bonnes réponses par question\',
-            data: ' . $attemptsJSON . ',
-            backgroundColor: \'rgba(50, 255, 50, 0.75)\', // Couleur de la ligne
-            borderWidth: 1
-        }]
-    };
-    const options2 = {
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    color: \'#ffffff\'
+        <canvas id="myChart2"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const ctx2 = document.getElementById(\'myChart2\').getContext(\'2d\');
+            const data2 = {
+                labels: ' . $labelsJSON . ',
+                datasets: [{
+                    type: \'bar\',
+                    label: \'Pourcentage de réussite par question\',
+                    data: ' . $successRatesJSON . ',
+                    backgroundColor: \'rgba(75, 192, 255, 0.75)\',
+                    borderWidth: 1
+                }]
+            };
+            const options2 = {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: \'Questions\',
+                            color: \'#ffffff\' // Couleur des étiquettes de l\'axe X
+                        },
+                        ticks: {
+                            color: \'#ffffff\' // Couleur des étiquettes de l\'axe X
+                        },
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: \'Pourcentage de réussite (%)\',
+                            color: \'#ffffff\' // Couleur des étiquettes de l\'axe Y
+                        },
+                        ticks: {
+                            color: \'#ffffff\' // Couleur des étiquettes de l\'axe Y
+                        },
+                    }
                 },
-                ticks: {
-                    color: \'#ffffff\'               
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: \'#ffffff\' // Couleur des étiquettes de la légende
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: \'rgba(0,0,0,0.8)\',
+                        titleFontColor: \'#ffffff\',
+                        bodyFontColor: \'#ffffff\',
+                        footerFontColor: \'#ffffff\'
+                    }
                 }
-            },
-            y: {
-                title: {
-                    display: true,
-                    color: \'#ffffff\'
-                },
-                ticks: {
-                    color: \'#ffffff\'
-                }
-            }
-        },
-        plugins: {
-            legend: {
-                labels: {
-                    color: \'#ffffff\'
-                }
-            },
-            tooltip: {
-                backgroundColor: \'rgba(0,0,0,0.8)\',
-                titleFontColor: \'#ffffff\',
-                bodyFontColor: \'#ffffff\',
-                footerFontColor: \'#ffffff\'
-            }
-        }
-    };
-    new Chart(ctx2, {
-        type: \'bar\',
-        data: data2,
-        options: options2
-    });
-</script>
-';
+            };
+            new Chart(ctx2, {
+                type: \'bar\',
+                data: data2,
+                options: options2
+            });
+        </script>
+    ';
 
         return $chart;
     }
 
-    public function generateChart3($parties)
-    {
-        // Trier les parties par durée croissante
-        usort($parties, function ($a, $b) {
-            $dateTimeA = DateTime::createFromFormat('Y-m-d H:i:s', $a['Date_Deb']);
-            $dateTimeB = DateTime::createFromFormat('Y-m-d H:i:s', $b['Date_Deb']);
-            return $dateTimeA <=> $dateTimeB;
-        });
-
-        // Préparer les données pour le graphique
-        $timeData = [];
-        $averageQuestions = [];
-        foreach ($parties as $partie) {
-            if ($partie['Date_Fin'] == null) {
-                continue;
-            }
-            $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $partie['Date_Deb']);
-            $dateTime2 = DateTime::createFromFormat('Y-m-d H:i:s', $partie['Date_Fin']);
-
-            $interval = $dateTime->diff($dateTime2);
-            $durationInSeconds = $interval->format('%H') * 3600 + $interval->format('%I') * 60 + $interval->format('%S');
-            $durationFormatted = gmdate("H:i:s", $durationInSeconds);
-
-            $timeData[] = $durationFormatted;
-            $averageQuestions[] = $partie['Moy_Questions'];
-        }
-
-        // Convertir les tableaux en chaînes JSON pour JavaScript
-        $timeJSON = json_encode($timeData);
-        $averageQuestionsJSON = json_encode($averageQuestions);
-
-        // Générer le code HTML et JavaScript pour le graphique
-        $chart = '
-<canvas id="myChart3"></canvas>
-<script>
-    const ctx3 = document.getElementById(\'myChart3\').getContext(\'2d\');
-    const data3 = {
-        labels: ' . $timeJSON . ',
-        datasets: [
+    /*
+        public function generateChart3($parties)
         {
+            // Trier les parties par durée croissante
+            usort($parties, function ($a, $b) {
+                $dateTimeA = DateTime::createFromFormat('Y-m-d H:i:s', $a['Date_Deb']);
+                $dateTimeB = DateTime::createFromFormat('Y-m-d H:i:s', $b['Date_Deb']);
+                return $dateTimeA <=> $dateTimeB;
+            });
+
+            // Préparer les données pour le graphique
+            $timeData = [];
+            $averageQuestions = [];
+            foreach ($parties as $partie) {
+                if ($partie['Date_Fin'] == null) {
+                    continue;
+                }
+                $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $partie['Date_Deb']);
+                $dateTime2 = DateTime::createFromFormat('Y-m-d H:i:s', $partie['Date_Fin']);
+
+                $interval = $dateTime->diff($dateTime2);
+                $durationInSeconds = $interval->format('%H') * 3600 + $interval->format('%I') * 60 + $interval->format('%S');
+                $durationFormatted = gmdate("H:i:s", $durationInSeconds);
+
+                $timeData[] = $durationFormatted;
+                $averageQuestions[] = $partie['Moy_Questions'];
+            }
+
+            // Convertir les tableaux en chaînes JSON pour JavaScript
+            $timeJSON = json_encode($timeData);
+            $averageQuestionsJSON = json_encode($averageQuestions);
+
+            // Générer le code HTML et JavaScript pour le graphique
+            $chart = '
+    <canvas id="myChart3"></canvas>
+    <script>
+        const ctx3 = document.getElementById(\'myChart3\').getContext(\'2d\');
+        const data3 = {
+            labels: ' . $timeJSON . ',
+            datasets: [
+            {
+                type: \'line\',
+                label: \'Moyenne des questions\',
+                data: ' . $averageQuestionsJSON . ',
+                borderColor: \'rgba(54, 162, 235, 0.75)\',
+                fill: false
+            }]
+        };
+        const options3 = {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: \'Parties\',
+                        color: \'#ffffff\'
+                    },
+                    ticks: {
+                        color: \'#ffffff\'
+                    },
+                    grid: {
+                        color: \'#ffffff\'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: \'Valeurs\',
+                        color: \'#ffffff\'
+                    },
+                    ticks: {
+                        color: \'#ffffff\'
+                    },
+                    grid: {
+                        color: \'#ffffff\'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: \'#ffffff\'
+                    }
+                },
+                tooltip: {
+                    backgroundColor: \'rgba(0,0,0,0.8)\',
+                    titleFontColor: \'#ffffff\',
+                    bodyFontColor: \'#ffffff\',
+                    footerFontColor: \'#ffffff\'
+                }
+            }
+        };
+        new Chart(ctx3, {
             type: \'line\',
-            label: \'Moyenne des questions\',
-            data: ' . $averageQuestionsJSON . ',
-            borderColor: \'rgba(54, 162, 235, 0.75)\',
-            fill: false
-        }]
-    };
-    const options3 = {
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: \'Parties\',
-                    color: \'#ffffff\'
-                },
-                ticks: {
-                    color: \'#ffffff\'
-                },
-                grid: {
-                    color: \'#ffffff\'
-                }
-            },
-            y: {
-                title: {
-                    display: true,
-                    text: \'Valeurs\',
-                    color: \'#ffffff\'
-                },
-                ticks: {
-                    color: \'#ffffff\'
-                },
-                grid: {
-                    color: \'#ffffff\'
-                }
-            }
-        },
-        plugins: {
-            legend: {
-                labels: {
-                    color: \'#ffffff\'
-                }
-            },
-            tooltip: {
-                backgroundColor: \'rgba(0,0,0,0.8)\',
-                titleFontColor: \'#ffffff\',
-                bodyFontColor: \'#ffffff\',
-                footerFontColor: \'#ffffff\'
-            }
+            data: data3,
+            options: options3
+        });
+    </script>
+    ';
+            return $chart;
         }
-    };
-    new Chart(ctx3, {
-        type: \'line\',
-        data: data3,
-        options: options3
-    });
-</script>
-';
-        return $chart;
-    }
-
+    */
 
 }
