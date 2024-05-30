@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using Script.Services;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Script.Controllers
 {
@@ -13,6 +15,11 @@ namespace Script.Controllers
         [SerializeField] private string sceneHomeName;
         [SerializeField] private string sceneGameName;
         [SerializeField] private string platform;
+
+        [SerializeField] TMP_InputField usernameInput;
+        [SerializeField] TextMeshProUGUI usernameError;
+
+        WWWForm form;
 
         private void Start()
         {
@@ -26,8 +33,17 @@ namespace Script.Controllers
 
         public IEnumerator StartGameAction()
         {
-            yield return StartCoroutine(_gameService.StartGame(platform));
-            SceneManager.LoadScene(sceneGameName);
+            string username = usernameInput.text.Trim();
+
+            if (string.IsNullOrEmpty(username))
+            {
+                usernameError.text = "Veuillez Saisir un nom d'utilisateur";
+            } else
+            {
+                usernameError.text = "";
+                yield return StartCoroutine(_gameService.StartGame(platform, username));
+                SceneManager.LoadScene(sceneGameName);
+            }            
         }
 
         public void StartGame()

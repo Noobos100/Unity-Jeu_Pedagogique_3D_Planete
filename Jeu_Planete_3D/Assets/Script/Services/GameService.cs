@@ -13,9 +13,9 @@ namespace Script.Services
         [SerializeField] private GameObject pauseMenu;
         [SerializeField] private InformationDisplayer[] displayers;
 
-        public IEnumerator StartGame(string platform)
+        public IEnumerator StartGame(string platform, string username)
         {
-            return linkWeb.NewGame(platform);
+            return linkWeb.NewGame(platform, username);
         }
         
         public IEnumerator AbortGame()

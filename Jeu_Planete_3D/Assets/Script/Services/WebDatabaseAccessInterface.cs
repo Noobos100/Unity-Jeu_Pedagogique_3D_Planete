@@ -5,7 +5,7 @@ namespace Script.Services
     public interface WebDatabaseAccessInterface
     {
 
-        public IEnumerator NewGame(string platform);
+        public IEnumerator NewGame(string platform, string username);
         
         public IEnumerator AbortGame();
         
