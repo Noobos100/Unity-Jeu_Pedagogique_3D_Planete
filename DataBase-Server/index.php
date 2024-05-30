@@ -54,7 +54,7 @@ $partieChecking = new PartieChecking();
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 if($uri == '/') {
-	header('Location: /game');
+    header('Location: /game');
 }
 elseif($uri == '/game'){
     $layout = new Layout('gui/layout.html');
@@ -137,12 +137,13 @@ elseif ('/abort-on-going-game' == $uri) {
     $viewPartie = new ViewPartie($layout, $partieStatus, $ip, $date);
 
     $viewPartie->display();
-} elseif ('/new-game' == $uri) {
+}
+elseif ('/new-game' == $uri) {
     if (isset($_GET['plateforme']) && isset($_GET['username'])) {
         $ip = $_SERVER['REMOTE_ADDR'];
         $plateforme = $_GET['plateforme'];
         $date = date('Y-m-d H:i:s');
-		$username = $_GET['username'];
+        $username = $_GET['username'];
         try {
             $controllerGame->newPlayer($ip, $plateforme, $username, $partieChecking, $data);
         } catch (CannotDoException $e) {
@@ -207,7 +208,8 @@ elseif ('/question' == $uri ) {
     $viewQuestion = new ViewQuestions($layout, $jsonQ);
 
     $viewQuestion->display();
-} elseif ('/manage-questions' == $uri && (isset($_SESSION['loggedin']) )){
+}
+elseif ('/manage-questions' == $uri && (isset($_SESSION['loggedin']) )){
     $layout = new Layout('gui/layout.html');
     $questions = $controllerQuestions->getJsonAttributesAllQ($partieChecking, $data);
 
@@ -293,6 +295,43 @@ elseif ('/random-questions' == $uri) {
     $viewRandomQs = new ViewRandomQuestion($layout, $jsonRandQ);
 
     $viewRandomQs->display();
+}
+elseif ('/add-question' == $uri && (isset($_SESSION['loggedin']) )) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $type = $_POST['type'];
+        $question = $_POST['enonce'];
+
+        if ($type == 'VRAIFAUX') {
+            $correct = $_POST['reponse'];
+            $orbit = $_POST['orbit'];
+            $rotation = $_POST['rotation'];
+
+            $controllerQuestions->addQVraiFaux($question, $orbit, $rotation, $correct, $partieChecking, $data);
+        }
+        elseif ($type == 'QUESINTERAC') {
+            $orbit = $_POST['orbit'];
+            $rotation = $_POST['rotation'];
+            $rotationMargin = $_POST['margin-orbit'];
+            $orbitMargin = $_POST['margin-rotation'];
+
+            $controllerQuestions->addQInterac($question, $orbit, $rotation, $rotationMargin, $orbitMargin, $partieChecking, $data);
+        }
+        elseif ($type == 'QCU') {
+            $option1 = $_POST['option1'];
+            $option2 = $_POST['option2'];
+            $option3 = $_POST['option3'];
+            $option4 = $_POST['option4'];
+            $correct = $_POST['correct'];
+
+            $controllerQuestions->addQCU($question, $option1, $option2, $option3, $option4, $correct, $partieChecking, $data);
+        }
+        echo '<script>
+                alert("Question ajoutée.");
+                location.href = "/manage-questions";
+            </script>';
+    } else {
+        echo "URL not complete, cannot add question.";
+    }
 }
 else {
 	session_destroy();
