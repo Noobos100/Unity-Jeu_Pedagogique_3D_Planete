@@ -278,31 +278,51 @@ class DataAccess implements DataAccessInterface
         return $this->dataAccess->lastInsertId();
     }
 
-    public function addQCU(int $numQues, string $rep1, string $rep2, string $rep3, string $rep4, int $bonneRep): int
+    public function addQCU(string $enonce, string $rep1, string $rep2, string $rep3, string $rep4, string $bonneRep): int
     {
-        $query = "INSERT INTO QCU (Num_Ques, Rep1, Rep2, Rep3, Rep4, BonneRep) VALUES (:numQues, :rep1, :rep2, :rep3, :rep4, :bonneRep)";
+        $query = "INSERT INTO QUESTION (Enonce, Type) VALUES (:enonce, 'QCU')";
         $stmt = $this->dataAccess->prepare($query);
-        $stmt->bindParam(':numQues', $numQues);
-        $stmt->bindParam(':rep1', $rep1);
-        $stmt->bindParam(':rep2', $rep2);
-        $stmt->bindParam(':rep3', $rep3);
-        $stmt->bindParam(':rep4', $rep4);
-        $stmt->bindParam(':bonneRep', $bonneRep);
+        $stmt->bindParam(':enonce', $enonce);
         $stmt->execute();
-        return $this->dataAccess->lastInsertId();
+
+        $lastQID = $this->dataAccess->lastInsertId();
+
+        $query2 = "INSERT INTO QCU (Num_Ques, Rep1, Rep2, Rep3, Rep4, BonneRep) VALUES (:numQues, :rep1, :rep2, :rep3, :rep4, '')";
+        $stmt2 = $this->dataAccess->prepare($query2);
+        $stmt2->bindParam(':numQues', $lastQID);
+        $stmt2->bindParam(':rep1', $rep1);
+        $stmt2->bindParam(':rep2', $rep2);
+        $stmt2->bindParam(':rep3', $rep3);
+        $stmt2->bindParam(':rep4', $rep4);
+        $stmt2->execute();
+
+        $query3 = "UPDATE QCU SET BonneRep = " . $bonneRep . " WHERE Num_Ques = :numQues";
+        $stmt3 = $this->dataAccess->prepare($query3);
+        $stmt3->bindParam(':numQues', $lastQID);
+        $stmt3->execute();
+
+        return $lastQID;
     }
 
-    public function addQInterac(int $numQues, float $bonneRepValeur_orbit, float $marge_Orbit, float $bonneRepValeur_rotation, float $marge_Rotation): int
+    public function addQInterac(string $enonce, string $bonneRepValeur_orbit, string $marge_Orbit, string $bonneRepValeur_rotation, string $marge_Rotation): int
     {
-        $query = "INSERT INTO QUESINTERAC (Num_Ques, BonneRepValeur_orbit, Marge_Orbit, BonneRepValeur_rotation, Marge_Rotation) VALUES (:numQues, :bonneRepValeur_orbit, :marge_Orbit, :bonneRepValeur_rotation, :marge_Rotation)";
+        $query = "INSERT INTO QUESTION (Enonce, Type) VALUES (:enonce, 'QUESINTERAC')";
         $stmt = $this->dataAccess->prepare($query);
-        $stmt->bindParam(':numQues', $numQues);
-        $stmt->bindParam(':bonneRepValeur_orbit', $bonneRepValeur_orbit);
-        $stmt->bindParam(':marge_Orbit', $marge_Orbit);
-        $stmt->bindParam(':bonneRepValeur_rotation', $bonneRepValeur_rotation);
-        $stmt->bindParam(':marge_Rotation', $marge_Rotation);
+        $stmt->bindParam(':enonce', $enonce);
         $stmt->execute();
-        return $this->dataAccess->lastInsertId();
+
+        $lastQID = $this->dataAccess->lastInsertId();
+
+        $query2 = "INSERT INTO QUESINTERAC (Num_Ques, BonneRepValeur_orbit, Marge_Orbit, BonneRepValeur_rotation, Marge_Rotation) VALUES (:numQues, :bonneRepValeur_orbit, :marge_Orbit, :bonneRepValeur_rotation, :marge_Rotation)";
+        $stmt2 = $this->dataAccess->prepare($query2);
+        $stmt2->bindParam(':numQues', $lastQID);
+        $stmt2->bindParam(':bonneRepValeur_orbit', $bonneRepValeur_orbit);
+        $stmt2->bindParam(':marge_Orbit', $marge_Orbit);
+        $stmt2->bindParam(':bonneRepValeur_rotation', $bonneRepValeur_rotation);
+        $stmt2->bindParam(':marge_Rotation', $marge_Rotation);
+        $stmt2->execute();
+
+        return $lastQID;
     }
 
     public function addQVraiFaux(string $enonce, ?string $valeur_orbit, ?string $valeur_rotation, string $bonneRep): void

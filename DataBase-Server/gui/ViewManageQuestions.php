@@ -86,36 +86,41 @@ function showFormFields(type) {
                 <option value="Faux">Faux</option>
             </select>
         `;
-    } else if (type === "QCU") {
+    } 
+    else if (type === "QCU") {
         fields = `
             <label for="enonce">Enoncé:</label>
             <input type="text" id="enonce" name="enonce" required>
             <label for="option1">Option 1:</label>
-            <input type="text" id="option1" name="option1" required>
+            <input type="text" id="option1" name="option1" required">
             <label for="option2">Option 2:</label>
-            <input type="text" id="option2" name="option2" required>
+            <input type="text" id="option2" name="option2" required">
             <label for="option3">Option 3:</label>
-            <input type="text" id="option3" name="option3" required>
+            <input type="text" id="option3" name="option3" required">
             <label for="option4">Option 4:</label>
-            <input type="text" id="option4" name="option4" required>
+            <input type="text" id="option4" name="option4" required">
             <label for="correct">Correct Answer:</label>
-            <select id="correct" name="correct" required>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-                <option value="4">Option 4</option>
+            <select id="correct" name="correct" required">
+                <option value="Rep1">Option 1</option>
+                <option value="Rep2">Option 2</option>
+                <option value="Rep3">Option 3</option>
+                <option value="Rep4">Option 4</option>
             </select>
         `;
-    } else if (type === "QUESINTERAC") {
+    } 
+    else if (type === "QUESINTERAC") {
         fields = `
             <label for="enonce">Enoncé:</label>
             <input type="text" id="enonce" name="enonce" required>
-            <label for="orbit">Orbite:</label>
+            <label for="orbit">Réponse orbite:</label>
             <input type="text" id="orbit" name="orbit" required>
-            <label for="reponse">Réponse:</label>
-            <input type="text" id="reponse" name="reponse" required>
-            <label for="orbit-margin">Marge d\'erreur:</label>
-            <input type="number" id="orbit-margin" name="orbit-margin" required>
+            <label for="rotation">Réponse rotation:</label>
+            <input type="text" id="rotation" name="rotation" required>
+            
+            <label for="margin-rotation">Marge rotation:</label>
+            <input type="text" id="margin-rotation" name="margin-rotation" required>
+            <label for="margin-orbit">Marge orbite:</label>
+            <input type="text" id="margin-orbit" name="margin-orbit" required>
     `;
     }
 
@@ -192,7 +197,7 @@ function showFormFields(type) {
             });
 
             window.addEventListener("click", (event) => {
-                if (event.target == popup) {
+                if (event.target === popup) {
                     popup.style.display = "none";
                     document.body.classList.remove("popup-active");
                 }
