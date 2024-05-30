@@ -301,6 +301,32 @@ class DataAccess implements DataAccessInterface
         return $this->dataAccess->lastInsertId();
     }
 
+    public function addQVraiFaux(string $enonce, ?string $valeur_orbit, ?string $valeur_rotation, string $bonneRep): void
+    {
+        $query = "INSERT INTO QUESTION (Enonce, Type) VALUES (:enonce, 'VRAIFAUX')";
+        $stmt = $this->dataAccess->prepare($query);
+        $stmt->bindParam(':enonce', $enonce);
+        $stmt->execute();
+
+        $lastQID = $this->dataAccess->lastInsertId();
+
+        if (empty($valeur_orbit)) {
+            $valeur_orbit = null;
+        }
+
+        if (empty($valeur_rotation)) {
+            $valeur_rotation = null;
+        }
+
+        $query2 = "INSERT INTO VRAIFAUX (Num_Ques, Valeur_orbit, Valeur_rotation, BonneRep) VALUES (:numQues, :valeur_orbit, :valeur_rotation, :bonneRep)";
+        $stmt2 = $this->dataAccess->prepare($query2);
+        $stmt2->bindParam(':numQues', $lastQID);
+        $stmt2->bindParam(':valeur_orbit', $valeur_orbit);
+        $stmt2->bindParam(':valeur_rotation', $valeur_rotation);
+        $stmt2->bindParam(':bonneRep', $bonneRep);
+        $stmt2->execute();
+    }
+
     /**
      * @param int $numQues
      * @param int $idParty
@@ -539,7 +565,7 @@ class DataAccess implements DataAccessInterface
      * @return array
      */
     public function getAllQ(): array{
-        $query = "SELECT * FROM QUESTION";
+        $query = "SELECT * FROM QUESTION ORDER BY Num_Ques DESC";
         return $this->dataAccess->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
