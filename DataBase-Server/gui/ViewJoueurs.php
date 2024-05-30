@@ -2,6 +2,8 @@
 
 namespace gui;
 
+use control\ControllerPlayers;
+
 include_once "View.php";
 
 class ViewJoueurs extends View
@@ -10,28 +12,31 @@ class ViewJoueurs extends View
      * Constructs a new ViewJoueurs instance.
      *
      * @param Layout $layout The layout to use for displaying content.
-     * @param $controller The controller to fetch data from.
-     * @param $data Any additional data needed.
+     * @param ControllerPlayers $controller The controller to fetch data from.
+     * @param mixed $data additional data needed.
      */
-    public function __construct($layout, $controller, $data)
+    public function __construct(Layout $layout, ControllerPlayers $controller, mixed $data)
     {
         parent::__construct($layout);
 
+        // Page title
         $this->title = 'Utilisateurs';
+
+        // Page content
         $this->content .= '<h1>Types de joueur</h1>';
 
-        $joueurs = $controller->getJoueurs($data);
+        // Get all players
+        $players = $controller->getPlayers($data);
 
-        // Afficher le nombre total de joueurs
-        $totalJoueurs = count($joueurs);
-        $this->content .= "<p>Nombre total de joueurs : $totalJoueurs</p>";
+        // Get player count
+        $nbPlayers = count($players);
+        $this->content .= "<p>Nombre total de joueurs : $nbPlayers</p>";
 
-        // Passer les données des joueurs à la vue
-        $this->content .= $controller->generateChartPlatforme($joueurs);
+        // Generate the pie chart
+        $this->content .= $controller->generateChartPlatforme($players);
 
-        // Ajouter le tableau des adresses IP et leur nombre d'apparitions
-        $this->content .= $controller->generateTable($joueurs);
+        // Ip Table
+        $this->content .= $controller->generateTable($players);
     }
 
 }
-?>

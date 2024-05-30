@@ -78,7 +78,7 @@ class DataAccess implements DataAccessInterface
     /**
      * @return array
      */
-    public function getJoueurs(): array
+    public function getPlayers(): array
     {
         $query = "SELECT * FROM JOUEUR";
         return $this->dataAccess->query($query)->fetchAll(PDO::FETCH_ASSOC);

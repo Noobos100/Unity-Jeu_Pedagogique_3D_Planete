@@ -2,17 +2,22 @@
 
 namespace gui;
 
+use control\ControllerGameData;
+use data\DataAccess;
+
 include_once "View.php";
+include_once "charts/ViewPercentage.php";
+include_once "charts/ViewMoyQuestions.php";
+include_once "charts/ViewApparition.php";
 
-class ViewDonneesDuJeu extends View
+class ViewGameData extends View
 {
-
     /**
      * Constructs a new ViewHome instance.
      *
      * @param Layout $layout The layout to use for displaying content.
      */
-    public function __construct($layout, $controller, $data)
+    public function __construct(Layout $layout, ControllerGameData $controller, DataAccess $data)
     {
         parent::__construct($layout);
 
@@ -43,8 +48,6 @@ class ViewDonneesDuJeu extends View
         $this->content .= "<p>Temps maximum de jeu : $totalMaxTemps</p>";
 
         // Ajouter le tableau des données dans le contenu
-        $this->content .= $controller->generateTable($parties);
-
         $this->content .= $controller->generateChartMoyQuestion($partiesAsc);
 
         $this->content .= '<h2>Réponses</h2>';
@@ -57,10 +60,7 @@ class ViewDonneesDuJeu extends View
         $totalMaxTemps = $controller->calculateTempsMax($reponseUser);
         $this->content .= "<p>Temps maximum de réponse : $totalMaxTemps</p>";
 
-        // Ajouter le tableau des données dans le contenu
-        $this->content .= $controller->generateTable($reponseUser);
-
-        $this->content .= $controller->generateChartPourcentage($reponseUser);
+        $this->content .= $controller->generatePercentageChart($reponseUser);
 
         $this->content .= $controller->generateChartApparitions($getQuestionsNb);
     }

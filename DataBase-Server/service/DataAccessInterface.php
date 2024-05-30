@@ -163,4 +163,9 @@ interface DataAccessInterface
      * @return array
      */
     public function getRandomQVraiFaux(int $howManyVraiFaux): array;
+
+	/**
+	 * @return array
+	 */
+	public function getPlayers(): array;
 }

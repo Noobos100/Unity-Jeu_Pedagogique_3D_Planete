@@ -6,8 +6,9 @@ use data\DataAccess;
 include_once 'control/ControllerGame.php';
 include_once 'control/ControllerInteractions.php';
 include_once 'control/ControllerQuestions.php';
-include_once 'control/ControllerJoueurs.php';
-use control\{ControllerGame, ControllerQuestions, ControllerInteractions, ControllerJoueurs};
+include_once 'control/ControllerPlayers.php';
+include_once 'control/ControllerGameData.php';
+use control\{ControllerGame, ControllerQuestions, ControllerInteractions, ControllerPlayers, ControllerGameData};
 
 include_once 'service/PartieChecking.php';
 include_once 'service/DataAccessInterface.php';
@@ -25,9 +26,9 @@ include_once 'gui/ViewModifyQuestion.php';
 include_once 'gui/ViewManageQuestions.php';
 include_once 'gui/ViewGame.php';
 include_once 'gui/ViewJoueurs.php';
-include_once 'gui/ViewDonneesDuJeu.php';
+include_once 'gui/ViewGameData.php';
 
-use gui\{Layout,ViewInteractions,ViewDonneesDuJeu,ViewJoueurs,ViewManageQuestions,ViewModifyQuestion,ViewPartie,ViewQuestions,ViewRandomQuestion,ViewUtilisateur,ViewLogin,ViewGame};
+use gui\{Layout,ViewInteractions,ViewGameData,ViewJoueurs,ViewManageQuestions,ViewModifyQuestion,ViewPartie,ViewQuestions,ViewRandomQuestion,ViewUtilisateur,ViewLogin,ViewGame};
 
 
 session_start();
@@ -45,7 +46,8 @@ try {
 $controllerGame = new ControllerGame();
 $controllerInte = new ControllerInteractions();
 $controllerQuestions = new ControllerQuestions();
-$controllerJoueurs = new ControllerJoueurs();
+$controllerPlayers = new ControllerPlayers();
+$controllerGameData = new ControllerGameData();
 
 // initilisation du cas d'utilisation PartieChecking
 $partieChecking = new PartieChecking();
@@ -91,14 +93,14 @@ elseif ('/login' == $uri ) {
 }
 elseif ('/game-data' == $uri && (isset($_SESSION['loggedin']) )) {
     $layout = new Layout('gui/layout.html');
-    $viewPartie = new ViewDonneesDuJeu($layout, $controllerJoueurs, $data);
+    $viewPartie = new ViewGameData($layout, $controllerGameData, $data);
     $viewPartie->display();
 
 
 }
 elseif ('/players' == $uri && (isset($_SESSION['loggedin']) )) {
     $layout = new Layout('gui/layout.html');
-    $viewPartie = new ViewJoueurs($layout, $controllerJoueurs, $data);
+    $viewPartie = new ViewJoueurs($layout, $controllerPlayers, $data);
     $viewPartie->display();
 
 }
