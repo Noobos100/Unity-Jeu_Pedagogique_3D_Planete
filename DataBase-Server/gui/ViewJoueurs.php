@@ -27,7 +27,7 @@ class ViewJoueurs extends View
         $this->content .= "<p>Nombre total de joueurs : $totalJoueurs</p>";
 
         // Passer les données des joueurs à la vue
-        $this->content .= $controller->generateChart($joueurs);
+        $this->content .= $controller->generateChartPlatforme($joueurs);
 
         // Ajouter le tableau des adresses IP et leur nombre d'apparitions
         $this->content .= $controller->generateTable($joueurs);

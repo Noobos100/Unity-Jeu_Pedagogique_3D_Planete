@@ -21,7 +21,8 @@ class ViewDonneesDuJeu extends View
 
         $parties = $controller->getParties($data);
         $reponseUser = $controller->getReponsesUsers($data);
-        //$partiesAsc = $controller->getPartiesAsc($data);
+        $partiesAsc = $controller->getPartiesAsc($data);
+        $getQuestionsNb = $controller->getQuestionNb($data);
 
         // Afficher le nombre total de parties
         $totalParties = count($parties);
@@ -44,7 +45,7 @@ class ViewDonneesDuJeu extends View
         // Ajouter le tableau des données dans le contenu
         $this->content .= $controller->generateTable($parties);
 
-        //$this->content .= $controller->generateChart3($partiesAsc);
+        $this->content .= $controller->generateChartMoyQuestion($partiesAsc);
 
         $this->content .= '<h2>Réponses</h2>';
 
@@ -59,7 +60,9 @@ class ViewDonneesDuJeu extends View
         // Ajouter le tableau des données dans le contenu
         $this->content .= $controller->generateTable($reponseUser);
 
-        $this->content .= $controller->generateChart2($reponseUser);
+        $this->content .= $controller->generateChartPourcentage($reponseUser);
+
+        $this->content .= $controller->generateChartApparitions($getQuestionsNb);
     }
 
 }
