@@ -18,8 +18,8 @@ class ViewMoyQuestions extends ViewChart
         <canvas id="myChart3"></canvas>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-          let ctx3 = document.getElementById('myChart3').getContext('2d');
-          let data3 = {
+          let moyQuestionCtx = document.getElementById('myChart3').getContext('2d');
+          let moyQuestionData = {
             labels: <?php echo $this->getDatasetKey() ?>,
             datasets: [{
               type: 'bar',
@@ -29,7 +29,7 @@ class ViewMoyQuestions extends ViewChart
               borderWidth: 1
             }]
           };
-          const options3 = {
+          const moyQuestionOptions = {
             scales: {
               x: {
                 title: {
@@ -66,10 +66,10 @@ class ViewMoyQuestions extends ViewChart
               }
             }
           };
-          new Chart(ctx3, {
+          new Chart(moyQuestionCtx, {
             type: 'bar',
-            data: data3,
-            options: options3
+            data: moyQuestionData,
+            options: moyQuestionOptions
           });
         </script>
 		<?php

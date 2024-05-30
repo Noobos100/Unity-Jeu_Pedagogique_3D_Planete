@@ -6,7 +6,7 @@ include_once "ViewChart.php";
 
 class ViewPlatform extends ViewChart
 {
-    public function __construct($dataset)
+	public function __construct($dataset)
 	{
 		parent::__construct($dataset);
 	}
@@ -24,11 +24,33 @@ class ViewPlatform extends ViewChart
               datasets: [{
                 label: 'Nombre de joueurs',
                 data: <?php echo $this->getDatasetValue() ?>,
+                backgroundColor: [
+                  'rgba(60,227,99,0.75)',
+                  'rgba(255, 99, 132, 0.75)',
+                  'rgba(54, 162, 235, 0.75)',
+                  'rgba(255, 206, 86, 0.75)',
+                ],
               }]
             };
+          let platformOptions = {
+            plugins: {
+              legend: {
+                labels: {
+                  color: '#ffffff' // Couleur des étiquettes de la légende
+                }
+              },
+              tooltip: {
+                backgroundColor: 'rgba(0,0,0,0.8)',
+                titleFontColor: '#ffffff',
+                bodyFontColor: '#ffffff',
+                footerFontColor: '#ffffff'
+              }
+            }
+          }
           new Chart(platformCtx, {
             type: 'pie',
-            data: platformData
+            data: platformData,
+            options: platformOptions
           });
         </script>
 		<?php
