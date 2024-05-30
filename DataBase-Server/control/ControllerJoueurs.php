@@ -26,6 +26,11 @@ class ControllerJoueurs
         return $data->getPartiesAsc();
     }
 
+    public function getQuestionNb($data)
+    {
+        return $data->getQuestionNb();
+    }
+
     public function generateTable($data)
     {
         if (empty($data)) {
@@ -102,7 +107,7 @@ class ControllerJoueurs
         return gmdate("H:i:s", $totalMaxTemps);
     }
 
-    public function generateChart($joueurs)
+    public function generateChartPlatforme($joueurs)
     {
         // Préparer les données pour le graphique
         $platformCount = [];
@@ -149,21 +154,7 @@ class ControllerJoueurs
                             borderWidth: 1
                         }]
                     },
-                    options: {
-                        plugins: {
-                            legend: {
-                                labels: {
-                                    color: \'#ffffff\' // Couleur des étiquettes de la légende
-                                }
-                            },
-                            tooltip: {
-                                backgroundColor: \'rgba(0,0,0,0.8)\',
-                                titleFontColor: \'#ffffff\',
-                                bodyFontColor: \'#ffffff\',
-                                footerFontColor: \'#ffffff\'
-                            }
-                        }
-                    }
+                    
                 });
             </script>
         ';
@@ -171,7 +162,7 @@ class ControllerJoueurs
         return $chart;
     }
 
-    public function generateChart2($reponsesUsers)
+    public function generateChartPourcentage($reponsesUsers)
     {
         // Préparer les données pour le graphique
         $questionData = [];
@@ -206,8 +197,8 @@ class ControllerJoueurs
         <canvas id="myChart2"></canvas>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            const ctx2 = document.getElementById(\'myChart2\').getContext(\'2d\');
-            const data2 = {
+            let ctx2 = document.getElementById(\'myChart2\').getContext(\'2d\');
+            let data2 = {
                 labels: ' . $labelsJSON . ',
                 datasets: [{
                     type: \'bar\',
@@ -265,87 +256,151 @@ class ControllerJoueurs
         return $chart;
     }
 
-    /*
-        public function generateChart3($parties)
-        {
-            // Trier les parties par durée croissante
-            usort($parties, function ($a, $b) {
-                $dateTimeA = DateTime::createFromFormat('Y-m-d H:i:s', $a['Date_Deb']);
-                $dateTimeB = DateTime::createFromFormat('Y-m-d H:i:s', $b['Date_Deb']);
-                return $dateTimeA <=> $dateTimeB;
-            });
 
-            // Préparer les données pour le graphique
-            $timeData = [];
-            $averageQuestions = [];
-            foreach ($parties as $partie) {
-                if ($partie['Date_Fin'] == null) {
-                    continue;
-                }
-                $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $partie['Date_Deb']);
-                $dateTime2 = DateTime::createFromFormat('Y-m-d H:i:s', $partie['Date_Fin']);
-
-                $interval = $dateTime->diff($dateTime2);
-                $durationInSeconds = $interval->format('%H') * 3600 + $interval->format('%I') * 60 + $interval->format('%S');
-                $durationFormatted = gmdate("H:i:s", $durationInSeconds);
-
-                $timeData[] = $durationFormatted;
-                $averageQuestions[] = $partie['Moy_Questions'];
+    public function generateChartMoyQuestion($parties)
+    {
+        // Préparer les données pour le graphique
+        $moyQuestionsData = [];
+        foreach ($parties as $partie) {
+            $moyQuestions = $partie['Moy_Questions'];
+            if (!isset($moyQuestionsData[$moyQuestions])) {
+                $moyQuestionsData[$moyQuestions] = 0;
             }
+            $moyQuestionsData[$moyQuestions]++;
+        }
 
-            // Convertir les tableaux en chaînes JSON pour JavaScript
-            $timeJSON = json_encode($timeData);
-            $averageQuestionsJSON = json_encode($averageQuestions);
+        // Trier les moyennes de questions par ordre croissant
+        ksort($moyQuestionsData);
 
-            // Générer le code HTML et JavaScript pour le graphique
-            $chart = '
-    <canvas id="myChart3"></canvas>
+        $labels = array_keys($moyQuestionsData);
+        $moyQuestionsCounts = array_values($moyQuestionsData);
+
+        // Convertir les tableaux en chaînes JSON pour JavaScript
+        $labelsJSON = json_encode($labels);
+        $moyQuestionsCountsJSON = json_encode($moyQuestionsCounts);
+
+        // Générer le code HTML et JavaScript pour le graphique
+        $chart = '
+        <canvas id="myChart3"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            let ctx3 = document.getElementById(\'myChart3\').getContext(\'2d\');
+            let data3 = {
+                labels: ' . $labelsJSON . ',
+                datasets: [{
+                    type: \'bar\',
+                    label: \'Nombre de fois où chaque moyenne apparaît\',
+                    data: ' . $moyQuestionsCountsJSON . ',
+                    backgroundColor: \'rgba(75, 192, 192, 0.75)\',
+                    borderWidth: 1
+                }]
+            };
+            const options3 = {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: \'Moyennes des questions et Abandons\',
+                            color: \'#ffffff\' // Couleur des étiquettes de l\'axe X
+                        },
+                        ticks: {
+                            color: \'#ffffff\' // Couleur des étiquettes de l\'axe X
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: \'Nombre\',
+                            color: \'#ffffff\' // Couleur des étiquettes de l\'axe Y
+                        },
+                        ticks: {
+                            color: \'#ffffff\', // Couleur des étiquettes de l\'axe Y
+                            stepSize : 1
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: \'#ffffff\' // Couleur des étiquettes de la légende
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: \'rgba(0,0,0,0.8)\',
+                        titleFontColor: \'#ffffff\',
+                        bodyFontColor: \'#ffffff\',
+                        footerFontColor: \'#ffffff\'
+                    }
+                }
+            };
+            new Chart(ctx3, {
+                type: \'bar\',
+                data: data3,
+                options: options3
+            });
+        </script>
+    ';
+
+        return $chart;
+    }
+
+    public function generateChartApparitions($questionData)
+    {
+        $labels = [];
+        $appearances = [];
+        foreach ($questionData as $data) {
+            $labels[] = "Question " . $data['Num_Ques'];
+            $appearances[] = $data['Apparitions'];
+        }
+
+        // Convertir les tableaux en chaînes JSON pour JavaScript
+        $labelsJSON = json_encode($labels);
+        $appearancesJSON = json_encode($appearances);
+
+        // Générer le code HTML et JavaScript pour le graphique
+        $chart = '
+    <canvas id="myChart4"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const ctx3 = document.getElementById(\'myChart3\').getContext(\'2d\');
-        const data3 = {
-            labels: ' . $timeJSON . ',
-            datasets: [
-            {
-                type: \'line\',
-                label: \'Moyenne des questions\',
-                data: ' . $averageQuestionsJSON . ',
-                borderColor: \'rgba(54, 162, 235, 0.75)\',
-                fill: false
+        let ctx4 = document.getElementById(\'myChart4\').getContext(\'2d\');
+        let data4 = {
+            labels: ' . $labelsJSON . ',
+            datasets: [{
+                type: \'bar\',
+                label: \'Nombre d apparitions par question\',
+                data: ' . $appearancesJSON . ',
+                backgroundColor: \'rgba(200, 150, 150, 0.75)\',
+                borderWidth: 1
             }]
-        };
-        const options3 = {
+        }
+        const options4 = {
             scales: {
                 x: {
                     title: {
                         display: true,
-                        text: \'Parties\',
-                        color: \'#ffffff\'
+                        text: \'Questions\',
+                        color: \'#ffffff\' // Couleur des étiquettes de l\'axe X
                     },
                     ticks: {
-                        color: \'#ffffff\'
-                    },
-                    grid: {
-                        color: \'#ffffff\'
+                        color: \'#ffffff\' // Couleur des étiquettes de l\'axe X
                     }
                 },
                 y: {
                     title: {
                         display: true,
-                        text: \'Valeurs\',
-                        color: \'#ffffff\'
+                        text: \'Nombre d apparitions\',
+                        color: \'#ffffff\' // Couleur des étiquettes de l\'axe Y
                     },
                     ticks: {
-                        color: \'#ffffff\'
-                    },
-                    grid: {
-                        color: \'#ffffff\'
+                        color: \'#ffffff\', // Couleur des étiquettes de l\'axe Y
+                        stepSize : 1
                     }
                 }
             },
             plugins: {
                 legend: {
                     labels: {
-                        color: \'#ffffff\'
+                        color: \'#ffffff\' // Couleur des étiquettes de la légende
                     }
                 },
                 tooltip: {
@@ -356,15 +411,15 @@ class ControllerJoueurs
                 }
             }
         };
-        new Chart(ctx3, {
-            type: \'line\',
-            data: data3,
-            options: options3
+        new Chart(ctx4, {
+            type: \'bar\',
+            data: data4,
+            options: options4
         });
     </script>
     ';
-            return $chart;
-        }
-    */
+
+        return $chart;
+    }
 
 }
