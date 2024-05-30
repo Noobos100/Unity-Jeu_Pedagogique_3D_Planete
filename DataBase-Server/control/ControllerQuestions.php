@@ -84,4 +84,9 @@ class ControllerQuestions
     {
         $questionService->deleteQuestion($numQues, $data);
     }
+
+    public function addQVraiFaux(string $question, ?string $orbit, ?string $rotation, string $correct, PartieChecking $partieChecking, $data): void
+    {
+        $partieChecking->addQVraiFaux($question, $orbit, $rotation, $correct, $data);
+    }
 }
