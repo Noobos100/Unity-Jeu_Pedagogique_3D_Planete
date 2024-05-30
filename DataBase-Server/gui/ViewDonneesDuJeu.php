@@ -30,7 +30,7 @@ class ViewDonneesDuJeu extends View
 
         // Afficher le nombre total d'abandons sur le total
         $totalAbandons = $controller->calculateTotalAbandons($parties);
-        $this->content .= "<p>Nombre total d'abandons sur le total : $totalAbandons</p>";
+        $this->content .= "<p>Nombre total d'abandons : $totalAbandons</p>";
 
         $this->content .= '<h2>Parties</h2>';
 
@@ -63,6 +63,7 @@ class ViewDonneesDuJeu extends View
         $this->content .= $controller->generateChartPourcentage($reponseUser);
 
         $this->content .= $controller->generateChartApparitions($getQuestionsNb);
+
     }
 
 }

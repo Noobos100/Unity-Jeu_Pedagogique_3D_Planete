@@ -305,9 +305,6 @@ class ControllerJoueurs
                         },
                         ticks: {
                             color: \'#ffffff\' // Couleur des étiquettes de l\'axe X
-                        },
-                        grid: {
-                            color: \'#ffffff\' // Couleur de la grille de l\'axe X
                         }
                     },
                     y: {
@@ -317,10 +314,8 @@ class ControllerJoueurs
                             color: \'#ffffff\' // Couleur des étiquettes de l\'axe Y
                         },
                         ticks: {
-                            color: \'#ffffff\' // Couleur des étiquettes de l\'axe Y
-                        },
-                        grid: {
-                            color: \'#ffffff\' // Couleur de la grille de l\'axe Y
+                            color: \'#ffffff\', // Couleur des étiquettes de l\'axe Y
+                            stepSize : 1
                         }
                     }
                 },
@@ -372,9 +367,9 @@ class ControllerJoueurs
             labels: ' . $labelsJSON . ',
             datasets: [{
                 type: \'bar\',
-                label: \'Nombre d\'apparitions par question\',
+                label: \'Nombre d apparitions par question\',
                 data: ' . $appearancesJSON . ',
-                backgroundColor: \'rgba(75, 192, 192, 0.75)\',
+                backgroundColor: \'rgba(200, 150, 150, 0.75)\',
                 borderWidth: 1
             }]
         }
@@ -393,11 +388,12 @@ class ControllerJoueurs
                 y: {
                     title: {
                         display: true,
-                        text: \'Nombre d\'apparitions\',
+                        text: \'Nombre d apparitions\',
                         color: \'#ffffff\' // Couleur des étiquettes de l\'axe Y
                     },
                     ticks: {
-                        color: \'#ffffff\' // Couleur des étiquettes de l\'axe Y
+                        color: \'#ffffff\', // Couleur des étiquettes de l\'axe Y
+                        stepSize : 1
                     }
                 }
             },
@@ -425,9 +421,5 @@ class ControllerJoueurs
 
         return $chart;
     }
-
-
-
-
 
 }
