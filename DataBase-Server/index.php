@@ -277,7 +277,6 @@ elseif ('/delete-question' == $uri && (isset($_SESSION['loggedin']) )) {
     if (isset($_GET['qid'])) {
         $controllerQuestions->deleteQuestion($_GET['qid'], $partieChecking, $data);
         echo '<script>
-                alert("Question supprimée.");
                 location.href = "/manage-questions";
             </script>';
     } else {

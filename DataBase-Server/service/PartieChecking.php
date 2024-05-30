@@ -15,7 +15,7 @@ class PartieChecking
      * @param int $isEval
      * @param string $ipJoueur
      * @param string $dateInterac
-     * @param $data
+     * @param DataAccess $data
      * @return Interaction|False
      */
     public function addInteraction(string $nomInteract, float $valeurInteract, int $isEval, string $ipJoueur, string $dateInterac, DataAccess $data): Interaction|False{
@@ -25,28 +25,28 @@ class PartieChecking
     /**
      * @param string $ip
      * @param string $plateforme
-	 * @param string $username
-     * @param $data
+     * @param string $username
+     * @param DataAccess $data
      * @return Joueur|False
      */
     public function addJoueur(string $ip, string $plateforme, string $username, DataAccess $data): Joueur|False {
         return $data->addJoueur($ip, $plateforme, $username);
     }
 
-	/**
-	 * @param string $ip
-	 * @param string $plateforme
-	 * @param string $username
-	 * @param $data
-	 * @return Joueur|False
-	 */
+    /**
+     * @param string $ip
+     * @param string $plateforme
+     * @param string $username
+     * @param DataAccess $data
+     * @return Joueur|False
+     */
 	public function updateJoueur(string $ip, string $plateforme, string $username, DataAccess $data): Joueur|False {
 		return $data->updateJoueur($ip, $plateforme, $username);
 	}
 
     /**
      * @param string $ip
-     * @param $data
+     * @param DataAccess $data
      * @return bool
      */
     public function verifyJoueurExists(string $ip, DataAccess $data): bool{
@@ -56,7 +56,7 @@ class PartieChecking
     /**
      * @param string $ipJoueur
      * @param string $dateDeb
-     * @param $data
+     * @param DataAccess $data
      * @return Partie|False
      */
     public function addNewPartie(string $ipJoueur, string $dateDeb, DataAccess $data): Partie|False{
@@ -65,7 +65,7 @@ class PartieChecking
 
     /**
      * @param string $ipJoueur
-     * @param $data
+     * @param DataAccess $data
      * @return void
      */
     public function deleteOnGoingPartie(string $ipJoueur, DataAccess $data): void{
@@ -74,7 +74,7 @@ class PartieChecking
 
     /**
      * @param string $ipJoueur
-     * @param $data
+     * @param DataAccess $data
      * @return void
      */
     public function abortOnGoingPartie(string $ipJoueur, DataAccess $data): void{
@@ -84,7 +84,7 @@ class PartieChecking
     /**
      * @param string $ipJoueur
      * @param string $dateFin
-     * @param $data
+     * @param DataAccess $data
      * @return Partie
      */
     public function endPartie(string $ipJoueur, string $dateFin, DataAccess $data): Partie{
@@ -93,7 +93,7 @@ class PartieChecking
 
     /**
      * @param string $ipJoueur
-     * @param $data
+     * @param DataAccess $data
      * @return Partie|False
      */
     public function getPartieInProgress(string $ipJoueur, DataAccess $data): Partie|False{
@@ -102,7 +102,7 @@ class PartieChecking
 
     /**
      * @param string $ipJoueur
-     * @param $data
+     * @param DataAccess $data
      * @return bool
      */
     public function verifyPartieInProgress(string $ipJoueur, DataAccess $data): bool{
@@ -112,7 +112,7 @@ class PartieChecking
     /**
      * @param int $numQues
      * @param int $idPartie
-     * @param $data
+     * @param DataAccess $data
      * @return UserAnswer
      */
     public function getQuestionCorrect(int $numQues, int $idPartie, DataAccess $data):  UserAnswer{
@@ -121,8 +121,9 @@ class PartieChecking
 
     /**
      * @param int $idPartie
-     * @param $data
+     * @param DataAccess $data
      * @return float|False
+     * @throws CannotDoException
      */
     public function getPartyScore(int $idPartie, DataAccess $data): float|False{
         return $data->getPartyScore($idPartie);
@@ -134,7 +135,7 @@ class PartieChecking
      * @param string $dateDeb
      * @param string $dateFin
      * @param bool $isCorrect
-     * @param $data
+     * @param DataAccess $data
      * @return void
      */
     public function addQuestionAnswer(int $numQues, int $idParty, string $dateDeb, string $dateFin, bool $isCorrect, DataAccess $data): void{
@@ -143,7 +144,7 @@ class PartieChecking
 
     /**
      * @param int $numQues
-     * @param $data
+     * @param DataAccess $data
      * @return array|False
      */
     public function getQBasics(int $numQues, DataAccess $data): array|False{
@@ -152,7 +153,7 @@ class PartieChecking
 
     /**
      * @param int $numQues
-     * @param $data
+     * @param DataAccess $data
      * @return QCU | VraiFaux | QuesInterac| False
      */
     public function getQAttributes(int $numQues, DataAccess $data): QCU | VraiFaux | QuesInterac| False{
@@ -163,7 +164,7 @@ class PartieChecking
      * @param int $howManyQCM
      * @param int $howManyInterac
      * @param int $howManyVraiFaux
-     * @param $data
+     * @param DataAccess $data
      * @return array
      */
     public function getRandomQs(int $howManyQCM, int $howManyInterac, int $howManyVraiFaux, DataAccess $data): array{
@@ -172,7 +173,7 @@ class PartieChecking
 
     /**
      * @param int $numQues
-     * @param $data
+     * @param DataAccess $data
      * @return Qcu|False
      */
     public function getQQCU(int $numQues, DataAccess $data): Qcu|False{
@@ -203,7 +204,7 @@ class PartieChecking
 
     /**
      * @param int $howManyInterac
-     * @param $data
+     * @param DataAccess $data
      * @return array
      */
     public function getRandomQInterac(int $howManyInterac, DataAccess $data): array{
@@ -212,7 +213,7 @@ class PartieChecking
 
     /**
      * @param int $numQues
-     * @param $data
+     * @param DataAccess $data
      * @return VraiFaux|False
      */
     public function getQVraiFaux(int $numQues, DataAccess $data): VraiFaux|False{
@@ -242,7 +243,7 @@ class PartieChecking
         $data->updateQInterac($Num_Ques, $question, $orbit, $rotation, $rotationMargin, $orbitMargin);
     }
 
-    public function deleteQuestion(int $numQues, mixed $data): void
+    public function deleteQuestion(int $numQues, DataAccess $data): void
     {
         $data->deleteQuestion($numQues);
     }
@@ -250,6 +251,11 @@ class PartieChecking
     public function addQVraiFaux(string $question, ?string $orbit, ?string $rotation, string $correct, DataAccess $data): void
     {
         $data->addQVraiFaux($question, $orbit, $rotation, $correct);
+    }
+
+    public function addQCU(string $question, string $option1, string $option2, string $option3, string $option4, string $correct, DataAccess $data): void
+    {
+        $data->addQCU($question, $option1, $option2, $option3, $option4, $correct);
     }
 }
 

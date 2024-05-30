@@ -10,10 +10,10 @@ class ViewJoueurs extends View
      * Constructs a new ViewJoueurs instance.
      *
      * @param Layout $layout The layout to use for displaying content.
-     * @param $controller The controller to fetch data from.
-     * @param $data Any additional data needed.
+     * @param $controller : The controller to fetch data from.
+     * @param $data : Any additional data needed.
      */
-    public function __construct($layout, $controller, $data)
+    public function __construct(Layout $layout, $controller, $data)
     {
         parent::__construct($layout);
 

@@ -91,19 +91,19 @@ function showFormFields(type) {
             <label for="enonce">Enoncé:</label>
             <input type="text" id="enonce" name="enonce" required>
             <label for="option1">Option 1:</label>
-            <input type="text" id="option1" name="option1" required>
+            <input type="text" id="option1" name="option1" required">
             <label for="option2">Option 2:</label>
-            <input type="text" id="option2" name="option2" required>
+            <input type="text" id="option2" name="option2" required">
             <label for="option3">Option 3:</label>
-            <input type="text" id="option3" name="option3" required>
+            <input type="text" id="option3" name="option3" required">
             <label for="option4">Option 4:</label>
-            <input type="text" id="option4" name="option4" required>
+            <input type="text" id="option4" name="option4" required">
             <label for="correct">Correct Answer:</label>
-            <select id="correct" name="correct" required>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-                <option value="4">Option 4</option>
+            <select id="correct" name="correct" required">
+                <option value="Rep1">Option 1</option>
+                <option value="Rep2">Option 2</option>
+                <option value="Rep3">Option 3</option>
+                <option value="Rep4">Option 4</option>
             </select>
         `;
     } else if (type === "QUESINTERAC") {
@@ -192,7 +192,7 @@ function showFormFields(type) {
             });
 
             window.addEventListener("click", (event) => {
-                if (event.target == popup) {
+                if (event.target === popup) {
                     popup.style.display = "none";
                     document.body.classList.remove("popup-active");
                 }

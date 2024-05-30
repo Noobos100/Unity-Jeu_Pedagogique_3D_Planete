@@ -274,18 +274,30 @@ class DataAccess implements DataAccessInterface
         return $this->dataAccess->lastInsertId();
     }
 
-    public function addQCU(int $numQues, string $rep1, string $rep2, string $rep3, string $rep4, int $bonneRep): int
+    public function addQCU(string $enonce, string $rep1, string $rep2, string $rep3, string $rep4, string $bonneRep): int
     {
-        $query = "INSERT INTO QCU (Num_Ques, Rep1, Rep2, Rep3, Rep4, BonneRep) VALUES (:numQues, :rep1, :rep2, :rep3, :rep4, :bonneRep)";
+        $query = "INSERT INTO QUESTION (Enonce, Type) VALUES (:enonce, 'QCU')";
         $stmt = $this->dataAccess->prepare($query);
-        $stmt->bindParam(':numQues', $numQues);
-        $stmt->bindParam(':rep1', $rep1);
-        $stmt->bindParam(':rep2', $rep2);
-        $stmt->bindParam(':rep3', $rep3);
-        $stmt->bindParam(':rep4', $rep4);
-        $stmt->bindParam(':bonneRep', $bonneRep);
+        $stmt->bindParam(':enonce', $enonce);
         $stmt->execute();
-        return $this->dataAccess->lastInsertId();
+
+        $lastQID = $this->dataAccess->lastInsertId();
+
+        $query2 = "INSERT INTO QCU (Num_Ques, Rep1, Rep2, Rep3, Rep4, BonneRep) VALUES (:numQues, :rep1, :rep2, :rep3, :rep4, '')";
+        $stmt2 = $this->dataAccess->prepare($query2);
+        $stmt2->bindParam(':numQues', $lastQID);
+        $stmt2->bindParam(':rep1', $rep1);
+        $stmt2->bindParam(':rep2', $rep2);
+        $stmt2->bindParam(':rep3', $rep3);
+        $stmt2->bindParam(':rep4', $rep4);
+        $stmt2->execute();
+
+        $query3 = "UPDATE QCU SET BonneRep = " . $bonneRep . " WHERE Num_Ques = :numQues";
+        $stmt3 = $this->dataAccess->prepare($query3);
+        $stmt3->bindParam(':numQues', $lastQID);
+        $stmt3->execute();
+
+        return $lastQID;
     }
 
     public function addQInterac(int $numQues, float $bonneRepValeur_orbit, float $marge_Orbit, float $bonneRepValeur_rotation, float $marge_Rotation): int
