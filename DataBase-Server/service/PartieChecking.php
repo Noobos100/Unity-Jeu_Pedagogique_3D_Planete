@@ -257,6 +257,11 @@ class PartieChecking
     {
         $data->addQCU($question, $option1, $option2, $option3, $option4, $correct);
     }
+
+    public function addQInterac(string $question, string $orbit, string $rotation, string $rotationMargin, string $orbitMargin, DataAccess $data): void
+    {
+        $data->addQInterac($question, $orbit, $rotation, $rotationMargin, $orbitMargin);
+    }
 }
 
 

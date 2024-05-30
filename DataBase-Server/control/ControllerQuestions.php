@@ -95,4 +95,9 @@ class ControllerQuestions
     {
         $partieChecking->addQCU($question, $option1, $option2, $option3, $option4, $correct, $data);
     }
+
+    public function addQInterac(string $question, string $orbit, string $rotation, string $rotationMargin, string $orbitMargin, PartieChecking $partieChecking, DataAccess $data): void
+    {
+        $partieChecking->addQInterac($question, $orbit, $rotation, $rotationMargin, $orbitMargin, $data);
+    }
 }
