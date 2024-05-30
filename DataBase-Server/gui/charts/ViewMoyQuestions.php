@@ -39,9 +39,6 @@ class ViewMoyQuestions extends ViewChart
                 },
                 ticks: {
                   color: '#ffffff' // Couleur des étiquettes de l'axe X
-                },
-                grid: {
-                  color: '#ffffff' // Couleur de la grille de l'axe X
                 }
               },
               y: {
@@ -52,9 +49,6 @@ class ViewMoyQuestions extends ViewChart
                 },
                 ticks: {
                   color: '#ffffff' // Couleur des étiquettes de l'axe Y
-                },
-                grid: {
-                  color: '#ffffff' // Couleur de la grille de l'axe Y
                 }
               }
             },
