@@ -74,43 +74,7 @@ class ViewModifyQuestion extends View
             
             <br>
             <input type="submit" value="Confirmer changements">
-            </form>
-            <script>
-            	const inputOrbit = document.getElementById("orbit");
-              	const inputRotation = document.getElementById("rotation");            	
-                const inputMargeOrbit = document.getElementById("margin-orbit");
-              	const inputMargeRotation = document.getElementById("margin-rotation");
-                  
-				const isOrbitable = document.getElementById("orbitable");
-        		const isRotatable = document.getElementById("rotatable");
-                const hasOrbitMargin = document.getElementById("orbit-margin");
-                const hasRotationMargin = document.getElementById("rotation-margin");
-                
-				inputOrbit.disabled = isOrbitable.checked;
-				inputRotation.disabled = isRotatable.checked;
-                inputMargeOrbit.disabled = hasOrbitMargin.checked;
-                inputMargeRotation.disabled = hasRotationMargin.checked;
-                
-                isOrbitable.addEventListener("change", () => {
-                    inputOrbit.disabled = isOrbitable.checked;
-                    inputOrbit.value = "";
-                })
-                
-                isRotatable.addEventListener("change", () => {
-                    inputRotation.disabled = isRotatable.checked;
-                    inputRotation.value = "";
-                })
-                
-                hasOrbitMargin.addEventListener("change", () => {
-                    inputMargeOrbit.disabled = hasOrbitMargin.checked;
-                    inputMargeOrbit.value = "";
-                })
-                
-                hasRotationMargin.addEventListener("change", () => {
-                    inputMargeRotation.disabled = hasRotationMargin.checked;
-                    inputMargeRotation.value = "";
-                })
-			</script>';
+            </form>';
         }
         elseif ($questionData['Type'] == 'VRAIFAUX') {
 			$this->content .= '
@@ -159,12 +123,6 @@ class ViewModifyQuestion extends View
 
         $this->content .= '
         <button onclick="confirmLeave()">Annuler</button>
-        <script>
-            function confirmLeave() {
-                if (confirm("Voulez-vous vraiment quitter sans sauvegarder?")) {
-                    window.location.href = "/manage-questions";
-                }
-            }
-        </script>';
+        <script src="/assets/js/modifyquestion.js"></script>';
     }
 }
