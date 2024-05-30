@@ -16,7 +16,7 @@ namespace Script.Controllers
         [SerializeField] private string sceneGameName;
         [SerializeField] private string platform;
 
-        [SerializeField] InputField usernameInput;
+        [SerializeField] TMP_InputField usernameInput;
         [SerializeField] TextMeshProUGUI usernameError;
 
         WWWForm form;
