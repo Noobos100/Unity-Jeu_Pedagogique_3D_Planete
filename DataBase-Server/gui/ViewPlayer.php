@@ -6,10 +6,10 @@ use control\ControllerPlayers;
 
 include_once "View.php";
 
-class ViewJoueurs extends View
+class ViewPlayer extends View
 {
     /**
-     * Constructs a new ViewJoueurs instance.
+     * Constructs a new ViewPlayer instance.
      *
      * @param Layout $layout The layout to use for displaying content.
      * @param ControllerPlayers $controller The controller to fetch data from.

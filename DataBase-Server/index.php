@@ -25,10 +25,10 @@ include_once 'gui/ViewLogin.php';
 include_once 'gui/ViewModifyQuestion.php';
 include_once 'gui/ViewManageQuestions.php';
 include_once 'gui/ViewGame.php';
-include_once 'gui/ViewJoueurs.php';
+include_once 'gui/ViewPlayer.php';
 include_once 'gui/ViewGameData.php';
 
-use gui\{Layout,ViewInteractions,ViewGameData,ViewJoueurs,ViewManageQuestions,ViewModifyQuestion,ViewPartie,ViewQuestions,ViewRandomQuestion,ViewUtilisateur,ViewLogin,ViewGame};
+use gui\{Layout,ViewInteractions,ViewGameData,ViewPlayer,ViewManageQuestions,ViewModifyQuestion,ViewPartie,ViewQuestions,ViewRandomQuestion,ViewUtilisateur,ViewLogin,ViewGame};
 
 
 session_start();
@@ -100,7 +100,7 @@ elseif ('/game-data' == $uri && (isset($_SESSION['loggedin']) )) {
 }
 elseif ('/players' == $uri && (isset($_SESSION['loggedin']) )) {
     $layout = new Layout('gui/layout.html');
-    $viewPartie = new ViewJoueurs($layout, $controllerPlayers, $data);
+    $viewPartie = new ViewPlayer($layout, $controllerPlayers, $data);
     $viewPartie->display();
 
 }
