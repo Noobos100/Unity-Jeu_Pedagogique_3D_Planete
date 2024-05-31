@@ -102,13 +102,16 @@ class ControllerGameData
 	{
 		// Préparer les données pour le graphique
 		$moyQuestionsData = [];
-		foreach ($parties as $partie) {
-			$moyQuestions = $partie['Moy_Questions'];
-			if (!isset($moyQuestionsData[$moyQuestions])) {
-				$moyQuestionsData[$moyQuestions] = 0;
-			}
-			$moyQuestionsData[$moyQuestions]++;
-		}
+        foreach ($parties as $partie) {
+            if ($partie['Abandon']) {
+                continue;
+            }
+            if (!isset($moyQuestionsData[$partie['Moy_Questions']])) {
+                $moyQuestionsData[$partie['Moy_Questions']] = 1;
+            } else {
+                $moyQuestionsData[$partie['Moy_Questions']]++;
+            }
+        }
 
 		// Trier les moyennes de questions par ordre croissant
 		ksort($moyQuestionsData);

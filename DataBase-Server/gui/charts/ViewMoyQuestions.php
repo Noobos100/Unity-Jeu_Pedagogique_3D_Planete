@@ -16,7 +16,6 @@ class ViewMoyQuestions extends ViewChart
 		ob_start();
 		?>
         <canvas id="myChart3"></canvas>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
           let moyQuestionCtx = document.getElementById('myChart3').getContext('2d');
           let moyQuestionData = {
@@ -25,7 +24,7 @@ class ViewMoyQuestions extends ViewChart
               type: 'bar',
               label: 'Nombre de fois où chaque moyenne apparaît',
               data: <?php echo $this->getDatasetValue() ?>,
-              backgroundColor: 'rgba(75, 192, 192, 0.75)',
+              backgroundColor: 'rgba(75,114,192,0.75)',
               borderWidth: 1
             }]
           };
@@ -34,7 +33,7 @@ class ViewMoyQuestions extends ViewChart
               x: {
                 title: {
                   display: true,
-                  text: 'Moyennes des questions et Abandons',
+                  text: 'Moyennes',
                   color: '#ffffff' // Couleur des étiquettes de l'axe X
                 },
                 ticks: {
@@ -44,11 +43,13 @@ class ViewMoyQuestions extends ViewChart
               y: {
                 title: {
                   display: true,
-                  text: 'Nombre',
+                  text: 'Nombre de fois que chaque moyenne apparaît',
                   color: '#ffffff' // Couleur des étiquettes de l'axe Y
                 },
                 ticks: {
-                  color: '#ffffff' // Couleur des étiquettes de l'axe Y
+                  color: '#ffffff', // Couleur des étiquettes de l'axe Y
+                    stepSize: 1
+
                 }
               }
             },

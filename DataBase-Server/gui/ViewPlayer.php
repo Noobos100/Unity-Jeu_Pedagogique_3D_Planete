@@ -32,11 +32,15 @@ class ViewPlayer extends View
         $nbPlayers = count($players);
         $this->content .= "<p>Nombre total de joueurs : $nbPlayers</p>";
 
-        // Generate the pie chart
+// Generate the pie chart
+        $this->content .= '<div class="column-left">';
         $this->content .= $controller->generateChartPlatforme($players);
+        $this->content .= '</div>';
 
-        // Ip Table
+// Ip Table
+        $this->content .= '<div class="column-right">';
         $this->content .= $controller->generateTable($players);
+        $this->content .= '</div>';
     }
 
 }

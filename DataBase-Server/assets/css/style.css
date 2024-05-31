@@ -92,3 +92,19 @@ h1{
 h2{
     border-bottom: 2px solid aliceblue; /* Add this line */
 }
+
+.column-left {
+    float: left;
+    width: 50%;
+}
+
+.column-right {
+    float: right;
+    width: 50%;
+    height: 50%;
+    overflow-y: scroll;
+}
+#platformChart {
+    width: 85%;  /* Adjust as needed */
+    height: 85%; /* Adjust as needed */
+}
