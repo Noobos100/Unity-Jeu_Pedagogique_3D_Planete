@@ -9,6 +9,10 @@ use gui\charts\ViewMoyQuestions;
 
 class ControllerGameData
 {
+    public function getScoreUsers($data)
+    {
+        return $data->getScoreUsers();
+    }
 
 	// Getter
 	public function getParties($data)
@@ -30,6 +34,11 @@ class ControllerGameData
 	{
 		return $data->getQuestionNb();
 	}
+
+    public function getBestUsers($data)
+    {
+        return $data->getBestUsers();
+    }
 
 	// Methods
 	public function calculateTotalAbandons($reponseUser): int

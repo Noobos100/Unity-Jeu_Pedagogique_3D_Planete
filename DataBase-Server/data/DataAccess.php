@@ -41,6 +41,22 @@ class DataAccess implements DataAccessInterface
         $this->dataAccess = null;
     }
 
+    /**
+     * @return array
+     */
+    public function getBestUsers(): array{
+        $query = "SELECT J.Username, MAX(P.Moy_Questions) as Max_Score
+FROM JOUEUR J
+         INNER JOIN PARTIE P ON J.Ip = P.Ip_Joueur
+GROUP BY J.Username
+ORDER BY Max_Score DESC
+LIMIT 1;";
+        return $this->dataAccess->query($query)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @return array
+     */
     public function getQuestionNb(): array
     {
         $query = "SELECT Num_Ques, COUNT(*) AS Apparitions FROM REPONSE_USER GROUP BY Num_Ques";
