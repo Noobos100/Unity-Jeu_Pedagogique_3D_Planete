@@ -45,7 +45,8 @@ class ViewApparition extends ViewChart
                     color: '#ffffff' // Couleur des étiquettes de l'axe Y
                   },
                   ticks: {
-                    color: '#ffffff' // Couleur des étiquettes de l'axe Y
+                    color: '#ffffff', // Couleur des étiquettes de l'axe Y
+                      stepSize: 1
                   }
                 }
               },

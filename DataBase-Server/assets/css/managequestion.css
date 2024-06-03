@@ -28,6 +28,7 @@
 .form-fields {
     margin-top: 20px;
 }
-text {
-    color: black;
+
+.formbox {
+    border: 1px solid black;
 }

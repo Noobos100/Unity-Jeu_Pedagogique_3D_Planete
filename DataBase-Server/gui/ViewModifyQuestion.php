@@ -5,7 +5,6 @@ namespace gui;
 
 class ViewModifyQuestion extends View
 {
-    private string $currentPage;
 
     public function __construct($layout, $questionData)
     {
@@ -15,31 +14,23 @@ class ViewModifyQuestion extends View
         $questionData = json_decode($questionData, true);
 
         $this->title = 'Modification de la question '. htmlspecialchars($questionData['Num_Ques']);
-        // Déterminer la page actuelle
-        $this->currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
         $this->content .= '<form action="/modify-question?qid=' . $questionData['Num_Ques'] . '" method="post">
             <label for="question">Question ' . $questionData['Num_Ques'] . ' (' . $questionData['Type'] . ')'.':</label>
-            <input type="text" id="question" name="question" value="' . $questionData['Enonce'] . '" required>
-            <br>';
+            <input type="text" id="question" name="question" value="' . $questionData['Enonce'] . '" required>';
 
         if ($questionData['Type'] == 'QCU') {
             $this->content .='
             <label for="option1">Option 1:</label>
             <input type="text" id="option1" name="option1" value="' . $questionData['Rep1'] . '" required>
-            <br>
             <label for="option2">Option 2:</label>
             <input type="text" id="option2" name="option2" value="' . $questionData['Rep2'] . '" required>
-            <br>
             <label for="option3">Option 3:</label>
             <input type="text" id="option3" name="option3" value="' . $questionData['Rep3'] . '" required>
-            <br>
             <label for="option4">Option 4:</label>
             <input type="text" id="option4" name="option4" value="' . $questionData['Rep4'] . '" required>
-            <br>
             <label for="current">Bonne réponse (actuellement):</label>
             <input type="text" id="current" name="current" value="' . $questionData['BonneRep'] . '" readonly> 
-            <br>
             <label for="correct">Changer bonne réponse:</label>
             <select id="correct" name="correct" required>
                 <option value="Rep1">Option 1</option>
@@ -47,7 +38,6 @@ class ViewModifyQuestion extends View
                 <option value="Rep3">Option 3</option>
                 <option value="Rep4">Option 4</option>
             </select>
-            <br>
             <input type="submit" value="Confirmer changements">
         </form>';
         }
@@ -56,23 +46,19 @@ class ViewModifyQuestion extends View
             '<label for="orbit">Réponse pour orbite:</label>
             <input type="text" id="orbit" name="orbit" value="' . $questionData['BonneRepValeur_orbit'] . '">
             <input id="orbitable" type="checkbox" ' . (($questionData['BonneRepValeur_orbit']) == '-1' ? 'checked' : '') . '>
-            
-            <br>
-            <label for="rotation">Réponse pour rotation:</label>
-            <input type="text" id="rotation" name="rotation" value="' . $questionData['BonneRepValeur_rotation'] . '">
-            <input id="rotatable" type="checkbox" ' . (($questionData['BonneRepValeur_rotation']) == '-1' ? 'checked' : '') . '>
-            <br>
-            
+
             <label for="marge-orbit">Marge orbite:</label>
             <input type="text" id="margin-orbit" name="margin-orbit" value="' . $questionData['Marge_Orbit'] . '">
             <input id="orbit-margin" type="checkbox" ' . (($questionData['Marge_Orbit']) == '-1' ? 'checked' : '') . '>
 
-            <br>
+            <label for="rotation">Réponse pour rotation:</label>
+            <input type="text" id="rotation" name="rotation" value="' . $questionData['BonneRepValeur_rotation'] . '">
+            <input id="rotatable" type="checkbox" ' . (($questionData['BonneRepValeur_rotation']) == '-1' ? 'checked' : '') . '>
+            
             <label for="marge-rotation">Marge rotation:</label>
             <input type="text" id="margin-rotation" name="margin-rotation" value="' . $questionData['Marge_Rotation'] . '">
             <input id="rotation-margin" type="checkbox" ' . (($questionData['Marge_Rotation']) == '-1' ? 'checked' : '') . '>
             
-            <br>
             <input type="submit" value="Confirmer changements">
             </form>';
         }

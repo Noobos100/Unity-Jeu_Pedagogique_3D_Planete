@@ -48,9 +48,13 @@ class ViewPlatform extends ViewChart
             }
           }
           new Chart(platformCtx, {
-            type: 'pie',
-            data: platformData,
-            options: platformOptions
+              type: 'pie',
+              data: platformData,
+              options: {
+                  ...platformOptions,
+                  responsive: true, // Le graphique s'adaptera à la taille de son conteneur
+                  maintainAspectRatio: false // Permet de modifier la hauteur et la largeur indépendamment
+              }
           });
         </script>
 		<?php

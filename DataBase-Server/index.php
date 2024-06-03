@@ -60,7 +60,7 @@ if($uri == '/') {
 }
 elseif($uri == '/game'){
     $layout = new Layout('gui/layout.html');
-    $viewPartie = new ViewGame($layout);
+    $viewPartie = new ViewGame($layout, $controllerGameData, $data);
     $viewPartie->display();
 }
 elseif ('/logout' == $uri) {

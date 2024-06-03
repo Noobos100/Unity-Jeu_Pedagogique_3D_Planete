@@ -9,6 +9,10 @@ use gui\charts\ViewMoyQuestions;
 
 class ControllerGameData
 {
+    public function getScoreUsers($data)
+    {
+        return $data->getScoreUsers();
+    }
 
 	// Getter
 	public function getParties($data)
@@ -30,6 +34,11 @@ class ControllerGameData
 	{
 		return $data->getQuestionNb();
 	}
+
+    public function getBestUsers($data)
+    {
+        return $data->getBestUsers();
+    }
 
 	// Methods
 	public function calculateTotalAbandons($reponseUser): int
@@ -102,13 +111,16 @@ class ControllerGameData
 	{
 		// Préparer les données pour le graphique
 		$moyQuestionsData = [];
-		foreach ($parties as $partie) {
-			$moyQuestions = $partie['Moy_Questions'];
-			if (!isset($moyQuestionsData[$moyQuestions])) {
-				$moyQuestionsData[$moyQuestions] = 0;
-			}
-			$moyQuestionsData[$moyQuestions]++;
-		}
+        foreach ($parties as $partie) {
+            if ($partie['Abandon']) {
+                continue;
+            }
+            if (!isset($moyQuestionsData[$partie['Moy_Questions']])) {
+                $moyQuestionsData[$partie['Moy_Questions']] = 1;
+            } else {
+                $moyQuestionsData[$partie['Moy_Questions']]++;
+            }
+        }
 
 		// Trier les moyennes de questions par ordre croissant
 		ksort($moyQuestionsData);
