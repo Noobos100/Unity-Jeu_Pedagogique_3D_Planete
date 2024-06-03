@@ -138,7 +138,7 @@ PlayerSettings:
   bundleVersion: 0.3.1
   preloadedAssets:
   - {fileID: 0}
-  - {fileID: -571333701288952235, guid: e89482f66338e534089d71166247ea3d, type: 2}
+  - {fileID: 5055406324539157890, guid: e89482f66338e534089d71166247ea3d, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -526,13 +526,16 @@ PlayerSettings:
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
   openGLRequireES32: 0
-  m_TemplateCustomTags: {}
+  m_TemplateCustomTags:
+    PRODUCT_DESCRIPTION: 
   mobileMTRendering:
     Android: 1
     iPhone: 1
     tvOS: 1
   m_BuildTargetGroupLightmapEncodingQuality:
   - m_BuildTarget: Android
+    m_EncodingQuality: 1
+  - m_BuildTarget: WebGL
     m_EncodingQuality: 1
   m_BuildTargetGroupHDRCubemapEncodingQuality:
   - m_BuildTarget: Android
@@ -789,10 +792,10 @@ PlayerSettings:
   webGLDebugSymbols: 0
   webGLEmscriptenArgs: 
   webGLModulesDirectory: 
-  webGLTemplate: APPLICATION:Default
+  webGLTemplate: APPLICATION:PWA
   webGLAnalyzeBuildSize: 0
   webGLUseEmbeddedResources: 0
-  webGLCompressionFormat: 0
+  webGLCompressionFormat: 2
   webGLWasmArithmeticExceptions: 0
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
