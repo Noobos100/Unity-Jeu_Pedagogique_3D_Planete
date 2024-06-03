@@ -35,23 +35,6 @@
     border: 1px solid black;
 }
 
-.question-row {
-    padding: 10px;
-}
-
-.question-row:hover {
-    background-color: rgba(18, 43, 157, 0.50);
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse; /* S'assurer que les bordures ne se chevauchent pas */
-}
-th, td {
-    padding: 8px;
-    text-align: left;
-}
-
 .fa-circle-xmark{
     color: black;
 }

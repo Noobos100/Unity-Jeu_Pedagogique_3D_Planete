@@ -37,15 +37,15 @@ class ControllerPlayers
 
         // Générer le tableau HTML
         $table = '<h3>Données</h3>';
-        $table .= '<table border="1"><tr>';
+        $table .= '<table ><tr >';
         foreach ($keys as $key) {
-            $table .= "<th>$key</th>";
+            $table .= "<th >$key</th>";
         }
         $table .= '</tr>';
         foreach ($data as $item) {
             $table .= '<tr>';
             foreach ($keys as $key) {
-                $table .= "<td>{$item[$key]}</td>";
+                $table .= "<td >{$item[$key]}</td>";
             }
             $table .= '</tr>';
         }

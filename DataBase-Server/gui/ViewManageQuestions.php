@@ -47,7 +47,7 @@ class ViewManageQuestions extends View
        </tr>';
         foreach ($questions as $question) {
             $this->content .= '
-                        <tr class="question-row">
+                        <tr class="table-row">
                             <td>' . htmlspecialchars($question['Num_Ques']) . '</td>
                             <td>' . htmlspecialchars($question['Enonce']) . '</td>
                             <td>' . htmlspecialchars($question['Type']) . '</td>
