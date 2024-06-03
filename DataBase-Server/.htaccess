@@ -17,3 +17,5 @@
         Header set Content-Encoding br
     </FilesMatch>
 </IfModule>
+
+AddType application/wasm .wasm
