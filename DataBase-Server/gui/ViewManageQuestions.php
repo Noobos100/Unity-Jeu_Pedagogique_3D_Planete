@@ -2,8 +2,6 @@
 
 namespace gui;
 
-use gui\View;
-
 class ViewManageQuestions extends View
 {
     public function __construct(Layout $layout, mixed $questions)
@@ -12,12 +10,10 @@ class ViewManageQuestions extends View
 
         $this->title = 'Gestion des questions';
 
-
-        $this->content .= '<h1>Gestionnaire des questions</h1>';
-
         $questions = json_decode($questions, true);
 
         $this->content .= '
+    <h1>Gestionnaire des questions</h1>
     <link href="/assets/css/managequestion.css" rel="stylesheet" />
     <div id="add-question-popup" class="popup">
         <form action="/add-question" method="post" class="popup-content">
@@ -50,12 +46,13 @@ class ViewManageQuestions extends View
        <th>Réponses</th>
        </tr>';
         foreach ($questions as $question) {
-            $this->content .= '<tr class="question-row">
-                        <td>' . htmlspecialchars($question['Num_Ques']) . '</td>
-                        <td>' . htmlspecialchars($question['Enonce']) . '</td>
-                        <td>' . htmlspecialchars($question['Type']) . '</td>
-                        <td><button onclick="location.href=\'modify-question?qid=' . $question['Num_Ques'] . '\'">Modifier</button></td>
-                        <td><button onclick="deleteQuestion(' . $question['Num_Ques'] . ')">Supprimer</button></td>
+            $this->content .= '
+                        <tr class="question-row">
+                            <td>' . htmlspecialchars($question['Num_Ques']) . '</td>
+                            <td>' . htmlspecialchars($question['Enonce']) . '</td>
+                            <td>' . htmlspecialchars($question['Type']) . '</td>
+                            <td><button onclick="location.href=\'modify-question?qid=' . $question['Num_Ques'] . '\'">Modifier</button></td>
+                            <td><button onclick="deleteQuestion(' . $question['Num_Ques'] . ')">Supprimer</button></td>
                        </tr>';
         }
         $this->content .= '
