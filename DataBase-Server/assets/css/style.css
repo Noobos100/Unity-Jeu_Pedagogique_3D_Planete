@@ -101,7 +101,7 @@ h2{
 .column-right {
     float: right;
     width: 50%;
-    height: 50%;
+    height: 70%;
     overflow-y: scroll;
 }
 #platformChart {
