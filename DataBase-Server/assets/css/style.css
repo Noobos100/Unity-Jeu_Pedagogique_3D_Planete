@@ -125,7 +125,7 @@ h2{
     transform: translate(-50%, -50%); /* Add this line */
 }
 
-.popup-content{
+.popup-content2{
 
 }
 
@@ -133,4 +133,12 @@ h2{
     position: absolute;
     top: 10px;
     right: 10px;
+    background: transparent;
+    border: none;
+    color: white;
+}
+
+#closeButton:hover{
+    cursor: pointer;
+    background-color: rgba(136, 136, 136, 0.5);
 }

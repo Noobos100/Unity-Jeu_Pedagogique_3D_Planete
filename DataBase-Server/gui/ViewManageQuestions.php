@@ -51,8 +51,8 @@ class ViewManageQuestions extends View
                             <td>' . htmlspecialchars($question['Num_Ques']) . '</td>
                             <td>' . htmlspecialchars($question['Enonce']) . '</td>
                             <td>' . htmlspecialchars($question['Type']) . '</td>
-                            <td><button onclick="location.href=\'modify-question?qid=' . $question['Num_Ques'] . '\'">Modifier</button></td>
-                            <td><button onclick="deleteQuestion(' . $question['Num_Ques'] . ')">Supprimer</button></td>
+                            <td><button class="modifier" onclick="location.href=\'modify-question?qid=' . $question['Num_Ques'] . '\'">Modifier</button></td>
+                            <td><button class="supprimer" onclick="deleteQuestion(' . $question['Num_Ques'] . ')">Supprimer</button></td>
                        </tr>';
         }
         $this->content .= '
