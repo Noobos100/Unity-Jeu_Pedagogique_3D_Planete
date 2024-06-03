@@ -112,7 +112,7 @@ class ControllerGameData
 		// Préparer les données pour le graphique
 		$moyQuestionsData = [];
         foreach ($parties as $partie) {
-            if ($partie['Abandon']) {
+            if ($partie['Abandon'] == 1 || (!isset($partie['Moy_Questions']) && $partie['Abandon'] == 0)) {
                 continue;
             }
             if (!isset($moyQuestionsData[$partie['Moy_Questions']])) {
