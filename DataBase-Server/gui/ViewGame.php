@@ -15,9 +15,10 @@ class ViewGame extends View
         $parties = $controller->getParties($data);
 
         $this->title = 'Jeu';
-        $this->content = '<p>Vous êtes dans le jeu</p>';
+		$this->content .= '<iframe src="/PlanetGame/index.html" width="800" height="600"></iframe>';
 
-        // Add the button
+
+		// Add the button
         $this->content .= '<button id="popupButton">Scores</button>';
 
         // Add the popup with "Hello World" content
@@ -62,13 +63,12 @@ class ViewGame extends View
 ';
 
         $this->content .= '
-<script>
-    document.getElementById(\'closeButton\').addEventListener(\'click\', function() {
-        var popup = document.getElementById(\'popup\');
-        popup.style.display = \'none\';
-    });
-</script>
-';
-        $this->content .= '<iframe src="/PlanetGame/index.html" width="800" height="600"></iframe>';
-    }
+			<script>
+				document.getElementById(\'closeButton\').addEventListener(\'click\', function() {
+					var popup = document.getElementById(\'popup\');
+					popup.style.display = \'none\';
+				});
+			</script>
+			';
+	}
 }
