@@ -18,13 +18,13 @@ class ViewGame extends View
         $this->content = '<p>Vous êtes dans le jeu</p>';
 
         // Add the button
-        $this->content .= '<button id="popupButton">Afficher/Masquer la pop-up</button>';
+        $this->content .= '<button id="popupButton">Scores</button>';
 
         // Add the popup with "Hello World" content
         $this->content .= '
             <div id="popup" class="popup2">
                 <div class="popup-content">
-                            <!-- <button id="popupButton">Afficher/Masquer la pop-up</button> -->
+                            <button id="closeButton" >X</button>
                     <h1>Top score</h1>';
         // Afficher le temps minimum
         $totalMinTemps = $controller->calculateTempsMin($parties);
@@ -48,23 +48,26 @@ class ViewGame extends View
             </div>
         ';
 
-        // Add the JavaScript
         $this->content .= '
-        <script>
-            document.getElementById(\'popupButton\').addEventListener(\'click\', function() {
-                var popup = document.getElementById(\'popup\');
-                if (popup.style.display === \'none\' || popup.style.display === \'\') {
-                    popup.style.display = \'block\';
-                } else {
-                    popup.style.display = \'none\';
-                }
-            });
-
+<script>
     document.getElementById(\'popupButton\').addEventListener(\'click\', function() {
         var popup = document.getElementById(\'popup\');
-        popup.style.display = \'none\';
+        if (popup.style.display === \'none\' || popup.style.display === \'\') {
+            popup.style.display = \'block\';
+        } else {
+            popup.style.display = \'none\';
+        }
+    });
+</script>
+';
 
-        </script>
-        ';
+        $this->content .= '
+<script>
+    document.getElementById(\'closeButton\').addEventListener(\'click\', function() {
+        var popup = document.getElementById(\'popup\');
+        popup.style.display = \'none\';
+    });
+</script>
+';
     }
 }

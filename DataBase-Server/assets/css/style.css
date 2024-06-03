@@ -128,3 +128,9 @@ h2{
 .popup-content{
 
 }
+
+#closeButton{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
