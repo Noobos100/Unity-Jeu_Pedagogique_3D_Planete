@@ -25,7 +25,7 @@ class ViewGame extends View
 		// Add the popup with "Hello World" content
 		$this->content .= '
             <div id="popup" class="popup2">
-                <div class="popup-content">
+                <div class="popup-content2">
                             <button id="closeButton" >X</button>
                     <h1>Top score</h1>';
 		// Afficher le temps minimum
