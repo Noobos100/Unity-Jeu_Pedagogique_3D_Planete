@@ -5,6 +5,7 @@ namespace data;
 use domain\{Interaction, Joueur, Partie, Qcu, Quesinterac, UserAnswer, VraiFaux};
 use service\{DataAccessInterface, CannotDoException};
 use PDO;
+use PDOException;
 
 include_once 'domain/Interaction.php';
 include_once 'domain/Joueur.php';
@@ -18,12 +19,15 @@ include_once 'domain/VraiFaux.php';
 include_once 'service/DataAccessInterface.php';
 include_once 'service/CannotDoException.php';
 
+/**
+ *
+ */
 class DataAccess implements DataAccessInterface
 {
     /**
      * @var PDO|null
      */
-    protected PDO|null $dataAccess = null;
+    protected ?PDO $dataAccess = null;
 
     /**
      * @param PDO $dataAccess
@@ -31,6 +35,29 @@ class DataAccess implements DataAccessInterface
     public function __construct(PDO $dataAccess)
     {
         $this->dataAccess = $dataAccess;
+    }
+
+    /**
+     * Crée une instance de Database en utilisant les paramètres de config/db.ini
+     *
+     * @return DataAccess
+     */
+    public static function createFromConfig(): DataAccess
+    {
+        $config = parse_ini_file('config/db.ini');
+        if ($config === false) {
+            die("Error loading configuration file.");
+        }
+
+        try {
+            $pdo = new PDO($config['dsn'], $config['username'], $config['password']);
+            // Définir le mode d'erreur PDO sur Exception
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die('Erreur de connexion : ' . $e->getMessage());
+        }
+
+        return new self($pdo);
     }
 
     /**
@@ -146,7 +173,13 @@ LIMIT 1;";
         else return false;
     }
 
-	public function updateJoueur(string $ip, string $plateforme, string $username): Joueur|false
+    /**
+     * @param string $ip
+     * @param string $plateforme
+     * @param string $username
+     * @return Joueur|false
+     */
+    public function updateJoueur(string $ip, string $plateforme, string $username): Joueur|false
 	{
 		$query = "UPDATE JOUEUR SET Plateforme = '$plateforme', Username = '$username' WHERE Ip = '$ip'";
 		if($this->dataAccess->query($query)) {
@@ -284,6 +317,11 @@ LIMIT 1;";
         } else return False;
     }
 
+    /**
+     * @param string $enonce
+     * @param string $type
+     * @return int
+     */
     public function addQuestion(string $enonce, string $type): int
     {
         $query = "INSERT INTO QUESTION (Enonce, Type) VALUES (:enonce, :type)";
@@ -294,6 +332,15 @@ LIMIT 1;";
         return $this->dataAccess->lastInsertId();
     }
 
+    /**
+     * @param string $enonce
+     * @param string $rep1
+     * @param string $rep2
+     * @param string $rep3
+     * @param string $rep4
+     * @param string $bonneRep
+     * @return int
+     */
     public function addQCU(string $enonce, string $rep1, string $rep2, string $rep3, string $rep4, string $bonneRep): int
     {
         $query = "INSERT INTO QUESTION (Enonce, Type) VALUES (:enonce, 'QCU')";
@@ -320,6 +367,14 @@ LIMIT 1;";
         return $lastQID;
     }
 
+    /**
+     * @param string $enonce
+     * @param string $bonneRepValeur_orbit
+     * @param string $marge_Orbit
+     * @param string $bonneRepValeur_rotation
+     * @param string $marge_Rotation
+     * @return int
+     */
     public function addQInterac(string $enonce, string $bonneRepValeur_orbit, string $marge_Orbit, string $bonneRepValeur_rotation, string $marge_Rotation): int
     {
         $query = "INSERT INTO QUESTION (Enonce, Type) VALUES (:enonce, 'QUESINTERAC')";
@@ -341,6 +396,13 @@ LIMIT 1;";
         return $lastQID;
     }
 
+    /**
+     * @param string $enonce
+     * @param string|null $valeur_orbit
+     * @param string|null $valeur_rotation
+     * @param string $bonneRep
+     * @return void
+     */
     public function addQVraiFaux(string $enonce, ?string $valeur_orbit, ?string $valeur_rotation, string $bonneRep): void
     {
         $query = "INSERT INTO QUESTION (Enonce, Type) VALUES (:enonce, 'VRAIFAUX')";
@@ -530,6 +592,16 @@ LIMIT 1;";
         return $result;
     }
 
+    /**
+     * @param int $numQues
+     * @param string $question
+     * @param string $rep1
+     * @param string $rep2
+     * @param string $rep3
+     * @param string $rep4
+     * @param string $bonneRep
+     * @return void
+     */
     public function updateQCU(int $numQues, string $question, string $rep1, string $rep2, string $rep3, string $rep4, string $bonneRep): void
     {
         $query = "UPDATE QCU SET Rep1 = :rep1, Rep2 = :rep2, Rep3 = :rep3, Rep4 = :rep4 WHERE Num_Ques = :numQues";
@@ -555,6 +627,14 @@ LIMIT 1;";
         $stmt3->execute();
     }
 
+    /**
+     * @param int $numQues
+     * @param string $question
+     * @param string $orbite
+     * @param string $rotation
+     * @param string $correct
+     * @return void
+     */
     public function updateQVraiFaux(int $numQues, string $question, string $orbite, string $rotation, string $correct): void
     {
         $orbite = empty($orbite) ? null : $orbite;
@@ -575,6 +655,15 @@ LIMIT 1;";
         $stmt2->execute();
     }
 
+    /**
+     * @param int $numQues
+     * @param string $question
+     * @param string $orbite
+     * @param string $rotation
+     * @param string $rotationMargin
+     * @param string $orbitMargin
+     * @return void
+     */
     public function updateQInterac(int $numQues, string $question, string $orbite, string $rotation, string $rotationMargin, string $orbitMargin): void
     {
         $query = "UPDATE QUESTION SET Enonce = :question WHERE Num_Ques = :numQues";
@@ -593,6 +682,10 @@ LIMIT 1;";
         $stmt2->execute();
     }
 
+    /**
+     * @param int $numQues
+     * @return void
+     */
     public function deleteQuestion(int $numQues): void
     {
         $query = "DELETE FROM QUESTION WHERE Num_Ques = :numQues";

@@ -6,6 +6,9 @@ use data\DataAccess;
 use domain\{Interaction, Joueur, Partie, Qcu, Quesinterac, UserAnswer, VraiFaux};
 
 
+/**
+ *
+ */
 class PartieChecking
 {
 
@@ -180,6 +183,10 @@ class PartieChecking
         return $data->getQQCU($numQues);
     }
 
+    /**
+     * @param DataAccess $data
+     * @return array
+     */
     public function getAllQ(DataAccess $data): array{
         return $data->getAllQ();
     }
@@ -229,35 +236,97 @@ class PartieChecking
         return $data->getRandomQVraiFaux($howManyVraiFaux);
     }
 
+    /**
+     * @param int $numQues
+     * @param string $question
+     * @param string $option1
+     * @param string $option2
+     * @param string $option3
+     * @param string $option4
+     * @param string $correct
+     * @param DataAccess $data
+     * @return void
+     */
     public function updateQCU(int $numQues, string $question, string $option1, string $option2, string $option3, string $option4, string $correct, DataAccess $data): void{
         $data->updateQCU($numQues, $question, $option1, $option2, $option3, $option4, $correct);
     }
 
-    public function updateQVraiFaux(mixed $Num_Ques, mixed $question, string $orbit, string $rotation, mixed $correct, DataAccess $data): void
+    /**
+     * @param int $Num_Ques
+     * @param string $question
+     * @param string $orbit
+     * @param string $rotation
+     * @param string $correct
+     * @param DataAccess $data
+     * @return void
+     */
+    public function updateQVraiFaux(int $Num_Ques, string $question, string $orbit, string $rotation, string $correct, DataAccess $data): void
     {
         $data->updateQVraiFaux($Num_Ques, $question, $orbit, $rotation, $correct);
     }
 
+    /**
+     * @param mixed $Num_Ques
+     * @param mixed $question
+     * @param string $orbit
+     * @param string $rotation
+     * @param $rotationMargin
+     * @param $orbitMargin
+     * @param DataAccess $data
+     * @return void
+     */
     public function updateQInterac(mixed $Num_Ques, mixed $question, string $orbit, string $rotation, $rotationMargin, $orbitMargin, DataAccess $data): void
     {
         $data->updateQInterac($Num_Ques, $question, $orbit, $rotation, $rotationMargin, $orbitMargin);
     }
 
+    /**
+     * @param int $numQues
+     * @param DataAccess $data
+     * @return void
+     */
     public function deleteQuestion(int $numQues, DataAccess $data): void
     {
         $data->deleteQuestion($numQues);
     }
 
+    /**
+     * @param string $question
+     * @param string|null $orbit
+     * @param string|null $rotation
+     * @param string $correct
+     * @param DataAccess $data
+     * @return void
+     */
     public function addQVraiFaux(string $question, ?string $orbit, ?string $rotation, string $correct, DataAccess $data): void
     {
         $data->addQVraiFaux($question, $orbit, $rotation, $correct);
     }
 
+    /**
+     * @param string $question
+     * @param string $option1
+     * @param string $option2
+     * @param string $option3
+     * @param string $option4
+     * @param string $correct
+     * @param DataAccess $data
+     * @return void
+     */
     public function addQCU(string $question, string $option1, string $option2, string $option3, string $option4, string $correct, DataAccess $data): void
     {
         $data->addQCU($question, $option1, $option2, $option3, $option4, $correct);
     }
 
+    /**
+     * @param string $question
+     * @param string $orbit
+     * @param string $rotation
+     * @param string $rotationMargin
+     * @param string $orbitMargin
+     * @param DataAccess $data
+     * @return void
+     */
     public function addQInterac(string $question, string $orbit, string $rotation, string $rotationMargin, string $orbitMargin, DataAccess $data): void
     {
         $data->addQInterac($question, $orbit, $rotation, $rotationMargin, $orbitMargin);

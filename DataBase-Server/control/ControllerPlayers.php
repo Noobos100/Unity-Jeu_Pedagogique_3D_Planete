@@ -4,17 +4,29 @@ namespace control;
 
 include_once 'gui/charts/ViewPlatform.php';
 
+use data\DataAccess;
 use DateTime;
 use gui\charts\ViewPlatform;
 
+/**
+ *
+ */
 class ControllerPlayers
 {
-    public function getPlayers($data)
+    /**
+     * @param DataAccess $data
+     * @return array
+     */
+    public function getPlayers(DataAccess $data): array
     {
         return $data->getPlayers();
     }
 
-    public function generateTable($data): string
+    /**
+     * @param array $data
+     * @return string
+     */
+    public function generateTable(array $data): string
     {
         if (empty($data)) {
             return ''; // Si la liste est vide, retourner une chaîne vide
@@ -42,6 +54,10 @@ class ControllerPlayers
         return $table;
     }
 
+    /**
+     * @param $joueurs
+     * @return string
+     */
     public function generateChartPlatforme($joueurs): string
 	{
         // Préparer les données pour le graphique

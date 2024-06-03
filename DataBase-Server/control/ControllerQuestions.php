@@ -66,36 +66,107 @@ class ControllerQuestions
         $questionService->addQuestionAnswer($numQues, $idParty, $dateDeb, $dateFin, $isCorrect, $data);
     }
 
+    /**
+     *  Updates QCU type questions
+     *
+     * @param int $numQues
+     * @param string $question
+     * @param string $option1
+     * @param string $option2
+     * @param string $option3
+     * @param string $option4
+     * @param string $correct
+     * @param PartieChecking $questionService
+     * @param DataAccess $data
+     * @return void
+     */
     public function updateQQCU(int $numQues, string $question, string $option1, string $option2, string $option3, string $option4, string $correct, PartieChecking $questionService, DataAccess $data): void
     {
         $questionService->updateQCU($numQues, $question, $option1, $option2, $option3, $option4, $correct, $data);
     }
 
-    public function updateQVraiFaux(mixed $Num_Ques, mixed $question, string $orbit, string $rotation, mixed $correct, PartieChecking $partieChecking, DataAccess $data): void
+    /**
+     * @param mixed $Num_Ques
+     * @param mixed $question
+     * @param string $orbit
+     * @param string $rotation
+     * @param mixed $correct
+     * @param PartieChecking $partieChecking
+     * @param DataAccess $data
+     * @return void
+     */
+    public function updateQVraiFaux(mixed $Num_Ques, mixed $question, string $orbit, string $rotation, string $correct, PartieChecking $partieChecking, DataAccess $data): void
     {
         $partieChecking->updateQVraiFaux($Num_Ques, $question, $orbit, $rotation, $correct, $data);
     }
 
+    /**
+     * @param mixed $Num_Ques
+     * @param mixed $question
+     * @param string $orbit
+     * @param string $rotation
+     * @param string $rotationMargin
+     * @param string $orbitMargin
+     * @param PartieChecking $partieChecking
+     * @param DataAccess $data
+     * @return void
+     */
     public function updateQInterac(mixed $Num_Ques, mixed $question, string $orbit, string $rotation, string $rotationMargin, string $orbitMargin, PartieChecking $partieChecking, DataAccess $data): void
     {
         $partieChecking->updateQInterac($Num_Ques, $question, $orbit, $rotation, $rotationMargin, $orbitMargin, $data);
     }
 
+    /**
+     * @param int $numQues
+     * @param PartieChecking $questionService
+     * @param DataAccess $data
+     * @return void
+     */
     public function deleteQuestion(int $numQues, PartieChecking $questionService, DataAccess $data): void
     {
         $questionService->deleteQuestion($numQues, $data);
     }
 
+    /**
+     * @param string $question
+     * @param string|null $orbit
+     * @param string|null $rotation
+     * @param string $correct
+     * @param PartieChecking $partieChecking
+     * @param DataAccess $data
+     * @return void
+     */
     public function addQVraiFaux(string $question, ?string $orbit, ?string $rotation, string $correct, PartieChecking $partieChecking, DataAccess $data): void
     {
         $partieChecking->addQVraiFaux($question, $orbit, $rotation, $correct, $data);
     }
 
+    /**
+     * @param string $question
+     * @param string $option1
+     * @param string $option2
+     * @param string $option3
+     * @param string $option4
+     * @param string $correct
+     * @param PartieChecking $partieChecking
+     * @param DataAccess $data
+     * @return void
+     */
     public function addQCU(string $question, string $option1, string $option2, string $option3, string $option4, string $correct, PartieChecking $partieChecking, DataAccess $data): void
     {
         $partieChecking->addQCU($question, $option1, $option2, $option3, $option4, $correct, $data);
     }
 
+    /**
+     * @param string $question
+     * @param string $orbit
+     * @param string $rotation
+     * @param string $rotationMargin
+     * @param string $orbitMargin
+     * @param PartieChecking $partieChecking
+     * @param DataAccess $data
+     * @return void
+     */
     public function addQInterac(string $question, string $orbit, string $rotation, string $rotationMargin, string $orbitMargin, PartieChecking $partieChecking, DataAccess $data): void
     {
         $partieChecking->addQInterac($question, $orbit, $rotation, $rotationMargin, $orbitMargin, $data);

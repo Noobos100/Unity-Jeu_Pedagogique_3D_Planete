@@ -148,7 +148,6 @@ class ControllerGameData
 		$dateTime2 = DateTime::createFromFormat('Y-m-d H:i:s', $user['Date_Fin']);
 
 		$interval = $dateTime->diff($dateTime2);
-		$totalMaxTemps2 = ((int)$interval->format('%H')) * 3600 + ((int)$interval->format('%I')) * 60 + ((int)$interval->format('%S'));
-		return $totalMaxTemps2;
+        return ((int)$interval->format('%H')) * 3600 + ((int)$interval->format('%I')) * 60 + ((int)$interval->format('%S'));
 	}
 }

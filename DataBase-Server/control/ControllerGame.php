@@ -16,9 +16,9 @@ class ControllerGame
      *
      * @param string $ip The IP address of the player.
      * @param string $platform The platform of the player.
+     * @param string $username
      * @param PartieChecking $partieService An instance of PartieChecking service.
      * @param mixed $data Additional data.
-     * @throws CannotDoException If the player already exists.
      * @return void
      */
     public function newPlayer(string $ip, string $platform, string $username, PartieChecking $partieService, mixed $data): void {
