@@ -8,14 +8,4 @@
     RewriteRule ^(.*)$ index.php [L]
 </IfModule>
 
-<IfModule mod_mime.c>
-    AddType application/javascript .br
-</IfModule>
-
-<IfModule mod_headers.c>
-    <FilesMatch "\.br$">
-        Header set Content-Encoding br
-    </FilesMatch>
-</IfModule>
-
-AddType application/wasm .wasm
+Header set Access-Control-Allow-Origin "https://jeupedagogique.pq.lu"
