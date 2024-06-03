@@ -10,6 +10,7 @@ class ViewGame extends View
         parent::__construct($layout);
 
         $this->title = 'Jeu';
-        $this->content = '<p>Vous êtes dans le jeu</p>';
+//		$this->content = '';
+        $this->content = '<iframe src="/PlanetGame/index.html" width="800" height="600"></iframe>';
     }
 }

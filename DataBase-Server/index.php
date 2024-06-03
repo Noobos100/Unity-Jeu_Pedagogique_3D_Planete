@@ -335,7 +335,6 @@ elseif ('/add-question' == $uri && (isset($_SESSION['loggedin']) )) {
     }
 }
 else {
-	session_destroy();
     header('Status: 404 Not Found');
     echo '<html><body><h1>Page Not Found</h1>';
     echo '<button onclick="window.location.href=\'/\'">Retour à la page d\'accueil</button>';
