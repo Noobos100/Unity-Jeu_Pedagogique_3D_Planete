@@ -110,21 +110,21 @@ h2{
 }
 
 
-.popup {
+.popup2 {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    left: 30%;
-    top: 30%;
+    left: 50%;
+    top: 50%;
     width: 300px; /* Full width */
     height: 250px; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.75); /* Black w/ opacity */
     overflow-y: scroll;
     border-radius: 20px;
+    transform: translate(-50%, -50%); /* Add this line */
 }
 
-.popup-content {
-    /* Style the popup content here */
+.popup-content{
+
 }

@@ -22,8 +22,9 @@ class ViewGame extends View
 
         // Add the popup with "Hello World" content
         $this->content .= '
-            <div id="popup" class="popup">
+            <div id="popup" class="popup2">
                 <div class="popup-content">
+                            <!-- <button id="popupButton">Afficher/Masquer la pop-up</button> -->
                     <h1>Top score</h1>';
         // Afficher le temps minimum
         $totalMinTemps = $controller->calculateTempsMin($parties);
@@ -58,6 +59,11 @@ class ViewGame extends View
                     popup.style.display = \'none\';
                 }
             });
+
+    document.getElementById(\'popupButton\').addEventListener(\'click\', function() {
+        var popup = document.getElementById(\'popup\');
+        popup.style.display = \'none\';
+
         </script>
         ';
     }
