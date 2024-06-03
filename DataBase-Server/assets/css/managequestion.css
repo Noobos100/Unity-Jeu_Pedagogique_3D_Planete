@@ -11,9 +11,11 @@
     background-color: white;
     color: black;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-radius: 10px;
 }
 .popup-content {
     position: relative;
+    margin-right: 20px;
 }
 .popup .close {
     position: absolute;
@@ -33,10 +35,24 @@
     border: 1px solid black;
 }
 
-#supprimer {
-
+.question-row {
+    padding: 10px;
 }
 
-#modifier {
-
+.question-row:hover {
+    background-color: rgba(18, 43, 157, 0.50);
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* S'assurer que les bordures ne se chevauchent pas */
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+.fa-circle-xmark{
+    color: black;
+}
+

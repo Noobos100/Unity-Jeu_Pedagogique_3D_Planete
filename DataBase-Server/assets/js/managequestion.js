@@ -45,13 +45,13 @@ function showFormFields(type) {
     if (type === "VRAIFAUX") {
         fields = `
             <label for="enonce">Enoncé:</label>
-            <input type="text" id="enonce" name="enonce" required>
+            <input type="text" id="enonce" name="enonce" style="border: 1px solid #0B1B66;" required>
             <label for="orbit">Orbite (optionnel):</label>
-            <input type="text" id="orbit" name="orbit" style="border: 1px solid #000000;" required>
+            <input type="text" id="orbit" name="orbit" style="border: 1px solid #0B1B66;" >
             <label for="rotation">Rotation (optionnel):</label>
-            <input type="text" id="rotation" name="rotation" style="border: 1px solid #000000;" required>
+            <input type="text" id="rotation" name="rotation" style="border: 1px solid #0B1B66;" 
             <label for="reponse">Réponse:</label>
-            <select id="reponse" name="reponse" required>
+            <select class="selector" id="reponse" name="reponse" required>
                 <option value="Vrai">Vrai</option>
                 <option value="Faux">Faux</option>
             </select>
@@ -60,17 +60,17 @@ function showFormFields(type) {
     else if (type === "QCU") {
         fields = `
             <label for="enonce">Enoncé:</label>
-            <input type="text" id="enonce" name="enonce" style="border: 1px solid #000000;" required>
+            <input type="text" id="enonce" name="enonce" style="border: 1px solid #0B1B66;" required>
             <label for="option1">Option 1:</label>
-            <input type="text" id="option1" name="option1" style="border: 1px solid #000000;" required>
+            <input type="text" id="option1" name="option1" style="border: 1px solid #0B1B66;" required>
             <label for="option2">Option 2:</label>
-            <input type="text" id="option2" name="option2" style="border: 1px solid #000000;" required>
+            <input type="text" id="option2" name="option2" style="border: 1px solid #0B1B66;" required>
             <label for="option3">Option 3:</label>
-            <input type="text" id="option3" name="option3" style="border: 1px solid #000000;" required>
+            <input type="text" id="option3" name="option3" style="border: 1px solid #0B1B66;" required>
             <label for="option4">Option 4:</label>
-            <input type="text" id="option4" name="option4" style="border: 1px solid #000000;" required>
+            <input type="text" id="option4" name="option4" style="border: 1px solid #0B1B66;" required>
             <label for="correct">Correct Answer:</label>
-            <select id="correct" name="correct" required">
+            <select class="selector" id="correct" name="correct" required">
                 <option value="Rep1">Option 1</option>
                 <option value="Rep2">Option 2</option>
                 <option value="Rep3">Option 3</option>
@@ -81,16 +81,16 @@ function showFormFields(type) {
     else if (type === "QUESINTERAC") {
         fields = `
         <label for="enonce">Enoncé:</label>
-        <input type="text" class="formbox" id="enonce" name="enonce" style="border: 1px solid #000000;" required>
+        <input type="text" class="formbox" id="enonce" name="enonce" style="border: 1px solid #0B1B66;" required>
         <label for="orbit">Réponse orbite:</label>
-        <input type="text" class="formbox" id="orbit" name="orbit" style="border: 1px solid #000000;" required>
+        <input type="text" class="formbox" id="orbit" name="orbit" style="border: 1px solid #0B1B66;" required>
         <label for="margin-orbit">Marge orbite:</label>
-        <input type="text" class="formbox" id="margin-orbit" name="margin-orbit" style="border: 1px solid #000000;" required>
+        <input type="text" class="formbox" id="margin-orbit" name="margin-orbit" style="border: 1px solid #0B1B66;" required>
         
         <label for="rotation">Réponse rotation:</label>
-        <input type="text" class="formbox" id="rotation" name="rotation" style="border: 1px solid #000000;" required>
+        <input type="text" class="formbox" id="rotation" name="rotation" style="border: 1px solid #0B1B66;" required>
         <label for="margin-rotation">Marge rotation:</label>
-        <input type="text" class="formbox" id="margin-rotation" name="margin-rotation" style="border: 1px solid #000000;" required>
+        <input type="text" class="formbox" id="margin-rotation" name="margin-rotation" style="border: 1px solid #0B1B66;" required>
     `;
     }
 

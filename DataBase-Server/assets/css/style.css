@@ -76,13 +76,13 @@ input[type="submit"] {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #1a1a1a;
+    background-color: #0B1B66;
     color: white;
     font-size: 18px;
     cursor: pointer;
 }
 input[type="submit"]:hover {
-    background-color: #333;
+    background-color: #122b9d;
 }
 
 h1{
@@ -129,16 +129,103 @@ h2{
 
 }
 
-#closeButton{
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: transparent;
+.fa-circle-xmark{
+    display: flex;
+    justify-content: right;
     border: none;
+    background-color: transparent;
     color: white;
+    font-size: 20px;
+    cursor: pointer;
+    right: 10px;
+    float: right;
 }
 
-#closeButton:hover{
+.fa-circle-xmark:hover{
     cursor: pointer;
-    background-color: rgba(136, 136, 136, 0.5);
+    color: red;
+}
+
+.fa-pencil{
+    border: none;
+    justify-content: right;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+}
+
+.fa-pencil:hover{
+    cursor: pointer;
+    color: #333333;
+}
+
+.fa-trash-can{
+    border: none;
+    justify-content: right;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+}
+
+.fa-trash-can:hover{
+    cursor: pointer;
+    color: red;
+}
+
+.selector{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #0B1B66; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    border: none; /* Suppression de la bordure */
+    border-radius: 10px; /* Coins arrondis */
+    padding: 10px; /* Espacement intérieur */
+}
+
+.selector:hover{
+    cursor: pointer;
+}
+
+.buttonStyle {
+    position: relative;
+    top: 10px;
+    float: right;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 10px;
+    background-color: #0B1B66;
+    padding: 10px;
+    border-radius: 10px;
+    color : white;
+    border: none;
+}
+
+.buttonStyle:hover {
+    background-color: #122b9d;
+    cursor: pointer;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colonnes de largeur égale */
+    grid-template-rows: repeat(2, 1fr); /* 2 lignes de hauteur égale */
+    gap: 30px; /* Espacement entre les cellules de la grille */
+    margin-right: 20px;
+    margin-bottom: 40px;
+}
+
+.block {
+    font-size: 16px;
+    background-color: #122b9d;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }

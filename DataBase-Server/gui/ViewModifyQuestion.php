@@ -32,7 +32,7 @@ class ViewModifyQuestion extends View
             <label for="current">Bonne réponse (actuellement):</label>
             <input type="text" id="current" name="current" value="' . $questionData['BonneRep'] . '" readonly> 
             <label for="correct">Changer bonne réponse:</label>
-            <select id="correct" name="correct" required>
+            <select class="selector" id="correct" name="correct" required>
                 <option value="Rep1">Option 1</option>
                 <option value="Rep2">Option 2</option>
                 <option value="Rep3">Option 3</option>
@@ -108,7 +108,7 @@ class ViewModifyQuestion extends View
         }
 
         $this->content .= '
-        <button onclick="confirmLeave()">Annuler</button>
+        <button class="buttonStyle" onclick="confirmLeave()">Annuler</button>
         <script src="/assets/js/modifyquestion.js"></script>';
     }
 }

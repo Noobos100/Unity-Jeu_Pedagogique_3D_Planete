@@ -22,10 +22,10 @@ class ViewGame extends View
 		// Add the button
 		ob_start();
 		?>
-		<button id="popupButton">Scores</button>
+		<button class="buttonStyle" id="popupButton">Scores</button>
 		<div id="popup" class="popup2">
 			<div class="popup-content2">
-				<button id="closeButton" class="fas fa-pen"></button>
+				<button class="fas fa-circle-xmark" id="closeButton"></button>
 				<h1>Top score</h1>
 				<p>Temps minimum de jeu : <?php echo $totalMinTemps ?></p>
 				<h2>Meilleurs scores</h2>
