@@ -126,6 +126,27 @@ h2{
 }
 
 .popup-content2{
+    max-height: 100%;
+}
+
+
+.iframe-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.iframe-container iframe {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 90%;
+    height: 90%;
+    border: none;
+    justify-content: center;
+    align-items: center;
 
 }
 
@@ -188,6 +209,21 @@ h2{
     cursor: pointer;
 }
 
+.buttonStyle2 {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 10px;
+    background-color: #0B1B66;
+    padding: 10px;
+    border-radius: 10px;
+    color : white;
+    border: none;
+}
+
 .buttonStyle {
     position: relative;
     top: 10px;
@@ -248,20 +284,3 @@ th, td {
     background-color: rgba(18, 43, 157, 0.50);
 }
 
-.iframe-container {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
-}
-
-.iframe-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    width: 90%;
-    height: 90%;
-    border: none;
-}
