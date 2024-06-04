@@ -38,7 +38,7 @@ function deleteQuestion(qid) {
 }
 function showFormFields(type) {
     const container = document.getElementById("form-fields-container");
-    container.innerHTML = ""; // Clear previous fields
+    container.innerHTML = "";
 
     let fields = "";
 
