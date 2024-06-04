@@ -134,12 +134,22 @@ LIMIT 10;
      */
     public function utilisateur(string $name, string $pwd): bool
     {
-        $query = "SELECT COUNT(*) AS Counter FROM UTILISATEUR WHERE NOM = ? AND MDP = ?";
+        $query = "SELECT MDP FROM UTILISATEUR WHERE NOM = ?";
         $stmt = $this->dataAccess->prepare($query);
-        $stmt->execute([$name, $pwd]);
+        $stmt->execute([$name]);
         $result = $stmt->fetch();
 
-        return $result['Counter'] > 0;
+        return ($result && password_verify($pwd, $result['MDP']));
+    }
+
+    public function createUser(string $name, string $pwd): bool
+    {
+        // Hacher le mot de passe
+        $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
+
+        $query = "INSERT INTO UTILISATEUR (NOM, MDP) VALUES (?, ?)";
+        $stmt = $this->dataAccess->prepare($query);
+        return $stmt->execute([$name, $hashedPwd]);
     }
 
 
