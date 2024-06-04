@@ -26,19 +26,19 @@ class ViewGame extends View
 		<div id="popup" class="popup2">
 			<div class="popup-content2">
 				<button class="fas fa-circle-xmark" id="closeButton"></button>
-				<h1>Top score</h1>
-				<p>Temps minimum de jeu : <?php echo $totalMinTemps ?></p>
 				<h2>Meilleurs scores</h2>
 				<table>
 				<tr>
 					<th>Utilisateur</th>
 					<th>Score</th>
+                    <th>Temps</th>
 				</tr>
 				<?php
 				foreach ($bestUsers as $user) {
 					echo '<tr>';
 					echo '<td>' . $user['Username'] . '</td>';
 					echo '<td>' . $user['Max_Score'] . '</td>';
+                    echo '<td>' . $user['Min_Time'] . '</td>';
 					echo '</tr>';
 				}
 				?>
