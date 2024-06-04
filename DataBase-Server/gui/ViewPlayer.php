@@ -30,7 +30,9 @@ class ViewPlayer extends View
 
         // Get player count
         $nbPlayers = count($players);
-        $this->content .= "<p>Nombre total de joueurs : $nbPlayers</p>";
+        $this->content .= "<div class='texte'>
+        <p>Nombre total de joueurs : $nbPlayers</p>
+        </div>";
 
 // Generate the pie chart
         $this->content .= '<div class="column-left">';

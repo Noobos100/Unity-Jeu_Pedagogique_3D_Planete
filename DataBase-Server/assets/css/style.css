@@ -283,3 +283,12 @@ th, td {
     background-color: rgba(18, 43, 157, 0.50);
 }
 
+.texte{
+    font-size: 16px;
+    text-align: center;
+    background-color: #122b9d;
+    padding: 8px;
+    border-radius: 10px;
+    color : white;
+    border: none;
+}
