@@ -7,10 +7,9 @@
     transform: translate(-50%, -50%);
     width: 50%;
     padding: 20px;
-    border: 1px solid #888;
-    background-color: white;
-    color: black;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border: none;
+    background-color: rgba(0, 0, 0, 0.80);
+    color: white;
     border-radius: 10px;
 }
 .popup-content {
@@ -35,7 +34,4 @@
     border: 1px solid black;
 }
 
-.fa-circle-xmark{
-    color: black;
-}
 
