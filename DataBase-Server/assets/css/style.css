@@ -240,10 +240,10 @@ th, td {
     text-align: left;
 }
 
-.table-row {
+.question-row {
     padding: 10px;
 }
 
-.table-row:hover {
+.question-row:hover {
     background-color: rgba(18, 43, 157, 0.50);
 }

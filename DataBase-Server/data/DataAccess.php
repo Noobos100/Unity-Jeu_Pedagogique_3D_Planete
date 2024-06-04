@@ -20,7 +20,7 @@ include_once 'service/DataAccessInterface.php';
 include_once 'service/CannotDoException.php';
 
 /**
- *
+ * Classe permettant d'accéder à la base de données et faire les requêtes SQL
  */
 class DataAccess implements DataAccessInterface
 {

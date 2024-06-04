@@ -2,8 +2,15 @@
 
 namespace gui;
 
+/**
+ * Vue pour gérer les questions (supression, modification, etc...)
+ */
 class ViewManageQuestions extends View
 {
+    /**
+     * @param Layout $layout
+     * @param mixed $questions
+     */
     public function __construct(Layout $layout, mixed $questions)
     {
         parent::__construct($layout);
@@ -22,9 +29,9 @@ class ViewManageQuestions extends View
             <label for="type">Type:</label>
             <select class="selector" id="type" name="type" required onchange="showFormFields(this.value)">
                 <option value="">Sélectionnez un type</option>
-                <option value="VRAIFAUX">VRAIFAUX</option>
+                <option value="VRAIFAUX">VRAI OU FAUX</option>
                 <option value="QCU">QCU</option>
-                <option value="QUESINTERAC">QUESINTERAC</option>
+                <option value="QUESINTERAC">QUESTION INTERACTIVE</option>
             </select>
             <div id="form-fields-container"></div>
             <input class="submit" type="submit" value="Ajouter">
@@ -34,9 +41,9 @@ class ViewManageQuestions extends View
     <label for="filter">Filtrer par type :</label>
     <select class="selector" id="filter" onchange="filterQuestions()">
     <option value="all">Tous</option>
-    <option value="VRAIFAUX">VRAIFAUX</option>
+    <option value="VRAIFAUX">VRAI OU FAUX</option>
     <option value="QCU">QCU</option>
-    <option value="QUESINTERAC">QUESINTERAC</option>
+    <option value="QUESINTERAC">QUESTION INTERACTIVE</option>
     </select>
     <table id="question-table">
        <tr>
@@ -47,7 +54,7 @@ class ViewManageQuestions extends View
        </tr>';
         foreach ($questions as $question) {
             $this->content .= '
-                        <tr class="table-row">
+                        <tr class="question-row">
                             <td>' . htmlspecialchars($question['Num_Ques']) . '</td>
                             <td>' . htmlspecialchars($question['Enonce']) . '</td>
                             <td>' . htmlspecialchars($question['Type']) . '</td>
