@@ -72,15 +72,11 @@ class DataAccess implements DataAccessInterface
      * @return array
      */
     public function getBestUsers(): array{
-        $query = "SELECT J.Username,
-       MAX(P.Moy_Questions) as Max_Score,
-       TIME_FORMAT(TIMEDIFF(P.Date_Fin, P.Date_Deb), '%H:%i:%s') as Min_Time
-FROM JOUEUR J
-         INNER JOIN PARTIE P ON J.Ip = P.Ip_Joueur
-WHERE P.Date_Fin IS NOT NULL AND P.Date_Deb IS NOT NULL
-GROUP BY J.Username
-ORDER BY Max_Score DESC, Min_Time ASC
-LIMIT 1;
+        $query = "SELECT j.Username, PARTIE.Moy_Questions, TIMEDIFF(PARTIE.Date_Fin, PARTIE.Date_Deb) AS Temps_Reponse
+FROM PARTIE
+         JOIN JOUEUR j ON PARTIE.Ip_Joueur = j.Ip
+ORDER BY Moy_Questions DESC, (Date_Fin - Date_Deb) ASC
+LIMIT 10;
 ";
         return $this->dataAccess->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }

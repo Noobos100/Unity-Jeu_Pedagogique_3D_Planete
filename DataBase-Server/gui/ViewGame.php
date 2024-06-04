@@ -13,8 +13,6 @@ class ViewGame extends View
 	{
 		parent::__construct($layout);
 
-		$parties = $controller->getParties($data);
-		$totalMinTemps = $controller->calculateTempsMin($parties);
 		$bestUsers = $controller->getBestUsers($data);
 
 		$this->title = 'Jeu';
@@ -26,7 +24,8 @@ class ViewGame extends View
 		<div id="popup" class="popup2">
 			<div class="popup-content2">
 				<button class="fas fa-circle-xmark" id="closeButton"></button>
-				<h2>Meilleurs scores</h2>
+				<h1>Meilleurs scores</h1>
+				<h2>Top 10 :</h2>
 				<table>
 				<tr>
 					<th>Utilisateur</th>
@@ -37,8 +36,8 @@ class ViewGame extends View
 				foreach ($bestUsers as $user) {
 					echo '<tr>';
 					echo '<td>' . $user['Username'] . '</td>';
-					echo '<td>' . $user['Max_Score'] . '</td>';
-                    echo '<td>' . $user['Min_Time'] . '</td>';
+					echo '<td>' . $user['Moy_Questions'] . '</td>';
+                    echo '<td>' . $user['Temps_Reponse'] . '</td>';
 					echo '</tr>';
 				}
 				?>
@@ -58,8 +57,11 @@ class ViewGame extends View
 				popup.style.display = 'none';
 			});
 		</script>
-		<iframe src="https://jeupedagogique.pq.lu" width="960" height="540"></iframe>
-<?php
+        <div class="iframe-container">
+            <iframe src="https://jeupedagogique.pq.lu"></iframe>
+        </div>
+
+        <?php
 
 		$this->content .= ob_get_clean();
 	}

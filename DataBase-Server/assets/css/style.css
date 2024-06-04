@@ -247,3 +247,21 @@ th, td {
 .question-row:hover {
     background-color: rgba(18, 43, 157, 0.50);
 }
+
+.iframe-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 90%;
+    height: 90%;
+    border: none;
+}
