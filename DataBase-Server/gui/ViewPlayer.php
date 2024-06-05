@@ -3,6 +3,7 @@
 namespace gui;
 
 use control\ControllerPlayers;
+use data\DataAccess;
 
 include_once "View.php";
 
@@ -13,9 +14,9 @@ class ViewPlayer extends View
      *
      * @param Layout $layout The layout to use for displaying content.
      * @param ControllerPlayers $controller The controller to fetch data from.
-     * @param mixed $data additional data needed.
+     * @param DataAccess $data An instance of DataAccess.
      */
-    public function __construct(Layout $layout, ControllerPlayers $controller, mixed $data)
+    public function __construct(Layout $layout, ControllerPlayers $controller, DataAccess $data)
     {
         parent::__construct($layout);
 

@@ -15,7 +15,7 @@ class ControllerQuestions
      * Generates JSON containing random questions.
      *
      * @param PartieChecking $questionService An instance of PartieChecking service.
-     * @param mixed $data Additional data.
+     * @param DataAccess $data An instance of DataAccess.
      * @param int $howManyQCU The number of multiple-choice questions.
      * @param int $howManyInterac The number of interactive questions.
      * @param int $howManyVraiFaux The number of true/false questions.
@@ -42,7 +42,7 @@ class ControllerQuestions
      *
      * @param int $numQues The number of the question.
      * @param PartieChecking $questionService An instance of PartieChecking service.
-     * @param DataAccess $data Additional data.
+     * @param DataAccess $data An instance of DataAccess.
      * @return string JSON containing attributes of the question.
      */
     public function getJsonAttributesQ(int $numQues, PartieChecking $questionService, DataAccess $data): string {
@@ -59,7 +59,7 @@ class ControllerQuestions
      * @param string $dateFin The end date of the party.
      * @param bool $isCorrect Indicates if the answer is correct.
      * @param PartieChecking $questionService An instance of PartieChecking service.
-     * @param DataAccess $data Additional data.
+     * @param DataAccess $data An instance of DataAccess.
      * @return void
      */
     public function addFinishedQuestion(int $numQues, int $idParty, string $dateDeb, string $dateFin, bool $isCorrect, PartieChecking $questionService, DataAccess $data): void {

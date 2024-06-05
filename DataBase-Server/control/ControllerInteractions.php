@@ -37,9 +37,9 @@ class ControllerInteractions
      * @param string $ipJoueur The IP address of the player.
      * @param string $dateInterac The date of the interaction.
      * @param PartieChecking $interactionService An instance of PartieChecking service.
-     * @param DataAccess $data Additional data.
+     * @param DataAccess $data An instance of DataAccess.
+     * @throws CannotDoException If the interaction type is not correct.
      * @return void
-     *@throws CannotDoException If the interaction type is not correct.
      */
     public function addInteration(string $nomInteract, float $valeurInteract, int $isEval, string $ipJoueur, string $dateInterac, PartieChecking $interactionService, DataAccess $data): void {
         if (!$interactionService->addInteraction($nomInteract, $valeurInteract, $isEval, $ipJoueur, $dateInterac, $data)){
