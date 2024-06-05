@@ -23,7 +23,7 @@ class ViewPlayer extends View
         $this->title = 'Utilisateurs';
 
         // Page content
-        $this->content .= '<h1>Types de joueur</h1>';
+        $this->content .= '<h1 class="h1-title">Types de joueur</h1>';
 
         // Get all players
         $players = $controller->getPlayers($data);
@@ -35,10 +35,10 @@ class ViewPlayer extends View
 // Generate the pie chart
         $this->content .= '<div class="column-left">';
         $this->content .= $controller->generateChartPlatforme($players);
-        $this->content .= '</div>';
+		$this->content .= '</div>';
 
 // Ip Table
-        $this->content .= '<div class="column-right">';
+		$this->content .= '<div class="column-right">';
         $this->content .= $controller->generateTable($players);
         $this->content .= '</div>';
     }

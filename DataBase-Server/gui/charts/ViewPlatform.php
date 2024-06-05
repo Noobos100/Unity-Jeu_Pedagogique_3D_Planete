@@ -36,6 +36,9 @@ class ViewPlatform extends ViewChart
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
                   ],
+                    borderWidth: 1,
+                width: 500,
+                height: 500
               }]
             };
           let platformOptions = {

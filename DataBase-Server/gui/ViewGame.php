@@ -12,50 +12,15 @@ class ViewGame extends View
     public function __construct(Layout $layout, ControllerGameData $controller, DataAccess $data)
     {
         parent::__construct($layout);
-
-        $bestUsers = $controller->getBestUsers($data);
-
         $this->title = 'Jeu';
-
         // Add the button
         ob_start();
         ?>
-        <button class="buttonStyle2" id="popupButton">Scores</button>
-        <div id="popup" class="popup2" style="display: none;">
-            <div class="popup-content2">
-                <button class="fas fa-circle-xmark" id="closeButton"></button>
-                <h1>Meilleurs scores</h1>
-                <h2>Top 10 :</h2>
-                <table>
-                    <tr>
-                        <th>Utilisateur</th>
-                        <th>Score</th>
-                        <th>Temps</th>
-                    </tr>
-                    <?php
-                    foreach ($bestUsers as $user) {
-                        echo '<tr>';
-                        echo '<td>' . htmlspecialchars($user['Username'], ENT_QUOTES, 'UTF-8') . '</td>';
-                        echo '<td>' . htmlspecialchars($user['Moy_Questions'], ENT_QUOTES, 'UTF-8') . '</td>';
-                        echo '<td>' . htmlspecialchars($user['Temps_Reponse'], ENT_QUOTES, 'UTF-8') . '</td>';
-                        echo '</tr>';
-                    }
-                    ?>
-                </table>
-            </div>
-        </div>
-        <script>
-            let popup = document.getElementById('popup');
-            document.getElementById('popupButton').addEventListener('click', function() {
-                popup.style.display = (popup.style.display === 'none' || popup.style.display === '') ? 'block' : 'none';
-            });
-            document.getElementById('closeButton').addEventListener('click', function() {
-                popup.style.display = 'none';
-            });
-        </script>
+        <button class="btn" id="scoreBtn">Scores</button>
         <div class="iframe-container">
             <iframe src="https://jeupedagogique.pq.lu"></iframe>
         </div>
+        <script type="module" src="/assets/js/game.js"></script>
         <?php
 
         $this->content .= ob_get_clean();

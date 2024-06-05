@@ -1,0 +1,14 @@
+.form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.input-text, .input-question {
+    background-color: #3c3c3c;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+}

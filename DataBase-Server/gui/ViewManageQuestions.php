@@ -21,31 +21,22 @@ class ViewManageQuestions extends View
 
 		ob_start();
 		?>
-        <h1>Gestionnaire des questions</h1>
-        <link href="/assets/css/managequestion.css" rel="stylesheet"/>
-        <div id="add-question-popup" class="popup">
-            <form action="/add-question" method="post" class="popup-content">
-                <span class="fas fa-circle-xmark" onclick="document.getElementById('add-question-popup').style.display = 'none'"></i></span>
-                <h2>Ajouter une question</h2>
-                <label for="type">Type:</label>
-                <select class="selector" id="type" name="type" required onchange="showFormFields(this.value)">
-                    <option value="">Sélectionnez un type</option>
+        <h1 class="h1-title">Gestionnaire des questions</h1>
+        <div id="filter-container">
+        <!--filtre-->
+            <div>
+                <label for="filter">Filtrer par type :</label>
+                <select class="selector" id="filter">
+                    <option value="all">Tous</option>
                     <option value="VRAIFAUX">Vrai ou faux</option>
                     <option value="QCU">QCU</option>
                     <option value="QUESINTERAC">Question interactive</option>
                 </select>
-                <div id="form-fields-container"></div>
-                <input class="submit" type="submit" value="Ajouter">
-            </form>
+            </div>
+            <!--bouton pour ajouter une question-->
+            <button id="addQuestionBtn" class="btn add">Ajouter une question</button>
         </div>
-        <button class="buttonStyle" onclick="document.getElementById('add-question-popup').style.display = 'block'">Ajouter une question</button>
-        <label for="filter">Filtrer par type :</label>
-        <select class="selector" id="filter" onchange="filterQuestions()">
-            <option value="all">Tous</option>
-            <option value="VRAIFAUX">Vrai ou faux</option>
-            <option value="QCU">QCU</option>
-            <option value="QUESINTERAC">Question interactive</option>
-        </select>
+        <!--tableau des questions-->
         <table id="question-table">
             <tr>
                 <th>ID</th>
@@ -56,22 +47,22 @@ class ViewManageQuestions extends View
 			<?php
 			foreach ($questions as $question) {
 				?>
-                <tr class="question-row">
+                <tr class="question-row" data-qid="<?=$question['Num_Ques']?>">
                     <td><?php echo htmlspecialchars($question['Num_Ques']) ?></td>
                     <td><?php echo htmlspecialchars($question['Enonce']) ?></td>
                     <td><?php echo htmlspecialchars($question['Type']) ?></td>
                     <td>
-                        <button class="fas fa-pencil" onclick="location.href='modify-question?qid=<?php echo $question['Num_Ques'] ?>'"></button>
+                        <button class="fas fa-pencil edit"></button>
                     </td>
                     <td>
-                        <button class="fas fa-trash-can" onclick="deleteQuestion('<?php echo $question['Num_Ques'] ?>')"></button>
+                        <button class="fas fa-trash-can delete"></button>
                     </td>
                 </tr>
 				<?php
 			}
 			?>
         </table>
-        <script src="/assets/js/managequestion.js"></script>';
+        <script type="module" src="/assets/js/managequestion.js"></script>';
 		<?php
 		$this->content = ob_get_clean();
 	}

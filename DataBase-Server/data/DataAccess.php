@@ -71,13 +71,12 @@ class DataAccess implements DataAccessInterface
     /**
      * @return array
      */
-    public function getBestUsers(): array{
+    public function getBestUsers(int $nbUser): array{
         $query = "SELECT j.Username, PARTIE.Moy_Questions, TIMEDIFF(PARTIE.Date_Fin, PARTIE.Date_Deb) AS Temps_Reponse
-FROM PARTIE
-         JOIN JOUEUR j ON PARTIE.Ip_Joueur = j.Ip
-ORDER BY Moy_Questions DESC, (Date_Fin - Date_Deb) ASC
-LIMIT 10;
-";
+					FROM PARTIE
+					JOIN JOUEUR j ON PARTIE.Ip_Joueur = j.Ip
+					ORDER BY Moy_Questions DESC
+					LIMIT {$nbUser};";
         return $this->dataAccess->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 

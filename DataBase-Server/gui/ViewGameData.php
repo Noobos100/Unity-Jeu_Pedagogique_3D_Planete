@@ -22,7 +22,7 @@ class ViewGameData extends View
         parent::__construct($layout);
 
         $this->title = 'Utilisateurs';
-        $this->content .= '<h1>Données de jeu</h1>';
+        $this->content .= '<h1 class="h1-title">Données de jeu</h1>';
 
         $parties = $controller->getParties($data);
         $reponseUser = $controller->getReponsesUsers($data);
