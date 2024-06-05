@@ -10,9 +10,9 @@ class ViewQuestions extends View
      * Constructs a new ViewQuestions instance.
      *
      * @param Layout $layout The layout to use for displaying content.
-     * @param mixed $jsonQ The JSON string representing the questions.
+     * @param string $jsonQ The JSON string representing the questions.
      */
-    public function __construct($layout, mixed $jsonQ)
+    public function __construct(Layout $layout, string $jsonQ)
     {
         parent::__construct($layout);
 

@@ -2,6 +2,7 @@
 
 namespace control;
 
+use data\DataAccess;
 use service\PartieChecking;
 use service\CannotDoException;
 
@@ -36,11 +37,11 @@ class ControllerInteractions
      * @param string $ipJoueur The IP address of the player.
      * @param string $dateInterac The date of the interaction.
      * @param PartieChecking $interactionService An instance of PartieChecking service.
-     * @param mixed $data Additional data.
-     * @throws CannotDoException If the interaction type is not correct.
+     * @param DataAccess $data Additional data.
      * @return void
+     *@throws CannotDoException If the interaction type is not correct.
      */
-    public function addInteration(string $nomInteract, float $valeurInteract, int $isEval, string $ipJoueur, string $dateInterac, PartieChecking $interactionService, $data): void {
+    public function addInteration(string $nomInteract, float $valeurInteract, int $isEval, string $ipJoueur, string $dateInterac, PartieChecking $interactionService, DataAccess $data): void {
         if (!$interactionService->addInteraction($nomInteract, $valeurInteract, $isEval, $ipJoueur, $dateInterac, $data)){
             $target = "DataBase Interaction ";
             $action = "Register Interaction";

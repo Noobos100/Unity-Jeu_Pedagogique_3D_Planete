@@ -76,7 +76,7 @@ elseif ('/login' == $uri ) {
         $_SESSION['username'] = $_POST['username'];
         $_SESSION['password'] = $_POST['password'];
 
-        if ($data->utilisateur($_SESSION['username'], $_SESSION['password'])) {
+        if ($data->authenticateUser($_SESSION['username'], $_SESSION['password'])) {
             $_SESSION['loggedin'] = true;
             header('Location: /game-data');
             exit;

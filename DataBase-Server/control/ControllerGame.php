@@ -2,6 +2,7 @@
 
 namespace control;
 
+use data\DataAccess;
 use service\CannotDoException;
 use service\PartieChecking;
 
@@ -18,10 +19,10 @@ class ControllerGame
      * @param string $platform The platform of the player.
      * @param string $username
      * @param PartieChecking $partieService An instance of PartieChecking service.
-     * @param mixed $data Additional data.
+     * @param DataAccess $data An instance of DataAccess service.
      * @return void
      */
-    public function newPlayer(string $ip, string $platform, string $username, PartieChecking $partieService, mixed $data): void {
+    public function newPlayer(string $ip, string $platform, string $username, PartieChecking $partieService, DataAccess $data): void {
         if($partieService->verifyJoueurExists($ip, $data)){
             $partieService->updateJoueur($ip, $platform, $username, $data);
         }

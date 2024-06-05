@@ -99,7 +99,6 @@ LIMIT 10;
         return $this->dataAccess->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
     /**
      * @return array
      */
@@ -132,7 +131,7 @@ LIMIT 10;
      * @param string $pwd
      * @return bool
      */
-    public function utilisateur(string $name, string $pwd): bool
+    public function authenticateUser(string $name, string $pwd): bool
     {
         $query = "SELECT MDP FROM UTILISATEUR WHERE NOM = ?";
         $stmt = $this->dataAccess->prepare($query);
@@ -142,6 +141,14 @@ LIMIT 10;
         return ($result && password_verify($pwd, $result['MDP']));
     }
 
+    /**
+     * /!\ Function not used in GUI
+     * This function is used to create a new user in the database
+     * that can connect to the website
+     * @param string $name
+     * @param string $pwd
+     * @return bool
+     */
     public function createUser(string $name, string $pwd): bool
     {
         // Hacher le mot de passe
@@ -151,7 +158,6 @@ LIMIT 10;
         $stmt = $this->dataAccess->prepare($query);
         return $stmt->execute([$name, $hashedPwd]);
     }
-
 
     /**
      * @param string $nomInteract

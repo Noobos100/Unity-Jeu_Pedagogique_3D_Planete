@@ -4,6 +4,9 @@ namespace gui;
 
 include_once "Layout.php";
 
+/**
+ * Represents a view in the MVC pattern.
+ */
 class View
 {
     protected string $title = '';

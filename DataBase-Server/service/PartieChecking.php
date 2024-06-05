@@ -7,7 +7,7 @@ use domain\{Interaction, Joueur, Partie, Qcu, Quesinterac, UserAnswer, VraiFaux}
 
 
 /**
- *
+ * Represents a class that checks the validity of the data entered.
  */
 class PartieChecking
 {

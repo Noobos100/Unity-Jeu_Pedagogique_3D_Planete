@@ -3,9 +3,18 @@
 namespace gui;
 
 
+/**
+ * Class ViewModifyQuestion
+ * @package gui
+ */
 class ViewModifyQuestion extends View
 {
 
+    /**
+     * Constructs a new ViewModifyQuestion instance.
+     * @param $layout
+     * @param $questionData
+     */
     public function __construct($layout, $questionData)
     {
         parent::__construct($layout);

@@ -7,8 +7,17 @@ use data\DataAccess;
 
 include_once "View.php";
 
+/**
+ *
+ */
 class ViewGame extends View
 {
+    /**
+     * Constructs a new ViewGame instance.
+     * @param Layout $layout
+     * @param ControllerGameData $controller
+     * @param DataAccess $data
+     */
     public function __construct(Layout $layout, ControllerGameData $controller, DataAccess $data)
     {
         parent::__construct($layout);

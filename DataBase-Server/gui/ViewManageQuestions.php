@@ -8,6 +8,7 @@ namespace gui;
 class ViewManageQuestions extends View
 {
 	/**
+     * Construit une nouvelle instance de ViewManageQuestions.
 	 * @param Layout $layout
 	 * @param mixed $questions
 	 */

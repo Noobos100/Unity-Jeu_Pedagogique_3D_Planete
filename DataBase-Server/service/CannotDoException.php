@@ -2,6 +2,9 @@
 
 namespace service;
 
+/**
+ * Represents an exception thrown when an action cannot be executed.
+ */
 class CannotDoException extends \Exception
 {
     private string $default_msg = 'An action cannot be executed.';

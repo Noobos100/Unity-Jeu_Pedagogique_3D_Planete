@@ -6,19 +6,18 @@ include_once "View.php";
 
 class ViewLogin extends View
 {
-/**
-* Constructs a new ViewLogin instance.
-*
-* @param Layout $layout The layout to use for displaying content.
-*/
-public function __construct(Layout $layout)
-{
-parent::__construct($layout);
+    /**
+     * Constructs a new ViewLogin instance.
+     * @param Layout $layout The layout to use for displaying content.
+     */
+    public function __construct(Layout $layout)
+    {
+        parent::__construct($layout);
 
-$this->title = 'Connexion';
+        $this->title = 'Connexion';
 
 // Formulaire de connexion
-$this->content .= '
+        $this->content .= '
 <div class="login-container">
     <form action="/login" method="post" class="login-form">
         <label for="username">Nom d\'utilisateur:</label>
@@ -28,5 +27,5 @@ $this->content .= '
         <input type="submit" value="Se connecter">
     </form>
 </div>';
-}
+    }
 }
