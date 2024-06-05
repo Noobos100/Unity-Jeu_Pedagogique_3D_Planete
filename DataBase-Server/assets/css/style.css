@@ -16,11 +16,22 @@ body, html {
     justify-content: space-between;
 
     min-width: 200px;
+    max-width: 200px;
     background-color: #061123;
     color: white;
 
     padding: 10px;
 }
+
+.sidebar-text {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 10px;
+    background-color: #0B1B66;
+    padding: 10px;
+    border-radius: 10px;
+}
+
 .sidebar-button {
     background: linear-gradient(90deg, #061123, #0B1B66, #061123);
     color: white;

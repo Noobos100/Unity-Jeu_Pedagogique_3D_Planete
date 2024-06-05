@@ -52,7 +52,7 @@ class ViewManageQuestions extends View
                 <th>Enoncé</th>
                 <th>Type</th>
             </tr>
-            ';
+
 			<?php
 			foreach ($questions as $question) {
 				?>
