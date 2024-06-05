@@ -4,6 +4,9 @@ namespace service;
 
 use domain\{Interaction, Joueur, Partie, Qcu, Quesinterac, UserAnswer, VraiFaux};
 
+/**
+ *
+ */
 interface DataAccessInterface
 {
     /**
@@ -132,6 +135,9 @@ interface DataAccessInterface
      */
     public function getQQCU(int $numQues): Qcu|False;
 
+    /**
+     * @return array
+     */
     public function getAllQ(): array;
 
     /**
@@ -168,4 +174,14 @@ interface DataAccessInterface
 	 * @return array
 	 */
 	public function getPlayers(): array;
+
+    public function getParties(): array;
+
+    public function getQuestionNb(): array;
+
+    public function getPartiesAsc(): array;
+
+    public function getReponsesUsers(): array;
+
+    public function getBestUsers(): array;
 }

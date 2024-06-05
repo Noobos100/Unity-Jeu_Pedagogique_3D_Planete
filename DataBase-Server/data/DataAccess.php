@@ -75,7 +75,7 @@ class DataAccess implements DataAccessInterface
         $query = "SELECT j.Username, PARTIE.Moy_Questions, TIMEDIFF(PARTIE.Date_Fin, PARTIE.Date_Deb) AS Temps_Reponse
 FROM PARTIE
          JOIN JOUEUR j ON PARTIE.Ip_Joueur = j.Ip
-ORDER BY Moy_Questions DESC, (Date_Fin - Date_Deb) ASC
+ORDER BY Moy_Questions DESC, (Date_Fin - Date_Deb)
 LIMIT 10;
 ";
         return $this->dataAccess->query($query)->fetchAll(PDO::FETCH_ASSOC);
@@ -325,21 +325,6 @@ LIMIT 10;
 
             return $result['Score'] * (10 / $count);
         } else return False;
-    }
-
-    /**
-     * @param string $enonce
-     * @param string $type
-     * @return int
-     */
-    public function addQuestion(string $enonce, string $type): int
-    {
-        $query = "INSERT INTO QUESTION (Enonce, Type) VALUES (:enonce, :type)";
-        $stmt = $this->dataAccess->prepare($query);
-        $stmt->bindParam(':enonce', $enonce);
-        $stmt->bindParam(':type', $type);
-        $stmt->execute();
-        return $this->dataAccess->lastInsertId();
     }
 
     /**
