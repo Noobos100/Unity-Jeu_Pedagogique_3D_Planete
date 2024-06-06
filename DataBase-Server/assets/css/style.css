@@ -53,7 +53,7 @@ body, html {
     border-radius: 10px;
 }
 .main-content {
-    flex-grow: 1;
+    width: 100%;
     padding: 20px;
     color: white;
     background: rgba(0, 0, 0, 0.5);
@@ -87,22 +87,19 @@ body, html {
 }
 
 .iframe-container {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
 }
 
 .iframe-container iframe {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 90%;
-    height: 90%;
     border: none;
     justify-content: center;
     align-items: center;
-
+    width: calc(1920px/1.4);
+    height: calc(1080px/1.4);
 }
 
 .fa-circle-xmark{
