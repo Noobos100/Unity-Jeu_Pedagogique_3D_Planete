@@ -8,7 +8,7 @@
     RewriteRule ^(.*)$ index.php [L]
 </IfModule>
 
-<FilesMatch "\.(html|css|js|jpg|jpeg|png|gif|svg|ico|wasm|br|framework|data)$">
+<FilesMatch "\.(wasm|br|framework|data)$">
     Header set Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate"
     Header set Pragma "no-cache"
     Header set Expires "0"
