@@ -17,3 +17,22 @@ scoreBtn.addEventListener("click", async () => {
   await popup.show();
 });
 
+if ('caches' in window) {
+  // Ouvre tous les caches disponibles
+  caches.keys().then(function(cacheNames) {
+    // Parcourt tous les caches et les supprime
+    cacheNames.forEach(function(cacheName) {
+      caches.delete(cacheName).then(function(success) {
+        if (success) {
+          console.log('Cache ' + cacheName + ' deleted successfully.');
+        } else {
+          console.log('Failed to delete cache ' + cacheName + '.');
+        }
+      });
+    });
+  }).catch(function(error) {
+    console.error('Error while accessing caches:', error);
+  });
+} else {
+  console.log('Cache API is not supported in this browser.');
+}
