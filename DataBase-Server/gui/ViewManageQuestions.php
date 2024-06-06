@@ -3,12 +3,12 @@
 namespace gui;
 
 /**
- * Vue pour gérer les questions (supression, modification, etc...)
+ * View for question managing
  */
 class ViewManageQuestions extends View
 {
 	/**
-     * Construit une nouvelle instance de ViewManageQuestions.
+     * Constructs a new instance of ViewManageQuestions.
 	 * @param Layout $layout
 	 * @param mixed $questions
 	 */
