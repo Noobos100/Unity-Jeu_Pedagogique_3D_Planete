@@ -153,3 +153,106 @@ async function SubmitFormFromPopup(parentPopup, submitMsg = "", redirectUrl = ""
     }
   });
 }
+
+document.getElementById('search').addEventListener('input', function() {
+  const searchValue = this.value.toLowerCase();
+  const rows = document.querySelectorAll('.question-row');
+
+  rows.forEach(row => {
+    const enonce = row.children[1].textContent.toLowerCase();
+    if (enonce.includes(searchValue)) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+});
+
+const sortModes = {
+  NONE: 'none',
+  ASCENDING: 'ascending',
+  DESCENDING: 'descending'
+};
+
+const sortStates = {
+  id: sortModes.NONE,
+  enonce: sortModes.NONE,
+  type: sortModes.NONE
+};
+
+document.querySelectorAll('.sort-btn').forEach(button => {
+  button.addEventListener('click', function() {
+    const sortAttribute = this.getAttribute('data-sort');
+    const table = document.getElementById('question-table');
+    const rows = Array.from(table.querySelectorAll('.question-row'));
+
+    // Determine the next sort state
+    const nextSortState = getNextSortState(sortStates[sortAttribute]);
+    sortStates[sortAttribute] = nextSortState;
+
+    // Clear other columns' sort states
+    Object.keys(sortStates).forEach(attr => {
+      if (attr !== sortAttribute) sortStates[attr] = sortModes.NONE;
+    });
+
+    // Sort rows based on the next sort state
+    if (nextSortState === sortModes.NONE) {
+      rows.sort((a, b) => a.dataset.qid - b.dataset.qid);  // Default order by ID
+    } else {
+      rows.sort((a, b) => {
+        const aText = a.querySelector(`td:nth-child(${getColumnIndex(sortAttribute)})`).textContent;
+        const bText = b.querySelector(`td:nth-child(${getColumnIndex(sortAttribute)})`).textContent;
+        const comparison = sortAttribute === 'id' ? parseInt(aText) - parseInt(bText) : aText.localeCompare(bText);
+        return nextSortState === sortModes.ASCENDING ? comparison : -comparison;
+      });
+    }
+
+    rows.forEach(row => table.appendChild(row));
+
+    // Update icon based on sort state
+    updateSortIcons(sortAttribute, nextSortState);
+  });
+});
+
+function getNextSortState(currentState) {
+  switch (currentState) {
+    case sortModes.NONE:
+      return sortModes.ASCENDING;
+    case sortModes.ASCENDING:
+      return sortModes.DESCENDING;
+    case sortModes.DESCENDING:
+      return sortModes.NONE;
+    default:
+      return sortModes.NONE;
+  }
+}
+
+function getColumnIndex(sortAttribute) {
+  switch (sortAttribute) {
+    case 'id':
+      return 1;
+    case 'enonce':
+      return 2;
+    case 'type':
+      return 3;
+    default:
+      return 1;
+  }
+}
+
+function updateSortIcons(attribute, sortState) {
+  const iconMap = {
+    [sortModes.NONE]: 'fas fa-sort',
+    [sortModes.ASCENDING]: 'fas fa-sort-up',
+    [sortModes.DESCENDING]: 'fas fa-sort-down'
+  };
+
+  document.querySelectorAll('.sort-btn i').forEach(icon => {
+    icon.className = 'fas fa-sort';
+  });
+
+  const targetIcon = document.querySelector(`.sort-btn[data-sort="${attribute}"] i`);
+  if (targetIcon) {
+    targetIcon.className = iconMap[sortState];
+  }
+}
