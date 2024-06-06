@@ -75,7 +75,7 @@ class ViewManageQuestions extends View
 			}
 			?>
         </table>
-        <script type="module" src="/assets/js/managequestion.js"></script>';
+        <script type="module" src="/assets/js/managequestion.js"></script>
 		<?php
 		$this->content = ob_get_clean();
 	}
