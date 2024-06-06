@@ -421,14 +421,6 @@ class DataAccess implements DataAccessInterface
 
         $lastQID = $this->dataAccess->lastInsertId();
 
-        if (empty($valeur_orbit)) {
-            $valeur_orbit = null;
-        }
-
-        if (empty($valeur_rotation)) {
-            $valeur_rotation = null;
-        }
-
         $query2 = "INSERT INTO VRAIFAUX (Num_Ques, Valeur_orbit, Valeur_rotation, BonneRep) VALUES (:numQues, :valeur_orbit, :valeur_rotation, :bonneRep)";
         $stmt2 = $this->dataAccess->prepare($query2);
         $stmt2->bindParam(':numQues', $lastQID);

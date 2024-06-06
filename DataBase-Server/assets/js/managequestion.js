@@ -121,21 +121,17 @@ async function SubmitFormFromPopup(parentPopup, submitMsg = "", redirectUrl = ""
     return;
   }
 
-  const response = fetch(form.action, {
+  fetch(form.action, {
     method: form.method,
     body: new FormData(form)
-  });
-
-  if (response.status !== 200) {
-    response.then(res => res.text()).then(data => alert(data));
-    return;
-  }
-
-  const data = await response.then(res => res.json());
-
-  if (data.error) {
-    alert(data.error);
-  } else {
+  }).then(response => {
+    if (!response.ok) {
+      return response.text().then(data => {
+        alert(data);
+        throw new Error(data);
+      });
+    }
+  }).then(async () => {
     parentPopup.close();
 
     if (submitMsg) {
@@ -155,5 +151,5 @@ async function SubmitFormFromPopup(parentPopup, submitMsg = "", redirectUrl = ""
 
       await submitPopup.show();
     }
-  }
+  });
 }

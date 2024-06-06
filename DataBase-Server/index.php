@@ -169,10 +169,10 @@ elseif ('/new-game' == $uri) {
 elseif ('/question-answer' == $uri) {
 	$ip = $_SERVER['REMOTE_ADDR'];
 
-	if (isset($_GET['qid']) && $data->verifyPartieInProgress($ip) && isset($_GET['correct']) && isset($_GET['start'])) {
+	if (isset($_GET['qid']) && $data->verifyPartieInProgress($ip) && isset($_GET['answer']) && isset($_GET['start'])) {
 		$dateFin = date('Y-m-d H:i:s');
 		$dateDeb = $_GET['start'];
-		$controllerQuestions->addFinishedQuestion($_GET['qid'], $data->getPartieInProgress($ip)->getIdPartie(), $dateDeb, $dateFin, $_GET['correct'], $partieChecking, $data);
+		$controllerQuestions->addFinishedQuestion($_GET['qid'], $data->getPartieInProgress($ip)->getIdPartie(), $dateDeb, $dateFin, $_GET['answer'], $partieChecking, $data);
 	} else {
 		echo "URL not complete, cannot add question answer to database";
 	}
@@ -278,7 +278,7 @@ elseif ('/modify-question' == $uri && (isset($_SESSION['loggedin']) )) {
 				$controllerQuestions->updateQInterac($questionData['Num_Ques'], $question, $orbit, $rotation, $rotationMargin, $orbitMargin, $partieChecking, $data);
 			}
 			elseif ($questionData['Type'] == 'VRAIFAUX') {
-				$reponse = areVraiFauxInputGood($_POST['question'], $_POST['correct'], $_POST['orbit'], $_POST['rotation']);
+				$reponse = areVraiFauxInputGood($_POST['question'], $_POST['answer'], $_POST['orbit'], $_POST['rotation']);
 				if ($reponse) {
 					return;
 				}
@@ -314,8 +314,8 @@ elseif ('/add-question' == $uri && (isset($_SESSION['loggedin']) )) {
 			}
 
 			$correct = $_POST['answer'];
-			$orbit = $_POST['orbit'] ?? -1;
-			$rotation = $_POST['rotation'] ?? -1;
+			$orbit = $_POST['orbit'] != "" ? $_POST['orbit'] : null;
+			$rotation = $_POST['rotation'] != "" ? $_POST['rotation'] : null;
 
 			$controllerQuestions->addQVraiFaux($question, $orbit, $rotation, $correct, $partieChecking, $data);
 		}
@@ -347,7 +347,7 @@ elseif ('/add-question' == $uri && (isset($_SESSION['loggedin']) )) {
 			$controllerQuestions->addQCU($question, $option1, $option2, $option3, $option4, $correct, $partieChecking, $data);
 		}
 	} else {
-		http_response_code(422);
+		http_response_code(400);
 		echo "URL not complete, cannot add question.";
 	}
 
@@ -396,37 +396,37 @@ function areQcuInputGood($question, $option1, $option2, $option3, $option4, $ans
 	$cpt = 0;
 	if (trim($question) == "") {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "La question ne peut pas être vide.\n";
 	}
 
 	if (trim($option1) == "") {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "L'option 1 ne peut pas être vide.\n";
 	}
 
 	if (trim($option2) == "") {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "L'option 2 ne peut pas être vide.\n";
 	}
 
 	if (trim($option3) == "") {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "L'option 3 ne peut pas être vide.\n";
 	}
 
 	if (trim($option4) == "") {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "L'option 4 ne peut pas être vide.\n";
 	}
 
 	if (trim($answer) == "") {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "La réponse ne peut pas être vide.\n";
 	}
 
@@ -439,25 +439,27 @@ function areVraiFauxInputGood($question, $answer, $orbit, $rotation): bool
 
 	if (trim($question) == "") {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "La question ne peut pas être vide.\n";
 	}
 
 	if (trim($answer) == "") {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "La réponse ne peut pas être vide.\n";
 	}
 
-	if ($orbit < 0 || $orbit > 1) {
+
+
+	if (trim($orbit) != "" && ($orbit < 0 || $orbit > 1)) {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "La valeur de l'orbite doit être comprise entre 0 et 1.\n";
 	}
 
-	if ($rotation < 0 || $rotation > 1) {
+	if (trim($rotation) != "" && ($rotation < 0 || $rotation > 1)) {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "La valeur de la rotation doit être comprise entre 0 et 1.\n";
 	}
 
@@ -469,55 +471,55 @@ function areQuesInteracInputGood($question, $orbit, $rotation, $rotationMargin, 
 	$cpt = 0;
 	if (trim($question) == "") {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "La question ne peut pas être vide.\n";
 	}
 
 	if (trim($orbit) == "") {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "La valeur de l'orbite ne peut pas être vide.\n";
 	}
 
 	if ($orbit < 0 || $orbit > 1) {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "La valeur de l'orbite doit être comprise entre 0 et 1.\n";
 	}
 
 	if (trim($rotation) == "") {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "La valeur de la rotation ne peut pas être vide.\n";
 	}
 
 	if ($rotation < 0 || $rotation > 1) {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "La valeur de la rotation doit être comprise entre 0 et 1.\n";
 	}
 
 	if (trim($rotationMargin) == "") {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "La marge de rotation ne peut pas être vide.\n";
 	}
 
 	if ($rotationMargin < 0 || $rotationMargin > 1) {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "La marge de rotation doit être comprise entre 0 et 1.\n";
 	}
 
 	if (trim($orbitMargin) == "") {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "La marge de l'orbite ne peut pas être vide.\n";
 	}
 
 	if ($orbitMargin < 0 || $orbitMargin > 1) {
 		$cpt++;
-		http_response_code(422);
+		http_response_code(400);
 		echo "La marge de l'orbite doit être comprise entre 0 et 1.\n";
 	}
 
