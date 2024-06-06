@@ -199,7 +199,7 @@ interface DataAccessInterface
     /**
      * @return array
      */
-    public function getBestUsers(): array;
+    public function getBestUsers(int $nbUser): array;
 
     /**
      * @param int $numQues
