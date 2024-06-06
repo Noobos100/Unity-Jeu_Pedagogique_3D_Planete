@@ -9,6 +9,16 @@ class _qcu
     private string $rep4;
     private string $answer;
 
+    /**
+     * Constructs a new _qcu instance.
+     *
+     * @param string $question The question.
+     * @param string $rep1 The first option.
+     * @param string $rep2 The second option.
+     * @param string $rep3 The third option.
+     * @param string $rep4 The fourth option.
+     * @param string $answer The correct answer.
+     */
 	public function __construct(string $question = "",
                                 string $rep1 = "",
                                 string $rep2 = "",
@@ -24,6 +34,12 @@ class _qcu
         $this->answer = $answer;
     }
 
+
+    /**
+     * Renders the question creation form.
+     *
+     * @return string The rendered question creation form.
+     */
 	public function render(): string
 	{
 		ob_start();

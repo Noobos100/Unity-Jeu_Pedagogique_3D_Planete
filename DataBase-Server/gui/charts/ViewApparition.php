@@ -4,11 +4,21 @@ namespace gui\charts;
 
 class ViewApparition extends ViewChart
 {
+    /**
+     * Constructs a new ViewApparition instance.
+     *
+     * @param array $dataset The dataset to display.
+     */
 	public function __construct($dataset)
 	{
 		parent::__construct($dataset);
 	}
 
+    /**
+     * Gets the dataset key.
+     *
+     * @return string The dataset key.
+     */
 	public function render(): string
 	{
 		ob_start();

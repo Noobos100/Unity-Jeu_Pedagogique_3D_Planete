@@ -6,11 +6,21 @@ include_once "ViewChart.php";
 
 class ViewPlatform extends ViewChart
 {
+    /**
+     * Constructs a new ViewPlatform instance.
+     *
+     * @param array $dataset The dataset to display.
+     */
 	public function __construct($dataset)
 	{
 		parent::__construct($dataset);
 	}
 
+    /**
+     * Renders the chart.
+     *
+     * @return string The rendered chart.
+     */
 	public function render(): string
 	{
 		ob_start();

@@ -8,6 +8,15 @@ class _questionInteractive
     private string $rotation;
     private string $marginRotation;
 
+    /**
+     * Constructs a new _questionInteractive instance.
+     *
+     * @param string $enonce The question.
+     * @param string $orbit The orbit answer.
+     * @param string $marginOrbit The orbit margin.
+     * @param string $rotation The rotation answer.
+     * @param string $marginRotation The rotation margin.
+     */
     public function __construct(string $enonce = "",
                                 string $orbit = "",
                                 string $marginOrbit = "",
@@ -21,6 +30,9 @@ class _questionInteractive
         $this->marginRotation = $marginRotation;
     }
 
+    /**
+     * @return false|string
+     */
 	public function render() {
 		ob_start();
 		?>

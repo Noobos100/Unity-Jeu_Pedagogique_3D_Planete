@@ -6,12 +6,22 @@ include_once "ViewChart.php";
 
 class ViewPercentage extends ViewChart
 {
+    /**
+     * Constructs a new ViewPercentage instance.
+     *
+     * @param array $dataset The dataset to display.
+     */
 	public function __construct($dataset)
 	{
 		parent::__construct($dataset);
 	}
 
-	public function render(): string
+    /**
+     * Renders the chart.
+     *
+     * @return string The rendered chart.
+     */
+    public function render(): string
 	{
 		ob_start();
 		?>

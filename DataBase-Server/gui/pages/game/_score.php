@@ -6,11 +6,21 @@ class _score
 {
 	private array $bestUsers;
 
+    /**
+     * Constructs a new _score instance.
+     *
+     * @param DataAccess $data The data access.
+     */
 	public function __construct(DataAccess $data)
 	{
 		$this->bestUsers = $data->getBestUsers(10);
 	}
 
+    /**
+     * Renders the best scores.
+     *
+     * @return bool|string The rendered best scores.
+     */
 	public function render(): bool|string
 	{
 		ob_start();

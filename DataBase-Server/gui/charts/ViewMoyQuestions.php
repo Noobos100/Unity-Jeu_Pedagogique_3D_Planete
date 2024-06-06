@@ -6,11 +6,21 @@ include_once "ViewChart.php";
 
 class ViewMoyQuestions extends ViewChart
 {
+    /**
+     * Constructs a new ViewMoyQuestions instance.
+     *
+     * @param array $dataset The dataset to display.
+     */
 	public function __construct($dataset)
 	{
 		parent::__construct($dataset);
 	}
 
+    /**
+     * Renders the chart.
+     *
+     * @return string The rendered chart.
+     */
 	public function render(): string
 	{
 		ob_start();

@@ -7,6 +7,14 @@ class _vraiFaux
 	private string $rotation;
 	private string $answer;
 
+    /**
+     * Constructs a new _vraiFaux instance.
+     *
+     * @param string $question The question.
+     * @param string $orbit The orbit.
+     * @param string $rotation The rotation.
+     * @param string $answer The answer.
+     */
 	function __construct($question = "", $orbit = "", $rotation = "", $answer = "")
 	{
 		$this->question = $question;
@@ -15,6 +23,11 @@ class _vraiFaux
 		$this->answer = $answer;
 	}
 
+    /**
+     * Renders the question creation form.
+     *
+     * @return string The rendered question creation form.
+     */
 	public function render() {
 		ob_start();
 		?>
