@@ -13,9 +13,11 @@ include_once "charts/ViewApparition.php";
 class ViewGameData extends View
 {
     /**
-     * Constructs a new ViewHome instance.
+     * Constructs a new ViewGameData instance.
      *
      * @param Layout $layout The layout to use for displaying content.
+     * @param ControllerGameData $controller The controller to use for getting data.
+     * @param DataAccess $data The data access service to use.
      */
     public function __construct(Layout $layout, ControllerGameData $controller, DataAccess $data)
     {

@@ -8,6 +8,7 @@ namespace gui;
 class ViewManageQuestions extends View
 {
 	/**
+     * Construit une nouvelle instance de ViewManageQuestions.
 	 * @param Layout $layout
 	 * @param mixed $questions
 	 */
@@ -43,7 +44,7 @@ class ViewManageQuestions extends View
                 <th>Enoncé</th>
                 <th>Type</th>
             </tr>
-            ';
+
 			<?php
 			foreach ($questions as $question) {
 				?>

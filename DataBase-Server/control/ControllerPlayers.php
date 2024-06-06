@@ -62,10 +62,10 @@ class ControllerPlayers
 	}
 
     /**
-	 * @param $joueurs
-	 * @return string
-	 */
-    public function generateChartPlatforme($joueurs): string
+     * @param array $joueurs
+     * @return string
+     */
+    public function generateChartPlatforme(array $joueurs): string
 	{
 		// Préparer les données pour le graphique
 		$platformCount = [];

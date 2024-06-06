@@ -4,7 +4,6 @@ body, html {
     height: 100%;
     font-family: Arial, sans-serif;
 }
-
 .container {
     display: flex;
     height: 100%;
@@ -17,12 +16,12 @@ body, html {
     justify-content: space-between;
 
     min-width: 200px;
+    max-width: 200px;
     background-color: #061123;
     color: white;
 
     padding: 10px;
 }
-
 .sidebar-button {
     background: linear-gradient(90deg, #061123, #0B1B66, #061123);
     color: white;
@@ -32,7 +31,6 @@ body, html {
     text-align: center;
     border-radius: 10px;
 }
-
 .sidebar-button:hover {
     background: linear-gradient(90deg, #061123, #0B1B66, #0B1B66, #061123);
 }
@@ -46,7 +44,6 @@ body, html {
     text-align: center;
     border-radius: 10px;
 }
-
 .sidebar-footer {
     font-size: 14px;
     text-align: center;
@@ -55,7 +52,6 @@ body, html {
     padding: 10px;
     border-radius: 10px;
 }
-
 .main-content {
     flex-grow: 1;
     padding: 20px;

@@ -98,7 +98,6 @@ class DataAccess implements DataAccessInterface
         return $this->dataAccess->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
     /**
      * @return array
      */
@@ -131,7 +130,7 @@ class DataAccess implements DataAccessInterface
      * @param string $pwd
      * @return bool
      */
-    public function utilisateur(string $name, string $pwd): bool
+    public function authenticateUser(string $name, string $pwd): bool
     {
         $query = "SELECT MDP FROM UTILISATEUR WHERE NOM = ?";
         $stmt = $this->dataAccess->prepare($query);
@@ -141,6 +140,14 @@ class DataAccess implements DataAccessInterface
         return ($result && password_verify($pwd, $result['MDP']));
     }
 
+    /**
+     * /!\ Function not used in GUI
+     * This function is used to create a new user in the database
+     * that can connect to the website
+     * @param string $name
+     * @param string $pwd
+     * @return bool
+     */
     public function createUser(string $name, string $pwd): bool
     {
         // Hacher le mot de passe
@@ -150,7 +157,6 @@ class DataAccess implements DataAccessInterface
         $stmt = $this->dataAccess->prepare($query);
         return $stmt->execute([$name, $hashedPwd]);
     }
-
 
     /**
      * @param string $nomInteract
@@ -324,21 +330,6 @@ class DataAccess implements DataAccessInterface
 
             return $result['Score'] * (10 / $count);
         } else return False;
-    }
-
-    /**
-     * @param string $enonce
-     * @param string $type
-     * @return int
-     */
-    public function addQuestion(string $enonce, string $type): int
-    {
-        $query = "INSERT INTO QUESTION (Enonce, Type) VALUES (:enonce, :type)";
-        $stmt = $this->dataAccess->prepare($query);
-        $stmt->bindParam(':enonce', $enonce);
-        $stmt->bindParam(':type', $type);
-        $stmt->execute();
-        return $this->dataAccess->lastInsertId();
     }
 
     /**

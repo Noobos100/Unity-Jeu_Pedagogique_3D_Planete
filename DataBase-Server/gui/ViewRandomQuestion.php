@@ -4,6 +4,9 @@ namespace gui;
 
 include_once "View.php";
 
+/**
+ * Represents a view in the MVC pattern.
+ */
 class ViewRandomQuestion extends View
 {
     /**

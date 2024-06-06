@@ -85,14 +85,14 @@ elseif ('/login' == $uri ) {
 		$_SESSION['username'] = $_POST['username'];
 		$_SESSION['password'] = $_POST['password'];
 
-		if ($data->utilisateur($_SESSION['username'], $_SESSION['password'])) {
-			$_SESSION['loggedin'] = true;
-			header('Location: /game-data');
-			exit;
-		} else {
-			$error = "Nom d'utilisateur ou mot de passe incorrect.";
-		}
-	}
+        if ($data->authenticateUser($_SESSION['username'], $_SESSION['password'])) {
+            $_SESSION['loggedin'] = true;
+            header('Location: /game-data');
+            exit;
+        } else {
+            $error = "Nom d'utilisateur ou mot de passe incorrect.";
+        }
+    }
 
 	if ($error) {
 		echo '<p style="color: red;">' . htmlspecialchars($error) . '</p>';

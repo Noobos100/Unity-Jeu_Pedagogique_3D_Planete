@@ -22,7 +22,7 @@ class ViewPercentage extends ViewChart
             labels: <?php echo $this->getDatasetKey() ?>,
             datasets: [{
               type: 'bar',
-              label: 'Pourcentage de réussite par question',
+              label: 'Taux de réussite par question (%)',
               data: <?php echo $this->getDatasetValue() ?>,
               backgroundColor: 'rgba(75, 192, 255, 0.75)',
               borderWidth: 1
@@ -43,7 +43,7 @@ class ViewPercentage extends ViewChart
               y: {
                 title: {
                   display: true,
-                  text: 'Pourcentage de réussite (%)',
+                  text: 'Taux de réussite (%)',
                   color: '#ffffff' // Couleur des étiquettes de l'axe Y
                 },
                 ticks: {

@@ -22,7 +22,7 @@ class ViewMoyQuestions extends ViewChart
             labels: <?php echo $this->getDatasetKey() ?>,
             datasets: [{
               type: 'bar',
-              label: 'Nombre de fois où chaque moyenne apparaît',
+              label: 'Score des participants',
               data: <?php echo $this->getDatasetValue() ?>,
               backgroundColor: 'rgba(75,114,192,0.75)',
               borderWidth: 1
@@ -33,7 +33,7 @@ class ViewMoyQuestions extends ViewChart
               x: {
                 title: {
                   display: true,
-                  text: 'Moyennes',
+                  text: 'Scores',
                   color: '#ffffff' // Couleur des étiquettes de l'axe X
                 },
                 ticks: {
@@ -43,7 +43,7 @@ class ViewMoyQuestions extends ViewChart
               y: {
                 title: {
                   display: true,
-                  text: 'Nombre de fois que chaque moyenne apparaît',
+                  text: 'Nombre de participants ayant obtenu ce score',
                   color: '#ffffff' // Couleur des étiquettes de l'axe Y
                 },
                 ticks: {

@@ -2,46 +2,71 @@
 
 namespace control;
 
+use data\DataAccess;
 use DateTime;
 use gui\charts\ViewApparition;
 use gui\charts\ViewPercentage;
 use gui\charts\ViewMoyQuestions;
 
+/**
+ * Class ControllerGameData
+ * @package control
+ * This class is responsible for handling the data related to the game.
+ */
 class ControllerGameData
 {
-    public function getScoreUsers($data)
+    /**
+     * @param DataAccess $data
+     * @return array
+     */
+    public function getParties(DataAccess $data): array
     {
-        return $data->getScoreUsers();
-    }
-
-	// Getter
-	public function getParties($data)
-	{
 		return $data->getParties();
 	}
 
-	public function getReponsesUsers($data)
-	{
+    /**
+     * @param DataAccess $data
+     * @return array
+     */
+    public function getReponsesUsers(DataAccess $data): array
+    {
 		return $data->getReponsesUsers();
 	}
 
-	public function getPartiesAsc($data)
-	{
+    /**
+     * @param DataAccess $data
+     * @return array
+     */
+    public function getPartiesAsc(DataAccess $data): array
+    {
 		return $data->getPartiesAsc();
 	}
 
-	public function getQuestionNb($data)
-	{
+    /**
+     * @param DataAccess $data
+     * @return array
+     */
+    public function getQuestionNb(DataAccess $data): array
+    {
 		return $data->getQuestionNb();
 	}
 
-    public function getBestUsers($data)
+    /**
+     * @param DataAccess $data
+     * @return array
+     */
+    public function getBestUsers(DataAccess $data): array
     {
         return $data->getBestUsers();
     }
 
 	// Methods
-	public function calculateTotalAbandons($reponseUser): int
+
+    /**
+     * @param array $reponseUser
+     * @return int
+     */
+    public function calculateTotalAbandons(array $reponseUser): int
 	{
 		// Compter le nombre total d'abandons
 		$totalAbandons = 0;
@@ -51,12 +76,16 @@ class ControllerGameData
 		return $totalAbandons;
 	}
 
-	public function calculateTempsMin($reponseUser): string
+    /**
+     * @param array $reponseUser
+     * @return string
+     */
+    public function calculateTempsMin(array $reponseUser): string
 	{
 		$totalMinTemps = PHP_INT_MAX;
 		foreach ($reponseUser as $user) {
 			if (isset($user['Date_Deb']) && isset($user['Date_Fin']) && $user['Date_Fin'] != null && $user['Date_Deb'] != null) {
-				$totalMinTemps2 = $this->getF($user);
+				$totalMinTemps2 = $this->calculateTime($user);
 
 				if ($totalMinTemps2 < $totalMinTemps) {
 					$totalMinTemps = $totalMinTemps2;
@@ -66,12 +95,16 @@ class ControllerGameData
 		return gmdate("H:i:s", $totalMinTemps);
 	}
 
-	public function calculateTempsMax($reponseUser): string
+    /**
+     * @param array $reponseUser
+     * @return string
+     */
+    public function calculateTempsMax(array $reponseUser): string
 	{
 		$totalMaxTemps = 0;
 		foreach ($reponseUser as $user) {
 			if (isset($user['Date_Deb']) && isset($user['Date_Fin']) && $user['Date_Fin'] != null && $user['Date_Deb'] != null) {
-				$totalMaxTemps2 = $this->getF($user);
+				$totalMaxTemps2 = $this->calculateTime($user);
 				if ($totalMaxTemps2 > $totalMaxTemps) {
 					$totalMaxTemps = $totalMaxTemps2;
 				}
@@ -81,7 +114,12 @@ class ControllerGameData
 	}
 
 	// Charts
-	public function generatePercentageChart($reponsesUsers): string
+
+    /**
+     * @param array $reponsesUsers
+     * @return string
+     */
+    public function generatePercentageChart(array $reponsesUsers): string
 	{
 		// Préparer les données pour le graphique
 		$questionData = [];
@@ -107,7 +145,11 @@ class ControllerGameData
 		return (new ViewPercentage($dataset))->render();
 	}
 
-	public function generateChartMoyQuestion($parties): string
+    /**
+     * @param array $parties
+     * @return string
+     */
+    public function generateChartMoyQuestion(array $parties): string
 	{
 		// Préparer les données pour le graphique
 		$moyQuestionsData = [];
@@ -128,7 +170,11 @@ class ControllerGameData
 		return (new ViewMoyQuestions($moyQuestionsData))->render();
 	}
 
-	public function generateChartApparitions($questionData): string
+    /**
+     * @param array $questionData
+     * @return string
+     */
+    public function generateChartApparitions(array $questionData): string
 	{
 		$dataset = [];
 		foreach ($questionData as $data) {
@@ -142,7 +188,7 @@ class ControllerGameData
 	 * @param mixed $user
 	 * @return float|int
 	 */
-	public function getF(mixed $user): int|float
+	public function calculateTime(mixed $user): int|float
 	{
 		$dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $user['Date_Deb']);
 		$dateTime2 = DateTime::createFromFormat('Y-m-d H:i:s', $user['Date_Fin']);

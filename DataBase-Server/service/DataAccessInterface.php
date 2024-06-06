@@ -4,6 +4,10 @@ namespace service;
 
 use domain\{Interaction, Joueur, Partie, Qcu, Quesinterac, UserAnswer, VraiFaux};
 
+/**
+ * Interface DataAccessInterface
+ * @package service
+ */
 interface DataAccessInterface
 {
     /**
@@ -11,7 +15,7 @@ interface DataAccessInterface
      * @param string $pwd
      * @return bool
      */
-    public function utilisateur(string $name, string $pwd): bool;
+    public function authenticateUser(string $name, string $pwd): bool;
 
     /**
      * @param string $nomInteract
@@ -132,6 +136,9 @@ interface DataAccessInterface
      */
     public function getQQCU(int $numQues): Qcu|False;
 
+    /**
+     * @return array
+     */
     public function getAllQ(): array;
 
     /**
@@ -168,4 +175,105 @@ interface DataAccessInterface
 	 * @return array
 	 */
 	public function getPlayers(): array;
+
+    /**
+     * @return array
+     */
+    public function getParties(): array;
+
+    /**
+     * @return array
+     */
+    public function getQuestionNb(): array;
+
+    /**
+     * @return array
+     */
+    public function getPartiesAsc(): array;
+
+    /**
+     * @return array
+     */
+    public function getReponsesUsers(): array;
+
+    /**
+     * @return array
+     */
+    public function getBestUsers(): array;
+
+    /**
+     * @param int $numQues
+     * @param string $question
+     * @param string $rep1
+     * @param string $rep2
+     * @param string $rep3
+     * @param string $rep4
+     * @param string $bonneRep
+     * @return void
+     */
+    public function updateQCU(int $numQues, string $question, string $rep1, string $rep2, string $rep3, string $rep4, string $bonneRep): void;
+
+    /**
+     * @param int $numQues
+     * @param string $question
+     * @param string $orbite
+     * @param string $rotation
+     * @param string $correct
+     * @return void
+     */
+    public function updateQVraiFaux(int $numQues, string $question, string $orbite, string $rotation, string $correct): void;
+
+    /**
+     * @param int $numQues
+     * @param string $question
+     * @param string $orbite
+     * @param string $rotation
+     * @param string $rotationMargin
+     * @param string $orbitMargin
+     * @return void
+     */
+    public function updateQInterac(int $numQues, string $question, string $orbite, string $rotation, string $rotationMargin, string $orbitMargin): void;
+
+    /**
+     * @param int $numQues
+     * @return void
+     */
+    public function deleteQuestion(int $numQues): void;
+
+    /**
+     * @param string $enonce
+     * @param string|null $valeur_orbit
+     * @param string|null $valeur_rotation
+     * @param string $bonneRep
+     * @return void
+     */
+    public function addQVraiFaux(string $enonce, ?string $valeur_orbit, ?string $valeur_rotation, string $bonneRep): void;
+
+    /**
+     * @param string $enonce
+     * @param string $bonneRepValeur_orbit
+     * @param string $marge_Orbit
+     * @param string $bonneRepValeur_rotation
+     * @param string $marge_Rotation
+     * @return int
+     */
+    public function addQInterac(string $enonce, string $bonneRepValeur_orbit, string $marge_Orbit, string $bonneRepValeur_rotation, string $marge_Rotation): int;
+
+    /**
+     * @param string $enonce
+     * @param string $rep1
+     * @param string $rep2
+     * @param string $rep3
+     * @param string $rep4
+     * @param string $bonneRep
+     * @return int
+     */
+    public function addQCU(string $enonce, string $rep1, string $rep2, string $rep3, string $rep4, string $bonneRep): int;
+
+    /**
+     * @param string $name
+     * @param string $pwd
+     * @return bool
+     */
+    public function createUser(string $name, string $pwd): bool;
 }
