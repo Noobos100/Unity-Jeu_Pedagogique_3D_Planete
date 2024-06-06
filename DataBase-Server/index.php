@@ -30,7 +30,7 @@ include_once 'gui/ViewGameData.php';
 use gui\{Layout,ViewInteractions,ViewGameData,ViewPlayer,ViewManageQuestions,ViewPartie,ViewQuestions,ViewRandomQuestion,ViewLogin,ViewGame};
 
 include_once 'gui/pages/question/_qcu.php';
-include_once 'gui/pages/question/_vraifaux.php';
+include_once 'gui/pages/question/_vraiFaux.php';
 include_once 'gui/pages/question/_questionInteractive.php';
 
 include_once 'gui/pages/game/_score.php';
