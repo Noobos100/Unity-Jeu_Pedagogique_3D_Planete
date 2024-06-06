@@ -35,14 +35,26 @@ class ViewManageQuestions extends View
                 </select>
             </div>
             <!--bouton pour ajouter une question-->
+            <div>
+                <input type="text" id="search" placeholder="🔍 Rechercher...">
+            </div>
             <button id="addQuestionBtn" class="btn add">Ajouter une question</button>
         </div>
         <!--tableau des questions-->
         <table id="question-table">
             <tr>
-                <th>ID</th>
-                <th>Enoncé</th>
-                <th>Type</th>
+                <th>
+                    ID
+                    <button class="sort-btn" data-sort="id"><i class="fas fa-sort"></i></button>
+                </th>
+                <th>
+                    Enoncé
+                    <button class="sort-btn" data-sort="enonce"><i class="fas fa-sort"></i></button>
+                </th>
+                <th>
+                    Type
+                    <button class="sort-btn" data-sort="type"><i class="fas fa-sort"></i></button>
+                </th>
             </tr>
 
 			<?php
@@ -63,7 +75,7 @@ class ViewManageQuestions extends View
 			}
 			?>
         </table>
-        <script type="module" src="/assets/js/managequestion.js"></script>';
+        <script type="module" src="/assets/js/managequestion.js"></script>
 		<?php
 		$this->content = ob_get_clean();
 	}
